@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Nextwing Quest</title>
+<meta name="description" content="Rätselspiele für eure Gruppe. Mit dem persönlichen Spielcode geht es los.">
+<meta name="robots" content="noindex">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Nextwing Nacht. Brand bar, hero with code login, running quest card, upcoming quests row, three-step explainer, footer. */
+:root{--surface:#0b1220;--raised:#131c2e;--sunken:#070c18;--line:#25304a;--line-strong:#5b6a8a;--ink:#eef2fb;--muted:#98a3bd;--action:#ff6a1f;--action-hover:#ff8a4c;--action-soft:#3a1c0e;--on-action:#0b1220;--info:#8eacff;--info-soft:#15224a;--success:#5fd3a0;--success-soft:#0e2e20;--danger:#ff8a8a;--danger-soft:#3a1214;--warning:#f5c451;--warning-soft:#33280b;
+--display:"Outfit",ui-sans-serif,system-ui,sans-serif;--sans:"Manrope",ui-sans-serif,system-ui,"Segoe UI",sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace;color-scheme:dark}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--surface:#f6f8fc;--raised:#fff;--sunken:#e6ecf6;--line:#d5ddeb;--line-strong:#7a879d;--ink:#0e1526;--muted:#535e73;--action:#c2410c;--action-hover:#9a3412;--action-soft:#ffe9dc;--on-action:#fff;--info:#2856b8;--info-soft:#e3ecff;--success:#137346;--success-soft:#ddf5e8;--danger:#bf2a2a;--danger-soft:#fce4e4;--warning:#7a5600;--warning-soft:#fdf1d2;color-scheme:light}}
+:root[data-theme="light"]{--surface:#f6f8fc;--raised:#fff;--sunken:#e6ecf6;--line:#d5ddeb;--line-strong:#7a879d;--ink:#0e1526;--muted:#535e73;--action:#c2410c;--action-hover:#9a3412;--action-soft:#ffe9dc;--on-action:#fff;--info:#2856b8;--info-soft:#e3ecff;--success:#137346;--success-soft:#ddf5e8;--danger:#bf2a2a;--danger-soft:#fce4e4;--warning:#7a5600;--warning-soft:#fdf1d2;color-scheme:light}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--surface);color:var(--ink)}
+body{font-family:var(--sans);font-size:15px;line-height:23px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:max(16px,env(safe-area-inset-top,0px)) 40px}
+a{color:var(--info)}
+.wrap{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand svg{width:34px;height:34px;flex:none}
+.word{font-family:var(--display);font-size:22px;line-height:24px}
+.word b{font-weight:700}
+.label{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;padding-top:8px}
+@media(min-width:820px){.hero{grid-template-columns:1.15fr .85fr}}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(34px,7vw,52px);line-height:1.05;letter-spacing:-.02em;margin:8px 0 12px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--action)}
+.lead{margin:0;color:var(--muted);font-size:16px;line-height:25px;max-width:46ch}
+.login{background:var(--raised);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.login h2{font-family:var(--display);font-size:20px;line-height:26px;margin:0;font-weight:600}
+.login p{margin:0;font-size:14px;color:var(--muted)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input{flex:1;min-width:0;font-family:var(--mono);font-size:18px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--sunken);border:1px solid var(--line-strong);border-radius:10px;padding:10px 14px;min-height:48px}
+input::placeholder{letter-spacing:.06em;text-transform:none;font-family:var(--sans);font-size:15px;color:var(--muted)}
+.btn{font:inherit;font-weight:700;border-radius:10px;padding:10px 18px;min-height:48px;cursor:pointer;border:1px solid var(--line-strong);background:var(--raised);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:var(--action);border-color:var(--action);color:var(--on-action)}
+.btn.primary:hover{background:var(--action-hover);border-color:var(--action-hover)}
+.btn:focus-visible,input:focus-visible,a:focus-visible{outline:none;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--info)}
+.err{margin:0;font-size:14px;border-radius:10px;padding:8px 12px;background:var(--danger-soft);color:var(--danger)}
+h2.sec{font-family:var(--display);font-size:24px;line-height:30px;font-weight:600;margin:0 0 12px}
+.quest{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--line);background:linear-gradient(160deg,#0a1430 0%,#16244c 60%,#26386c 100%);color:#eef2fb;padding:22px;display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:760px){.quest{grid-template-columns:1.3fr .7fr;align-items:end}}
+.quest canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.quest>*{position:relative}
+.quest h3{font-family:var(--display);font-size:clamp(26px,5vw,34px);line-height:1.1;margin:6px 0 8px;font-weight:600}
+.quest p{margin:0;color:#c9d4f0;max-width:52ch}
+.quest .label{color:#8eacff}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;line-height:20px;white-space:nowrap}
+.p-dark{background:rgba(11,18,32,.6);color:#eef2fb;border:1px solid rgba(142,172,255,.35)}
+.p-go{background:#ff6a1f;color:#0b1220}
+.p-plan{background:var(--info-soft);color:var(--info)}
+.qactions{display:flex;flex-direction:column;gap:8px}
+.qactions .btn{background:rgba(11,18,32,.55);color:#eef2fb;border-color:rgba(142,172,255,.45)}
+.count{font-family:var(--mono);font-size:44px;line-height:1;font-weight:500;color:#ff8a4c}
+.count small{font-family:var(--sans);font-size:13px;color:#c9d4f0;display:block;margin-top:6px;font-weight:500}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--raised);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h4{font-family:var(--display);font-size:18px;line-height:24px;margin:0;font-weight:600}
+.card p{margin:0;color:var(--muted);font-size:14px;line-height:21px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;counter-reset:s}
+.step{border-top:2px solid var(--line);padding-top:12px}
+.step b{display:block;font-family:var(--display);font-size:17px;margin-bottom:4px}
+.step span{color:var(--muted);font-size:14px;line-height:21px}
+.werk{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:var(--info-soft);border-radius:14px;padding:16px 18px}
+.werk p{margin:0;color:var(--ink);max-width:56ch}
+footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="brand" href="./" aria-label="Nextwing Quest Startseite">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0b1220"/><path d="M12 22 C24 14 40 13 52 17 C42 19 30 22 20 28 Z" fill="#4d7cff"/><path d="M12 33 C24 25 40 24 52 28 C42 30 30 33 20 39 Z" fill="#ff6a1f"/><path d="M12 44 C24 36 40 35 52 39 C42 41 30 44 20 50 Z" fill="#8eacff"/></svg>
+      <span class="word">next<b>wing</b></span>
+    </a>
+    <span class="label">Quest</span>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="label">Rätselspiele für eure Gruppe</span>
+      <h1>Gemeinsam rätseln, <em>jeder auf seine Art</em></h1>
+      <p class="lead">Jede Person bekommt eigene Rätsel, eigene Hinweise und einen persönlichen Spielcode. Lösen könnt ihr sie nur zusammen.</p>
+    </div>
+    <form class="login" id="login" novalidate>
+      <h2>Spielcode eingeben</h2>
+      <p>Den Code hast du per Mail oder WhatsApp bekommen. Eine Anmeldung brauchst du nicht.</p>
+      <div class="row">
+        <label for="code" class="label" hidden>Spielcode</label>
+        <input id="code" name="code" placeholder="z. B. K7F3-9QXA" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="14" aria-describedby="codeErr">
+        <button class="btn primary" type="submit">Los geht's</button>
+      </div>
+      <p class="err" id="codeErr" hidden></p>
+    </form>
+  </section>
+
+  <section aria-labelledby="runTitle">
+    <h2 class="sec" id="runTitle">Laufende Quest</h2>
+    <article class="quest">
+      <canvas id="snow" aria-hidden="true"></canvas>
+      <div>
+        <span class="label">Adventskalender 2026</span>
+        <h3>Expedition Polarstern</h3>
+        <p>24 Rätsel bis Heiligabend. Jeden Tag führt eine andere Person die Expedition an, und jede gelöste Tür bringt die Gruppe dem Stern ein Stück näher.</p>
+        <div class="facts"><span class="pill p-dark">1. bis 24. Dezember</span><span class="pill p-dark">8 Mitspieler</span><span class="pill p-go" id="qState">startet bald</span></div>
+      </div>
+      <div class="qactions">
+        <div class="count" id="countdown">–<small>Tage bis zur ersten Tür</small></div>
+        <a class="btn" href="polarstern/status.html">Zur Statusseite</a>
+      </div>
+    </article>
+  </section>
+
+  <section aria-labelledby="nextTitle">
+    <h2 class="sec" id="nextTitle">Demnächst</h2>
+    <div class="cards">
+      <div class="card"><span class="pill p-plan" style="align-self:flex-start">in Planung</span><h4>Krimi-Abend</h4><p>Jeder bekommt eine Rolle und eigene Hinweise. Einer von euch ist heimlich der Täter.</p></div>
+      <div class="card"><span class="pill p-plan" style="align-self:flex-start">in Planung</span><h4>Schatzsuche</h4><p>Stationen draußen, Codes an echten Orten. Auch für Kinder geeignet.</p></div>
+      <div class="card"><span class="pill p-plan" style="align-self:flex-start">in Planung</span><h4>Geschenk-Rätsel</h4><p>Eine Rätselkette, an deren Ende ein Geschenk wartet. Für Geburtstag, Hochzeit oder Jahrestag.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="howTitle">
+    <h2 class="sec" id="howTitle">So funktioniert's</h2>
+    <div class="steps">
+      <div class="step"><b>Code bekommen</b><span>Die Spielleitung schickt dir einen persönlichen Link mit deinem Spielcode.</span></div>
+      <div class="step"><b>Rätsel lösen</b><span>Hier auf der Seite: tippen, schieben, rubbeln, entschlüsseln. Tipps gibt es, wenn du feststeckst.</span></div>
+      <div class="step"><b>Gemeinsam ankommen</b><span>Manche Rätsel gehen nur zusammen. Am Ende bildet ihr gemeinsam den Schlusssatz.</span></div>
+    </div>
+  </section>
+
+  <section class="werk">
+    <p><strong>Neugierig, wie die Rätsel aussehen?</strong> In der Rätsel-Werkstatt kannst du sechs Rätselarten in drei Schwierigkeitsstufen ausprobieren.</p>
+    <a class="btn" href="werkstatt.html">Zur Rätsel-Werkstatt</a>
+  </section>
+
+  <footer><span>Nextwing Quest · ein privates Projekt von <a href="https://nextwing.de">nextwing.de</a></span><span>Kontakt: hallo@nextwing.de</span></footer>
+</div>
+<script src="codes.js"></script>
+<script>
+(function(){
+const norm=s=>s.toUpperCase().replace(/[^A-Z0-9]/g,'');
+const form=document.getElementById('login'),inp=document.getElementById('code'),err=document.getElementById('codeErr');
+const go=c=>{location.href='play.html#'+c;};
+try{const h=location.hash.slice(1);if(h&&window.QUEST_CODES&&QUEST_CODES[norm(h)]){go(norm(h));}}catch(e){}
+form.addEventListener('submit',e=>{e.preventDefault();const c=norm(inp.value);
+  if(!c){err.textContent='Bitte gib deinen Spielcode ein.';err.hidden=false;inp.focus();return;}
+  if(!window.QUEST_CODES||!QUEST_CODES[c]){err.textContent='Diesen Code kennen wir nicht. Prüf die Schreibweise oder frag die Spielleitung.';err.hidden=false;inp.focus();return;}
+  go(c);});
+inp.addEventListener('input',()=>{err.hidden=true;});
+const start=new Date('2026-12-01T08:00:00+01:00'),end=new Date('2026-12-25T00:00:00+01:00'),now=new Date();
+const cd=document.getElementById('countdown'),qs=document.getElementById('qState');
+if(now<start){const d=Math.ceil((start-now)/864e5);cd.innerHTML=d+'<small>'+(d===1?'Tag':'Tage')+' bis zur ersten Tür</small>';qs.textContent='startet am 1. Dezember';}
+else if(now<end){const d=Math.min(24,Math.floor((now-new Date('2026-12-01T00:00:00+01:00'))/864e5)+1);cd.innerHTML=d+'<small>Tür '+d+' ist offen</small>';qs.textContent='läuft';}
+else{cd.innerHTML='24<small>Der Stern ist erreicht</small>';qs.textContent='abgeschlossen';}
+const cv=document.getElementById('snow'),x=cv.getContext('2d');let W,H,fl=[];const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const size=()=>{const r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);W=r.width;H=r.height;cv.width=W*d;cv.height=H*d;x.setTransform(d,0,0,d,0,0);fl=Array.from({length:Math.round(W/10)},()=>({x:Math.random()*W,y:Math.random()*H,r:.6+Math.random()*1.5,s:.2+Math.random()*.5,p:Math.random()*6}));};
+let last=0;const tick=t=>{const dt=Math.min(50,t-last)/16;last=t;x.clearRect(0,0,W,H);for(const f of fl){if(!red){f.y+=f.s*dt;f.x+=Math.sin(t/1600+f.p)*.2*dt;if(f.y>H+3){f.y=-3;f.x=Math.random()*W;}}x.globalAlpha=.35+f.r*.2;x.fillStyle='#eef2fb';x.beginPath();x.arc(f.x,f.y,f.r,0,6.283);x.fill();}if(!red)requestAnimationFrame(tick);};
+new ResizeObserver(()=>{size();if(red)tick(0);}).observe(cv);if(!red)requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
