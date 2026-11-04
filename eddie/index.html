@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Eddie und der Schatz von Agathe</title>
+<meta name="description" content="Eine Rätselgeschichte für Kathleen, Stefan und Eddie. Etwa eine Stunde.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Nextwing Nacht as a storybook. Sticky top bar with chapter progress, timer and collected letters; one chapter per screen: illustration, callback line, story, Eddie's thought, the riddle card, then who solved it and the reward. */
+:root{--surface:#0b1220;--raised:#131c2e;--sunken:#070c18;--line:#25304a;--line-strong:#5b6a8a;--ink:#eef2fb;--muted:#98a3bd;--action:#ff6a1f;--action-hover:#ff8a4c;--action-soft:#3a1c0e;--on-action:#0b1220;--info:#8eacff;--info-soft:#15224a;--success:#5fd3a0;--success-soft:#0e2e20;--danger:#ff8a8a;--danger-soft:#3a1214;--warning:#f5c451;--warning-soft:#33280b;--paper:#f3ead8;--paper-ink:#3a2a18;
+--display:"Outfit",ui-sans-serif,system-ui,sans-serif;--sans:"Manrope",ui-sans-serif,system-ui,"Segoe UI",sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace;color-scheme:dark}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--surface:#f6f8fc;--raised:#fff;--sunken:#e6ecf6;--line:#d5ddeb;--line-strong:#7a879d;--ink:#0e1526;--muted:#535e73;--action:#c2410c;--action-hover:#9a3412;--action-soft:#ffe9dc;--on-action:#fff;--info:#2856b8;--info-soft:#e3ecff;--success:#137346;--success-soft:#ddf5e8;--danger:#bf2a2a;--danger-soft:#fce4e4;--warning:#7a5600;--warning-soft:#fdf1d2;color-scheme:light}}
+:root[data-theme="light"]{--surface:#f6f8fc;--raised:#fff;--sunken:#e6ecf6;--line:#d5ddeb;--line-strong:#7a879d;--ink:#0e1526;--muted:#535e73;--action:#c2410c;--action-hover:#9a3412;--action-soft:#ffe9dc;--on-action:#fff;--info:#2856b8;--info-soft:#e3ecff;--success:#137346;--success-soft:#ddf5e8;--danger:#bf2a2a;--danger-soft:#fce4e4;--warning:#7a5600;--warning-soft:#fdf1d2;color-scheme:light}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--surface);color:var(--ink)}
+body{font-family:var(--sans);font-size:16px;line-height:26px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:10}
+a{color:var(--info)}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(8px);margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:10px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line)}
+.topin{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font-family:var(--display);font-size:17px}
+.brand svg{width:26px;height:26px}
+.brand b{font-weight:700}
+.prog{display:flex;gap:5px;align-items:center}
+.prog i{width:18px;height:6px;border-radius:999px;background:var(--line)}
+.prog i.done{background:var(--action)}
+.prog i.now{background:var(--info)}
+.meta{display:flex;gap:10px;align-items:center;font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.lt{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:5px;background:var(--action-soft);color:var(--action);font-family:var(--display);font-weight:700;font-size:13px}
+.label{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(32px,7vw,46px);line-height:1.08;letter-spacing:-.02em;margin:6px 0 10px;text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,5.5vw,34px);line-height:1.12;letter-spacing:-.015em;margin:4px 0 0;text-wrap:balance}
+.illu{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(170deg,#0a1430,#1b2a55 70%,#2b3d70);aspect-ratio:16/7;max-width:100%}
+.illu svg{display:block;width:100%;height:100%}
+.callback{margin:0;font-size:15px;line-height:24px;color:var(--info);background:var(--info-soft);border-radius:12px;padding:10px 14px}
+.story{display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:28px;max-width:62ch}
+.story p{margin:0}
+.story .letter{background:var(--paper);color:var(--paper-ink);border-radius:6px;padding:16px 18px;font-style:italic;box-shadow:0 1px 0 rgba(0,0,0,.2);line-height:27px}
+.eddie{display:flex;gap:12px;align-items:flex-start}
+.eddie svg{width:52px;height:52px;flex:none}
+.bubble{position:relative;background:var(--raised);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:15px;line-height:23px}
+.bubble b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--warning);font-weight:600;line-height:16px;margin-bottom:2px}
+.card{background:var(--raised);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card.riddle{border-color:color-mix(in srgb,var(--action) 50%,var(--line))}
+.card.solved{border-color:color-mix(in srgb,var(--success) 50%,var(--line))}
+.rhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.rhead h3{font-family:var(--display);font-size:19px;margin:0;font-weight:600}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;line-height:20px;white-space:nowrap}
+.p-open{background:var(--action-soft);color:var(--action)}
+.p-done{background:var(--success-soft);color:var(--success)}
+.how{margin:0;font-size:14px;line-height:21px;color:var(--muted)}
+.field{background:var(--sunken);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;touch-action:manipulation}
+.answer{display:flex;gap:8px;flex-wrap:wrap}
+.answer input{flex:1;min-width:0;font:inherit;color:var(--ink);background:var(--sunken);border:1px solid var(--line-strong);border-radius:10px;padding:10px 12px;min-height:46px}
+.btn{font:inherit;font-weight:700;border-radius:10px;padding:10px 16px;min-height:46px;cursor:pointer;border:1px solid var(--line-strong);background:var(--raised);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:var(--action);border-color:var(--action);color:var(--on-action)}
+.btn.primary:hover{background:var(--action-hover);border-color:var(--action-hover)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--info);padding-inline:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,input:focus-visible,.icon:focus-visible,.tile:focus-visible,.cell:focus-visible,.sortitem:focus-visible,.ltile:focus-visible{outline:none;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--info)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.stars{font-family:var(--mono);color:var(--warning);letter-spacing:2px}
+.msg{margin:0;font-size:15px;line-height:23px;border-radius:10px;padding:10px 12px}
+.msg.ok{background:var(--success-soft);color:var(--success)}
+.msg.no{background:var(--danger-soft);color:var(--danger)}
+.msg.tip{background:var(--info-soft);color:var(--info)}
+.who{display:flex;flex-direction:column;gap:10px;background:var(--sunken);border:1px dashed var(--line-strong);border-radius:12px;padding:14px}
+.who .row{display:flex;gap:8px;flex-wrap:wrap}
+.reward{display:flex;gap:14px;align-items:center}
+.bigl{width:64px;height:64px;border-radius:14px;display:grid;place-items:center;font-family:var(--display);font-size:34px;font-weight:700;background:var(--action-soft);color:var(--action);flex:none}
+.next{align-self:flex-start}
+.icon{font:inherit;width:44px;height:40px;border-radius:8px;border:1px solid var(--line-strong);background:var(--raised);color:var(--ink);cursor:pointer;display:grid;place-items:center;font-size:18px}
+.lock{display:flex;gap:10px;justify-content:center}
+.wheel{display:flex;flex-direction:column;align-items:center;gap:6px}
+.digit{width:56px;height:66px;border-radius:10px;background:linear-gradient(180deg,#2a2016,#4a3826 50%,#2a2016);color:#f3d9a8;display:grid;place-items:center;font-family:var(--mono);font-size:34px;border:1px solid #6b5236}
+.verse{font-style:italic;text-align:center;line-height:26px;margin:0;color:var(--ink)}
+.barks{min-height:28px;font-family:var(--display);font-weight:700;color:var(--warning);display:flex;gap:10px}
+.barks span{animation:pop .3s ease-out}
+@keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+.cipher{width:min(100%,300px);aspect-ratio:1;touch-action:none;user-select:none;cursor:grab}
+.ctext{font-family:var(--mono);font-size:20px;letter-spacing:.2em;text-align:center;word-break:break-word}
+.secret{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+@media(max-width:460px){.secret{grid-template-columns:1fr}}
+.sc{border:1px solid var(--line-strong);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--raised)}
+.sc p{margin:0;font-size:15px;line-height:22px}
+.map{display:grid;grid-template-columns:28px repeat(4,1fr);gap:4px;width:min(100%,360px)}
+.map .hd{display:grid;place-items:center;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.cell{aspect-ratio:1;max-width:100%;border-radius:8px;border:1px solid #6b5a3a;background:#d9c9a3;cursor:pointer;padding:0;display:grid;place-items:center}
+.cell svg{width:72%;height:72%}
+.cell.hit{background:#f2b77a;border-color:#ff6a1f}
+.cell.dug{background:#bfae88}
+.puzzle{display:grid;gap:3px;width:min(100%,300px);aspect-ratio:1;touch-action:none;user-select:none}
+.tile{border:0;border-radius:4px;padding:0;background-repeat:no-repeat;cursor:pointer}
+.tile.empty{background:transparent;cursor:default}
+.sortlist{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:8px}
+.sortitem{display:flex;align-items:flex-start;gap:10px;background:var(--paper);color:var(--paper-ink);border-radius:8px;padding:10px 8px 10px 12px;touch-action:none;user-select:none;font-style:italic;font-size:15px;line-height:22px}
+.sortitem.drag{box-shadow:0 8px 24px rgba(0,0,0,.4);position:relative;z-index:2;outline:2px solid var(--action)}
+.sortitem.locked{outline:2px solid var(--success)}
+.sortitem .t{flex:1}
+.sortitem .btns{display:flex;flex-direction:column;gap:4px}
+.sortitem .icon{width:36px;height:32px;background:#e6d9bd;color:var(--paper-ink);border-color:#b39c72;font-size:15px}
+.ltiles{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.ltile{width:52px;height:60px;border-radius:10px;font-family:var(--display);font-size:28px;font-weight:700;border:1px solid var(--line-strong);background:var(--raised);color:var(--ink);cursor:pointer}
+.ltile.used{opacity:.25}
+.slots{display:flex;gap:8px;justify-content:center}
+.slot{width:52px;height:60px;border-radius:10px;border:2px dashed var(--line-strong);display:grid;place-items:center;font-family:var(--display);font-size:28px;font-weight:700;color:var(--action)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{background:var(--sunken);border-radius:12px;padding:12px}
+.stat b{display:block;font-family:var(--mono);font-size:24px;font-weight:500;line-height:30px}
+.stat span{font-size:13px;color:var(--muted)}
+.start{display:flex;flex-direction:column;gap:16px}
+.cast{display:flex;gap:14px;flex-wrap:wrap}
+.cast div{display:flex;align-items:center;gap:8px;background:var(--raised);border:1px solid var(--line);border-radius:999px;padding:4px 14px 4px 4px;font-weight:600}
+.cast span.av{width:32px;height:32px;border-radius:999px;display:grid;place-items:center;font-family:var(--display);font-weight:700;color:#0b1220}
+.tools{display:flex;gap:6px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){.barks span{animation:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <a class="brand" href="../" aria-label="Zurück zu Nextwing Quest"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0b1220"/><path d="M12 22 C24 14 40 13 52 17 C42 19 30 22 20 28 Z" fill="#4d7cff"/><path d="M12 33 C24 25 40 24 52 28 C42 30 30 33 20 39 Z" fill="#ff6a1f"/><path d="M12 44 C24 36 40 35 52 39 C42 41 30 44 20 50 Z" fill="#8eacff"/></svg><span>next<b>wing</b> quest</span></a>
+  <div class="prog" id="prog" aria-label="Fortschritt"></div>
+  <div class="meta"><span id="timer" aria-label="Spielzeit">00:00</span><span id="lets" aria-label="Gesammelte Buchstaben"></span></div>
+</div></header>
+<main class="wrap" id="app" style="padding-top:20px"></main>
+<script>
+(function(){
+'use strict';
+const K='Kathleen',S='Stefan';
+const CH=[
+{ title:'Die Blechdose', illu:'box',
+  story:[
+   'Es war einer dieser Abende, an denen der Herbst schon nach Kamin roch. Kathleen hatte gerade Tee aufgesetzt, Stefan suchte seit zehn Minuten die Fernbedienung, und Eddie lag im Flur und tat das, was er am besten konnte: so aussehen, als hätte er seit Tagen nichts gegessen.',
+   'Dann hörten sie es. Ein Kratzen. Ein Scharren. Und schließlich ein triumphierendes Bellen aus dem Garten. Eddie war, irgendwann zwischen Tee und Fernbedienung, durch die Terrassentür verschwunden.',
+   'Als Stefan nach draußen ging, saß Eddie mitten im Beet, über und über mit Erde bedeckt. Vor ihm lag etwas, das ganz eindeutig nicht dorthin gehörte: eine verbeulte Blechdose, rostig, mit einem kleinen Zahlenschloss aus Messing. Eddie sah Stefan an, als wollte er sagen: Ich habe meinen Teil erledigt. Der Rest ist euer Problem.',
+   'Am Küchentisch drehten sie die Dose hin und her. Sie war schwerer, als sie aussah. Auf dem Deckel war ein kleines Haus eingraviert, und darunter standen drei Zeilen in einer altmodischen, geschwungenen Schrift.'],
+  eddie:'Ich habe euch etwas gefunden. Dafür erwarte ich mindestens eine Scheibe Käse.',
+  riddle:{type:'lock',title:'Das Zahlenschloss',how:'Drei Ziffern. Die Lösung steht auf dem Deckel, und Eddie kann helfen.',code:[8,5,3],
+   tips:['Auf dem Deckel ist ein Haus eingraviert. Zählt alle Fenster, auch die im Dach.','Gefunden hat die Dose Eddie. Zählt die Buchstaben seines Namens. Und tippt auf Eddie, wenn ihr wissen wollt, wie oft er ruft.']},
+  reward:'Mit einem rostigen Knirschen sprang das Schloss auf. In der Dose lag, eingewickelt in ein Wachstuch, ein vergilbter Briefumschlag. Darauf stand, in derselben geschwungenen Schrift: »An die Finderin, an den Finder. Bitte mit Geduld öffnen.« Darunter, sorgfältig umrandet, ein einzelner Buchstabe.',
+  letter:'N', after:'Ein Brief. Man kann ihn nicht essen. Ich bin enttäuscht, aber gefasst.',
+  cb:{K:'Kathleen hatte das Schloss geknackt, noch bevor Stefan »Lass mich mal« sagen konnte.',S:'Stefan hatte das Schloss geknackt und erwähnte das in den folgenden zehn Minuten nur viermal.',B:'Gemeinsam hatten sie das Schloss geknackt. Eddie beanspruchte den Ruhm trotzdem für sich, schließlich hatte er die Dose ausgegraben.'}},
+
+{ title:'Der Brief von Agathe', illu:'letter',
+  story:[
+   'Der Umschlag knisterte, als Kathleen ihn öffnete. Darin lag ein eng beschriebener Brief, datiert auf den 3. Oktober 1963.',
+   {letter:'Liebe Finderin, lieber Finder,<br>wenn Ihr diesen Brief lest, dann hat ein neugieriger Hund meine Dose gefunden. Das freut mich. Ich habe immer gehofft, dass es ein Hund sein würde.<br><br>Mein Name ist Agathe Hagedorn. Ich habe in diesem Haus gewohnt, lange bevor Ihr kamt. Ich habe hier etwas versteckt, das mir sehr viel bedeutet hat. Ich verrate Euch nicht, was es ist. Aber ich verrate Euch, wo Ihr anfangen müsst. Der nächste Ort steht unten, verschlüsselt, denn ein Schatz, den man einfach findet, ist keiner.'},
+   'Darunter stand eine Reihe merkwürdiger Buchstaben. Und ganz am Rand, mit Bleistift ergänzt: »Den Schlüssel trägt der Finder in seinem Namen.«',
+   'Stefan zog noch etwas aus der Dose: zwei übereinanderliegende Ringe aus Pappe, mit Buchstaben beschriftet, die man gegeneinander drehen konnte. Eine Chiffrierscheibe. Agathe hatte wirklich an alles gedacht.'],
+  eddie:'Der Finder bin ich. Nur damit das hier allen klar ist.',
+  riddle:{type:'cipher',title:'Die Chiffrierscheibe',how:'Dreht die innere Scheibe. Außen steht der Klartext, innen die Geheimschrift. Wie weit ihr drehen müsst, steckt im Namen des Finders.',plain:'ALTE EICHE',key:5,
+   tips:['Der Finder heißt Eddie, das sind fünf Buchstaben. Dreht, bis innen unter dem A ein F steht.','Es sind zwei Wörter. Das zweite ist ein Baum.']},
+  reward:'»Alte Eiche«, las Stefan laut. Kathleen sah aus dem Fenster. Am Ende des Gartens, hinter dem Komposthaufen, stand eine Eiche, so knorrig, dass sie schon immer da gewesen sein musste. Auf der Rückseite des Briefes klebte ein kleiner Zettel mit einem weiteren Buchstaben.',
+  letter:'U', after:'Endlich geht es raus. Draußen riecht es nach Igel.',
+  cb:{K:'Kathleen hatte die Botschaft entschlüsselt, während Stefan die Scheibe noch verkehrt herum hielt.',S:'Stefan hatte die Botschaft entschlüsselt und sich dabei wie ein Geheimagent gefühlt. Er summte sogar die Melodie.',B:'Zu zweit hatten sie die Scheibe gedreht, bis der Text Sinn ergab. Eddie hatte währenddessen ein Nickerchen gemacht, das er als Beratung verbuchte.'}},
+
+{ title:'Unter der alten Eiche', illu:'oak',
+  story:[
+   'Draußen war es inzwischen dunkel. Stefan hielt die Taschenlampe, Kathleen den Brief, und Eddie lief voraus, die Nase am Boden, als hätte er sein Leben lang nichts anderes getan.',
+   'In einem Astknoten der Eiche steckte ein zusammengerolltes Stück Papier. Eine Karte, von Hand gezeichnet. Sie zeigte einen Garten, eingeteilt in Felder, mit Bäumen, einem Brunnen, einer Bank und einem großen Stein. Ein Garten, wie er vor sechzig Jahren ausgesehen haben musste.',
+   'Aber die Karte war in der Mitte durchgerissen, und auf jeder Hälfte stand ein Satz. Kathleen nahm die eine Hälfte, Stefan die andere. Agathe hatte das offenbar genau so geplant: Wer hier weiterkommen will, muss miteinander reden.'],
+  eddie:'Ich könnte auch einfach überall buddeln. Nur so als Vorschlag.',
+  riddle:{type:'map',title:'Die zerrissene Karte',how:'Jeder deckt nur seine eigene Kartenhälfte auf und liest sie dem anderen vor. Dann tippt ihr gemeinsam auf das richtige Feld.',
+   tips:['Der Brunnen steht in Reihe 2.','Schaut euch Spalte B an: Dort steht kein einziger Baum.']},
+  reward:'Kaum hatten sie das Feld markiert, war Eddie schon da. Er grub mit einer Hingabe, die er sonst nur dem Sofa widmete. Nach ein paar Sekunden stieß seine Pfote auf etwas Hartes: eine flache Steinplatte, bedeckt mit festgebackener Erde. In einer Ecke war ein Buchstabe eingeritzt.',
+  letter:'F', after:'Habt ihr gesehen, wie schnell ich war? Ich möchte, dass das im Protokoll steht.',
+  cb:{K:'Kathleen hatte auf der Karte das richtige Feld gefunden. Stefan behauptete später, er habe es auch gewusst, nur leiser.',S:'Stefan hatte auf der Karte das richtige Feld gefunden und dafür zum ersten Mal an diesem Abend Eddies uneingeschränkten Respekt bekommen.',B:'Mit beiden Kartenhälften zusammen war es plötzlich ganz einfach gewesen. Agathe hätte sich gefreut.'}},
+
+{ title:'Die Steinplatte', illu:'stone',
+  story:[
+   'Die Platte war schwer und kalt, und die Erde klebte daran, als wollte sie das Geheimnis nicht hergeben. In der Mitte war etwas eingeritzt, ein einzelnes Wort, aber man musste es erst freilegen.',
+   'Kathleen kniete sich ins feuchte Gras. Stefan leuchtete. Eddie schnaufte ungeduldig in beide Nacken gleichzeitig, was technisch eigentlich nicht möglich sein sollte.'],
+  eddie:'Für mich riecht das alles nach Wurm. Aber bitte, macht ihr mal.',
+  riddle:{type:'scratch',title:'Unter der Erde',how:'Wischt die Erde mit dem Finger oder der Maus weg. Dann lest, was dasteht. Agathe hatte eine Vorliebe für Umwege.',word:'MRUTHCRIK',answers:['kirchturm'],
+   tips:['Lest das Wort von hinten nach vorn.','Es ist der höchste Teil einer Kirche.']},
+  reward:'»Kirchturm«, sagte Stefan. Sie sahen sich an. Vom Garten aus konnte man ihn sehen, den alten Kirchturm am Ende der Straße, dessen Uhr seit Jahren auf zehn nach zwölf stehen geblieben war. Unter dem Wort, kaum noch zu erkennen, war ein weiterer Buchstabe eingeritzt.',
+  letter:'D', after:'Ein Spaziergang. Um diese Uhrzeit. Ich bin dabei.',
+  cb:{K:'Kathleen hatte das Wort auf der Steinplatte als Erste gelesen. Rückwärts. Im Dunkeln. Stefan war beeindruckt und versuchte, es sich nicht anmerken zu lassen.',S:'Stefan hatte das Wort auf der Steinplatte entziffert, indem er den Kopf so lange schief hielt, bis es Sinn ergab.',B:'Gemeinsam hatten sie die Erde von der Platte gewischt. Ihre Hände sahen danach aus wie Eddies Pfoten.'}},
+
+{ title:'Moritz', illu:'tower',
+  story:[
+   'Der Weg zum Kirchturm dauerte fünf Minuten. Mit Eddie dauerte er zwölf, weil jeder Laternenpfahl auf dem Weg gründlich gelesen werden musste.',
+   'Am Fuß des Turms stand eine Bank, und unter der Bank war mit Draht eine kleine Metallkassette festgebunden. Sie war nicht verschlossen. Stefan öffnete sie vorsichtig. In genau diesem Moment entdeckte Eddie eine Katze.',
+   'Was folgte, dauerte drei Sekunden und endete damit, dass die Kassette im Gras lag, die Katze auf der Friedhofsmauer und fünf Tagebuchseiten im Wind. Sie sammelten alle wieder ein. Aber sie waren nicht nummeriert.',
+   'Es waren Seiten aus Agathes Tagebuch. Und sie handelten alle von demselben Hund.'],
+  eddie:'Die Katze hat angefangen.',
+  riddle:{type:'sort',title:'Agathes Tagebuch',how:'Bringt die fünf Seiten in die richtige Reihenfolge, die erste oben. Zieht sie oder nehmt die Pfeile.',
+   pages:['Heute habe ich den kleinen Hund aus dem Tierheim geholt. Er heißt Moritz, ist kaum größer als mein Hut und hat auf der Heimfahrt meinen Handschuh gefressen. Ich glaube, wir werden uns gut verstehen.',
+          'Moritz ist jetzt ein Jahr alt und gräbt den ganzen Garten um. Der Gärtner ist verzweifelt. Ich habe beschlossen, Moritz einen richtigen Schatz zum Suchen zu verstecken.',
+          'Die Dose ist vergraben, im Beet hinter dem Haus. Moritz hat zugesehen und dabei so getan, als würde er schlafen. Ich weiß genau, dass er alles gesehen hat.',
+          'Moritz ist alt geworden. Er liegt jetzt meistens am Kamin und hebt nur noch den Kopf, wenn ich komme. Den Schatz hat er nie gesucht. Ich glaube, er wusste, dass er ihn nicht braucht.',
+          'Ich ziehe bald fort von hier. Den Schatz lasse ich im Haus, für den nächsten Hund, der dieses Haus so liebt wie Moritz. Und für seine Menschen.'],
+   tips:'lock'},
+  reward:'Kathleen las die letzte Seite zweimal. Dann noch einmal, leiser. »Für den nächsten Hund, der dieses Haus so liebt wie Moritz.« Eddie hatte sich neben sie gesetzt und lehnte sich gegen ihr Bein, was er sonst nur bei Gewitter tat. Auf der Rückseite der letzten Seite stand nur ein einziges Wort, »Zuhause«, und darunter ein Buchstabe.',
+  letter:'E', after:'Moritz. Klingt nach einem anständigen Kerl. Hat er Käse bekommen? Ich hoffe, er hat Käse bekommen.',
+  cb:{K:'Kathleen hatte die Tagebuchseiten geordnet. Sie habe dabei kein bisschen geweint, sagte sie. Stefan glaubte ihr kein Wort.',S:'Stefan hatte die Tagebuchseiten geordnet, mit einer Sorgfalt, die Kathleen sonst nur von seiner Steuererklärung kannte.',B:'Zu zweit hatten sie Agathes Seiten geordnet und dabei nicht viel geredet. Manchmal muss man das auch nicht.'}},
+
+{ title:'Das Foto', illu:'photo',
+  story:[
+   'Ganz unten in der Kassette, unter den Seiten, lag noch etwas: ein altes Schwarzweißfoto, in neun Stücke zerschnitten. Wer schneidet ein Foto in neun Stücke? Jemand, der möchte, dass man sich Mühe gibt. Agathe eben.',
+   'Zurück zu Hause legten sie die Teile auf den Küchentisch und schoben sie hin und her. Eddie lag unter dem Tisch und hatte die Angelegenheit innerlich bereits abgeschlossen.'],
+  eddie:'Ich bin kein Puzzle-Hund. Ich bin ein Ergebnis-Hund.',
+  riddle:{type:'slide',title:'Das zerschnittene Foto',how:'Schiebt die Teile an ihren Platz. Tippt auf ein Teil neben der Lücke.',
+   tips:['preview','Legt zuerst die obere Reihe, dann die linke Spalte. Der Rest ergibt sich fast von allein.']},
+  reward:'Als das letzte Teil an seinen Platz rutschte, wurde es still in der Küche. Das Foto zeigte einen Kamin mit Kacheln, auf denen kleine Segelschiffe gemalt waren. Davor lag ein struppiger Hund und sah direkt in die Kamera. Moritz. Kathleen drehte sich langsam um. Im Wohnzimmer, keine fünf Meter entfernt, stand genau dieser Kamin. Mit genau diesen Segelschiffen. Auf der Rückseite des Fotos stand: »Dritte Kachel von links. Drücken.« Und ein letzter Buchstabe.',
+  letter:'R', after:'Moment. Der Schatz war die ganze Zeit hier? Im Haus? Neben meinem Lieblingsplatz?',
+  cb:{K:'Kathleen hatte das Foto zusammengesetzt. Stefan hatte dabei hilfreich »Das gehört da nicht hin« gesagt, und zwar jedes Mal.',S:'Stefan hatte das Foto zusammengesetzt, mit der Zunge zwischen den Zähnen, wie früher beim Modellbau.',B:'Zusammen hatten sie das Foto gelegt, vier Hände, ein Ziel. Eddie hatte das Ganze mit einem Schnarchen begleitet.'}},
+
+{ title:'Der Schatz', illu:'chest', finale:true,
+  story:[
+   'Die dritte Kachel von links gab mit einem leisen Klicken nach. Dahinter war ein Hohlraum, kaum größer als ein Schuhkarton, und darin stand eine kleine Holzkiste mit einem Buchstabenschloss. Sechs Stellen.',
+   'Sechs Buchstaben hatten sie an diesem Abend gesammelt. Sie legten sie nebeneinander auf den Teppich, in der Reihenfolge, in der sie sie gefunden hatten. Aber in dieser Reihenfolge ergaben sie keinen Sinn.'],
+  eddie:'Wenn da kein Knochen drin ist, schreibe ich eine Beschwerde.',
+  riddle:{type:'anagram',title:'Das Buchstabenschloss',how:'Tippt die sechs Buchstaben in der richtigen Reihenfolge an. Ein Tipp auf ein gesetztes Feld nimmt den Buchstaben wieder heraus.',word:'FREUND',
+   tips:['Ein Wort für jemanden, der immer zu einem hält.','Es beginnt mit F.']},
+  reward:'',
+  letter:''}
+];
+
+const WRONG_DIG=['Eddie buddelt begeistert. Er findet einen alten Tennisball, aber keinen Hinweis.','Eddie buddelt. Er findet einen Plastikdinosaurier und wirkt sehr zufrieden. Ein Hinweis ist es nicht.','Eddie buddelt und findet nichts. Er buddelt trotzdem weiter, aus Prinzip.','Eddie buddelt und findet einen Kronkorken von 1987. Historisch interessant, aber leider falsch.'];
+const FINALE=[
+ 'F, R, E, U, N, D. Das Schloss sprang auf.',
+ 'In der Kiste lagen drei Dinge. Ein abgewetztes Lederhalsband mit einer kleinen Messingmarke, auf der »Moritz« stand. Ein Brief, viel kürzer als der erste. Und, eingewickelt in Butterbrotpapier, ein Hundekeks, der nach seiner Verpackung zu urteilen ungefähr sechzig Jahre alt war.',
+ 'Eddie aß den Keks, bevor irgendjemand eingreifen konnte. Er bereute nichts.',
+ 'Kathleen faltete den Brief auf und las ihn laut vor.',
+ {letter:'Wenn Ihr das lest, habt Ihr alles gefunden. Und Ihr habt es zusammen geschafft, das ist das Wichtigste.<br><br>Moritz war mein bester Freund. Er hat mir gezeigt, dass ein Haus erst dann ein Zuhause ist, wenn jemand an der Tür wartet. Ich hoffe, bei Euch wartet auch jemand.<br><br>Gebt ihm heute Abend etwas Besonderes. Er hat es verdient.<br><br>Eure Agathe'},
+ 'Stefan sah Eddie an. Eddie sah den Kühlschrank an.',
+ 'An diesem Abend bekam Eddie zwei Scheiben Käse. Er fand, dass das ein fairer Lohn für die Entdeckung des Jahrhunderts war. Und als Kathleen und Stefan später auf dem Sofa saßen, das Halsband von Moritz auf dem Kaminsims, lag Eddie zwischen ihnen und schnarchte, sehr zufrieden mit sich und der Welt.'];
+window.EDDIE_DATA={CH,WRONG_DIG,FINALE,K,S};
+})();
+</script>
+<script>
+(function(){
+'use strict';
+const {CH,WRONG_DIG,FINALE,K,S}=window.EDDIE_DATA;
+const $=s=>document.querySelector(s);
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
+const norm=s=>String(s).toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]/g,'');
+const DPR=()=>Math.min(2,window.devicePixelRatio||1);
+const FW=(f,m)=>Math.max(220,Math.min(m,(f.clientWidth||340)-26));
+const KEY='eddie-quest-v1';
+let G;try{G=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){G=null;}
+const fresh=()=>({ch:-1,solved:{},who:{},tips:{},start:null,end:null});
+if(!G||typeof G!=='object')G=fresh();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(G));}catch(e){}};
+const app=$('#app');
+let cleanups=[];const cleanup=()=>{cleanups.forEach(f=>{try{f();}catch(e){}});cleanups=[];try{speechSynthesis.cancel();}catch(e){}};
+
+/* ---------- Bilder ---------- */
+const EDDIE=`<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#33280b"/><path d="M14 20 C8 26 9 40 15 44 C19 40 20 30 20 24 Z" fill="#6b4523"/><path d="M50 20 C56 26 55 40 49 44 C45 40 44 30 44 24 Z" fill="#6b4523"/><ellipse cx="32" cy="33" rx="16" ry="17" fill="#b07a45"/><ellipse cx="32" cy="42" rx="9" ry="7" fill="#e8cfa8"/><circle cx="26" cy="30" r="2.6" fill="#1b130b"/><circle cx="38" cy="30" r="2.6" fill="#1b130b"/><circle cx="26.8" cy="29.2" r=".9" fill="#fff"/><circle cx="38.8" cy="29.2" r=".9" fill="#fff"/><ellipse cx="32" cy="38.5" rx="3.6" ry="2.6" fill="#1b130b"/><path d="M32 41 v3 M28.5 44.5 q3.5 2.5 7 0" stroke="#1b130b" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M31 46 q1 4 3 0" fill="#e8737f"/></svg>`;
+const STARS=Array.from({length:40},(_,i)=>`<circle cx="${(i*197)%800}" cy="${(i*73)%170}" r="${i%4?1:1.6}" fill="#fff6d8" opacity="${.3+(i%5)*.12}"/>`).join('');
+const ILLU={
+ box:`<g>${STARS}</g><rect x="0" y="250" width="800" height="100" fill="#3a2a18"/><rect x="0" y="246" width="800" height="8" fill="#5a4026"/><circle cx="400" cy="40" r="120" fill="#ffc66b" opacity=".12"/><path d="M380 0 V40 M340 40 H460 L430 80 H370 Z" fill="#2a2016" stroke="#2a2016"/><circle cx="400" cy="84" r="10" fill="#ffd27a"/><path d="M300 250 L500 250 L480 160 L320 160 Z" fill="#ffc66b" opacity=".08"/><rect x="330" y="180" width="140" height="70" rx="8" fill="#7c8a99"/><rect x="326" y="168" width="148" height="20" rx="6" fill="#95a3b2"/><path d="M345 200 h110 M345 215 h80" stroke="#5b6876" stroke-width="3"/><rect x="390" y="196" width="22" height="28" rx="3" fill="#c9a14a"/><circle cx="401" cy="206" r="4" fill="#7a5a1a"/><circle cx="350" cy="236" r="6" fill="#a15a2a" opacity=".6"/><circle cx="448" cy="184" r="5" fill="#a15a2a" opacity=".6"/>`,
+ letter:`<g>${STARS}</g><rect x="0" y="260" width="800" height="90" fill="#3a2a18"/><g transform="rotate(-4 400 190)"><rect x="250" y="70" width="300" height="200" rx="4" fill="#f3ead8"/><path d="M280 110 h220 M280 130 h240 M280 150 h200 M280 170 h230 M280 190 h180 M280 210 h220" stroke="#8a6e4a" stroke-width="3" stroke-linecap="round" opacity=".7"/><text x="280" y="250" font-family="JetBrains Mono,monospace" font-size="18" fill="#7a2a1a">FQYJ JNHMJ</text></g><circle cx="560" cy="250" r="22" fill="#a32a2a"/><circle cx="560" cy="250" r="12" fill="#c43d3d"/>`,
+ oak:`<g>${STARS}</g><circle cx="680" cy="70" r="28" fill="#eef2fb"/><path d="M0 270 Q400 240 800 275 V350 H0 Z" fill="#1d3a2a"/><path d="M380 270 C385 220 370 180 360 150 M400 270 C398 210 410 170 430 140" stroke="#4a3220" stroke-width="22" fill="none" stroke-linecap="round"/><circle cx="330" cy="120" r="70" fill="#22402f"/><circle cx="430" cy="100" r="80" fill="#1d3829"/><circle cx="390" cy="60" r="60" fill="#25473a"/><path d="M120 300 L380 200 L380 230 Z" fill="#ffe6a8" opacity=".25"/><rect x="100" y="292" width="40" height="14" rx="4" fill="#2a2a2a"/><circle cx="377" cy="214" r="9" fill="#f3ead8"/>`,
+ stone:`<g>${STARS}</g><path d="M0 230 Q400 200 800 235 V350 H0 Z" fill="#1d3a2a"/><ellipse cx="400" cy="275" rx="190" ry="45" fill="#3a2a18"/><path d="M270 260 L520 250 L540 290 L290 300 Z" fill="#8a8f98"/><path d="M290 265 L510 257 M300 285 L520 278" stroke="#6b7079" stroke-width="2"/><text x="405" y="282" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="20" fill="#4a4f58" opacity=".7">? ? ?</text><path d="M560 300 C600 280 640 290 650 310" stroke="#b07a45" stroke-width="8" fill="none" stroke-linecap="round"/>`,
+ tower:`<g>${STARS}</g><circle cx="140" cy="70" r="26" fill="#eef2fb"/><path d="M0 290 H800 V350 H0 Z" fill="#141c30"/><rect x="360" y="110" width="80" height="180" fill="#2a3352"/><path d="M350 112 L400 20 L450 112 Z" fill="#202842"/><circle cx="400" cy="150" r="22" fill="#e9dcc0"/><path d="M400 150 V134 M400 150 L404 135" stroke="#2a2016" stroke-width="3" stroke-linecap="round"/><rect x="388" y="230" width="24" height="60" rx="12" fill="#141c30"/><rect x="250" y="270" width="80" height="8" rx="3" fill="#5a4026"/><rect x="258" y="278" width="6" height="14" fill="#5a4026"/><rect x="316" y="278" width="6" height="14" fill="#5a4026"/><g fill="#f3ead8" opacity=".9"><rect x="520" y="180" width="26" height="34" rx="2" transform="rotate(18 533 197)"/><rect x="580" y="140" width="26" height="34" rx="2" transform="rotate(-22 593 157)"/><rect x="640" y="200" width="26" height="34" rx="2" transform="rotate(30 653 217)"/></g><path d="M700 270 q10 -20 22 0 l-4 8 h-14 Z" fill="#1b1a22"/><circle cx="716" cy="252" r="8" fill="#1b1a22"/>`,
+ photo:`<g>${STARS}</g><rect x="0" y="260" width="800" height="90" fill="#3a2a18"/><g transform="rotate(3 400 170)"><rect x="270" y="40" width="260" height="220" fill="#f3ead8"/><rect x="285" y="55" width="230" height="170" fill="#7b6a55"/><path d="M285 140 h230 M285 112 h230 M343 55 v170 M400 55 v170 M458 55 v170" stroke="#f3ead8" stroke-width="3"/></g>`,
+ chest:`<g>${STARS}</g><rect x="0" y="0" width="800" height="350" fill="#2a1d14" opacity=".55"/><rect x="220" y="40" width="360" height="280" fill="#6b4523"/><g fill="#e8e0cc" stroke="#8a6e4a">${[0,1,2,3,4].map(c=>[0,1,2].map(r=>`<rect x="${240+c*66}" y="${60+r*66}" width="60" height="60"/>`).join('')).join('')}</g><g fill="none" stroke="#2f5d8a" stroke-width="3">${[0,1,2,3,4].map(c=>[0,1,2].map(r=>`<path d="M${255+c*66} ${105+r*66} h30 l-5 6 h-20 Z M${270+c*66} ${80+r*66} v24 l12 -4 Z"/>`).join('')).join('')}</g><rect x="372" y="126" width="60" height="60" fill="#1a120b"/><rect x="380" y="146" width="44" height="34" rx="3" fill="#a8743f"/><rect x="398" y="158" width="8" height="10" fill="#c9a14a"/><circle cx="402" cy="150" r="60" fill="#ffc66b" opacity=".12"/>`
+};
+const illu=k=>`<div class="illu"><svg viewBox="0 0 800 350" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration">${ILLU[k]}</svg></div>`;
+
+/* ---------- Kopfzeile ---------- */
+function top(){
+  const p=$('#prog');p.innerHTML=CH.map((c,i)=>`<i class="${G.who[i]||(c.finale&&G.solved[i])?'done':i===G.ch?'now':''}"></i>`).join('');
+  $('#lets').innerHTML=CH.map((c,i)=>G.who[i]&&c.letter?`<span class="lt">${c.letter}</span>`:'').join('');
+}
+let tInt=null;
+function timer(){clearInterval(tInt);const t=$('#timer');const f=()=>{if(!G.start){t.textContent='00:00';return;}const ms=(G.end||Date.now())-G.start,m=Math.floor(ms/60000),s=Math.floor(ms/1000)%60;t.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');};f();tInt=setInterval(f,1000);}
+
+/* ---------- Bellen ---------- */
+let AC=null;
+function bark(n,onEach){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();
+  for(let i=0;i<n;i++)setTimeout(()=>{onEach&&onEach(i);if(!AC)return;const t=AC.currentTime,o=AC.createOscillator(),f=AC.createBiquadFilter(),g=AC.createGain();o.type='sawtooth';o.frequency.setValueAtTime(520,t);o.frequency.exponentialRampToValueAtTime(170,t+.16);f.type='bandpass';f.frequency.value=900;f.Q.value=1.2;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.5,t+.015);g.gain.exponentialRampToValueAtTime(.001,t+.2);o.connect(f);f.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.22);},i*480);}
+
+/* ---------- Start ---------- */
+function renderStart(){
+  cleanup();top();timer();
+  const resume=G.start&&G.ch>=0;
+  app.innerHTML=`${illu('box')}
+  <section class="start">
+    <div><span class="label">Nextwing Quest · Probespiel</span><h1>Eddie und der Schatz von Agathe</h1>
+    <p class="story" style="margin:0">Eine Rätselgeschichte für einen Herbstabend. Ein Hund, eine rostige Dose und eine Frau, die vor über sechzig Jahren etwas versteckt hat, das sie nie vergessen wollte.</p></div>
+    <div class="cast"><div><span class="av" style="background:#ff8a4c">K</span>Kathleen</div><div><span class="av" style="background:#8eacff">S</span>Stefan</div><div><span class="av" style="background:none;width:32px;height:32px">${EDDIE}</span>Eddie</div></div>
+    <div class="card"><h3 style="margin:0;font-family:var(--display);font-size:19px">So spielt ihr</h3>
+      <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px">
+        <li>Ein Handy oder Tablet reicht. Setzt euch zusammen hin, am besten mit Tee.</li>
+        <li>Lest die Geschichte abwechselnd vor oder lasst sie euch vorlesen.</li>
+        <li>Bei einem Rätsel hat jeder eine eigene Karte. Nicht spicken.</li>
+        <li>Tipps gibt es jederzeit. Jeder Tipp kostet einen Stern.</li>
+        <li>Dauer etwa eine Stunde, sieben Rätsel. Euer Fortschritt bleibt gespeichert.</li>
+      </ul></div>
+    <div class="tools"><button class="btn primary" id="go" type="button">${resume?'Weiterspielen: Kapitel '+(G.ch+1):'Die Geschichte beginnt'}</button>${resume?'<button class="btn ghost" id="restart" type="button">Von vorn beginnen</button>':''}</div>
+  </section>`;
+  $('#go').addEventListener('click',()=>{if(!G.start){G.start=Date.now();G.ch=0;save();}renderCh(G.ch<0?0:G.ch);});
+  const r=$('#restart');if(r){let arm=false;r.addEventListener('click',()=>{if(!arm){arm=true;r.textContent='Wirklich? Noch einmal tippen';setTimeout(()=>{arm=false;r.textContent='Von vorn beginnen';},3000);return;}G=fresh();save();renderStart();});}
+}
+
+/* ---------- Kapitel ---------- */
+const para=p=>typeof p==='string'?`<p>${p}</p>`:`<p class="letter">${p.letter}</p>`;
+const plainText=arr=>arr.map(p=>typeof p==='string'?p:p.letter.replace(/<br>/g,' ')).join(' ');
+function renderCh(i){
+  cleanup();G.ch=i;save();top();timer();window.scrollTo({top:0,behavior:'instant'});
+  const c=CH[i];const prevWho=i>0?G.who[i-1]:null;
+  app.innerHTML=`${illu(c.illu)}
+  <section><span class="label">${c.finale?'Finale':'Kapitel '+(i+1)+' von 6'}</span><h2>${c.title}</h2></section>
+  ${prevWho?`<p class="callback">${CH[i-1].cb[prevWho]}</p>`:''}
+  <section class="story" id="story">${c.story.map(para).join('')}</section>
+  <div class="tools"><button class="btn ghost" id="read" type="button">Vorlesen lassen</button></div>
+  <div class="eddie">${EDDIE}<div class="bubble"><b>Eddie denkt</b>${c.eddie}</div></div>
+  <section class="card riddle" id="rcard"></section>
+  <section id="after"></section>`;
+  const rb=$('#read');
+  if(!('speechSynthesis' in window))rb.hidden=true;
+  else rb.addEventListener('click',()=>{if(speechSynthesis.speaking){speechSynthesis.cancel();rb.textContent='Vorlesen lassen';return;}
+    const u=new SpeechSynthesisUtterance((prevWho?CH[i-1].cb[prevWho]+' ':'')+plainText(c.story));u.lang='de-DE';u.rate=.97;const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.startsWith('de'));if(v)u.voice=v;u.onend=()=>{rb.textContent='Vorlesen lassen';};speechSynthesis.speak(u);rb.textContent='Vorlesen stoppen';});
+  riddle(i);
+}
+
+function riddle(i){
+  const c=CH[i],R=c.riddle,card=$('#rcard');
+  const tips=()=>G.tips[i]||0;
+  const stars=()=>{const s=Math.max(1,3-tips());return '★'.repeat(s)+'☆'.repeat(3-s);};
+  if(G.solved[i]){card.className='card solved';card.innerHTML=`<div class="rhead"><h3>${R.title}</h3><span class="pill p-done">gelöst</span></div><div class="foot"><span class="stars">${stars()}</span><span class="how">${tips()?tips()+(tips()===1?' Tipp':' Tipps')+' genutzt':'ohne Tipp gelöst'}</span></div>`;after(i);return;}
+  card.innerHTML=`<div class="rhead"><h3>${R.title}</h3><span class="pill p-open">Rätsel offen</span></div><p class="how">${R.how}</p><div class="field" id="field"></div><form class="answer" id="af" hidden><input id="ans" autocomplete="off" autocapitalize="off" aria-label="Antwort" placeholder="Eure Antwort"><button class="btn primary" type="submit">Prüfen</button></form><p class="msg" id="rm" hidden aria-live="polite"></p><div class="foot"><span class="stars" id="stars">${stars()}</span><button class="btn" type="button" id="tipB"></button></div>`;
+  const field=$('#field'),rm=$('#rm'),tipB=$('#tipB');
+  const say=(t,k)=>{rm.textContent=t;rm.className='msg '+(k||'tip');rm.hidden=false;};
+  let answers=null;
+  const api={field,say,wrong:t=>say(t||'Das ist es leider nicht. Versucht es noch einmal oder holt euch einen Tipp.','no'),
+    input(list,ph){answers=list.map(norm);$('#af').hidden=false;if(ph)$('#ans').placeholder=ph;},
+    solved(){if(G.solved[i])return;G.solved[i]=true;if(c.finale){G.who[i]='B';G.end=Date.now();}save();top();riddle(i);if(!c.finale)setTimeout(()=>{const w=$('#after');if(w)w.scrollIntoView({behavior:'smooth',block:'start'});},50);}};
+  const tipList=Array.isArray(R.tips)?R.tips:[];let tipFns=[];
+  const updTip=()=>{const n=tipFns.length;tipB.textContent=`Tipp (${Math.min(tips(),n)}/${n})`;tipB.disabled=tips()>=n;$('#stars').textContent=stars();};
+  tipB.addEventListener('click',()=>{const f=tipFns[tips()];G.tips[i]=tips()+1;save();updTip();const r=typeof f==='function'?f():f;if(r)say(r,'tip');});
+  $('#af').addEventListener('submit',e=>{e.preventDefault();const v=norm($('#ans').value);if(!v){say('Gebt zuerst eine Antwort ein.','no');return;}if(answers.includes(v))api.solved();else api.wrong();});
+  $('#ans').addEventListener('input',()=>{if(rm.classList.contains('no'))rm.hidden=true;});
+  const extra=PUZ[R.type](field,api,R,i)||{};
+  tipFns=extra.tips||tipList;if(extra.cleanup)cleanups.push(extra.cleanup);updTip();
+}
+
+function after(i){
+  const c=CH[i],w=$('#after');
+  if(c.finale){renderEnd(w);return;}
+  if(!G.who[i]){
+    w.innerHTML=`<div class="who"><strong>Wer hat's gelöst?</strong><span class="how">Das merkt sich die Geschichte. Im nächsten Kapitel kommt es zur Sprache.</span><div class="row"><button class="btn" data-w="K" type="button">${K}</button><button class="btn" data-w="S" type="button">${S}</button><button class="btn" data-w="B" type="button">Beide zusammen</button></div></div>`;
+    w.querySelectorAll('[data-w]').forEach(b=>b.addEventListener('click',()=>{G.who[i]=b.dataset.w;save();top();after(i);}));return;}
+  w.innerHTML=`<div class="card"><div class="story"><p>${c.reward}</p></div><div class="reward"><div class="bigl">${c.letter}</div><p class="how" style="margin:0">Buchstabe ${Object.keys(G.who).filter(k=>CH[k].letter).length} von 6. Gut aufheben, er wird am Ende gebraucht.</p></div><div class="eddie">${EDDIE}<div class="bubble"><b>Eddie denkt</b>${c.after}</div></div><button class="btn primary next" id="next" type="button">${CH[i+1].finale?'Weiter zum Finale':'Weiter zu Kapitel '+(i+2)}</button></div>`;
+  $('#next').addEventListener('click',()=>renderCh(i+1));
+}
+
+function renderEnd(w){
+  const counts={K:0,S:0,B:0};for(let k=0;k<6;k++){if(G.who[k])counts[G.who[k]]++;}
+  let total=0,tipsAll=0;for(let k=0;k<CH.length;k++){const t=G.tips[k]||0;tipsAll+=t;total+=Math.max(1,3-t);}
+  const ms=(G.end||Date.now())-G.start,min=Math.round(ms/60000);
+  const honor=counts.K>counts.S?'Meisterdetektivin des Abends: Kathleen.':counts.S>counts.K?'Meisterdetektiv des Abends: Stefan.':'Unentschieden zwischen Kathleen und Stefan. Den Fund des Jahrhunderts hat aber eindeutig Eddie gemacht.';
+  w.innerHTML=`<section class="story">${FINALE.map(para).join('')}</section>
+  <div class="card"><span class="label">Ende der Geschichte</span><h3 style="margin:0;font-family:var(--display);font-size:22px">${honor}</h3>
+  <div class="stats"><div class="stat"><b>${min} Min.</b><span>Spielzeit</span></div><div class="stat"><b>${total} / 21</b><span>Sterne</span></div><div class="stat"><b>${tipsAll}</b><span>Tipps genutzt</span></div><div class="stat"><b>${counts.K} · ${counts.S} · ${counts.B}</b><span>gelöst von Kathleen · Stefan · beiden</span></div></div>
+  <div class="eddie">${EDDIE}<div class="bubble"><b>Eddie denkt</b>Zwei Scheiben Käse. Ich sage nichts mehr. Bestes Abenteuer meines Lebens.</div></div>
+  <div class="tools"><button class="btn primary" id="again" type="button">Noch einmal spielen</button><a class="btn" href="../">Zu Nextwing Quest</a></div></div>`;
+  $('#again').addEventListener('click',()=>{G=fresh();save();renderStart();});
+}
+
+/* ---------- Rätsel ---------- */
+const AB='ABCDEFGHIJKLMNOPQRSTUVWXYZ';const enc=(s,k)=>s.replace(/[A-Z]/g,ch=>AB[(AB.indexOf(ch)+k)%26]);
+const PUZ={
+lock(f,api,R){
+  f.innerHTML=`<svg viewBox="0 0 220 150" width="220" role="img" aria-label="Gravur auf dem Deckel: ein Haus"><rect x="1" y="1" width="218" height="148" rx="10" fill="#95a3b2"/><g fill="none" stroke="#3d4855" stroke-width="2.2" stroke-linejoin="round"><path d="M50 70 L110 28 L170 70"/><rect x="58" y="70" width="104" height="66"/><rect x="88" y="48" width="14" height="14"/><rect x="118" y="48" width="14" height="14"/><rect x="66" y="78" width="18" height="16"/><rect x="101" y="78" width="18" height="16"/><rect x="136" y="78" width="18" height="16"/><rect x="66" y="108" width="18" height="16"/><rect x="136" y="108" width="18" height="16"/><path d="M100 136 V108 H120 V136"/></g></svg>
+  <p class="verse">Zuerst zählt die Fenster, groß und klein,<br>dann zählt den Namen des Finders, Buchstabe für Buchstabe fein.<br>Zuletzt lauscht dem Finder, wie oft er ruft:<br>So lautet die letzte Zahl, die ihr sucht.</p>
+  <div style="display:flex;align-items:center;gap:12px"><button class="btn" id="eb" type="button" style="padding:6px 12px 6px 6px"><span style="width:36px;height:36px;display:inline-block">${EDDIE}</span>Auf Eddie tippen</button><div class="barks" id="barks" aria-live="polite"></div></div>
+  <div class="lock" id="lock"></div><button class="btn primary" id="open" type="button">Schloss öffnen</button>`;
+  const d=[0,0,0],L=f.querySelector('#lock');
+  const draw=()=>{L.innerHTML='';d.forEach((v,k)=>{const w=el('div','wheel');const up=el('button','icon','▲');up.type='button';up.setAttribute('aria-label','Ziffer '+(k+1)+' höher');const dn=el('button','icon','▼');dn.type='button';dn.setAttribute('aria-label','Ziffer '+(k+1)+' niedriger');const dg=el('div','digit',String(v));dg.setAttribute('aria-label','Ziffer '+(k+1)+': '+v);
+    up.addEventListener('click',()=>{d[k]=(d[k]+1)%10;draw();});dn.addEventListener('click',()=>{d[k]=(d[k]+9)%10;draw();});w.append(up,dg,dn);L.appendChild(w);});};draw();
+  f.querySelector('#eb').addEventListener('click',()=>{const b=f.querySelector('#barks');b.innerHTML='';bark(3,()=>{const s=el('span',null,'Wuff!');b.appendChild(s);});});
+  f.querySelector('#open').addEventListener('click',()=>{if(d.join('')===R.code.join(''))api.solved();else api.wrong('Das Schloss klemmt. Eddie legt den Kopf schief. Zählt noch einmal nach.');});
+},
+cipher(f,api,R){
+  const ct=enc(R.plain,R.key);
+  f.innerHTML=`<div class="ctext" aria-label="Geheimtext">${ct}</div>`;
+  const cv=el('canvas','cipher');cv.setAttribute('role','img');cv.setAttribute('aria-label','Chiffrierscheibe zum Drehen');f.appendChild(cv);
+  const ctl=el('div');ctl.style.cssText='display:flex;gap:8px;align-items:center';const l=el('button','icon','‹');l.type='button';l.setAttribute('aria-label','Scheibe zurückdrehen');const r=el('button','icon','›');r.type='button';r.setAttribute('aria-label','Scheibe weiterdrehen');const sh=el('span','label');ctl.append(l,sh,r);f.appendChild(ctl);
+  let ang=0;const ST=Math.PI*2/26;
+  const draw=()=>{const s=FW(f,300),d=DPR();cv.width=s*d;cv.height=s*d;cv.style.width=s+'px';const x=cv.getContext('2d');x.setTransform(d,0,0,d,0,0);const c=s/2;
+    x.clearRect(0,0,s,s);x.fillStyle='#e9dcc0';x.beginPath();x.arc(c,c,c-2,0,7);x.fill();x.strokeStyle='#8a6e4a';x.stroke();x.fillStyle='#d4c39e';x.beginPath();x.arc(c,c,c*.7,0,7);x.fill();x.stroke();
+    x.fillStyle='rgba(255,106,31,.22)';x.beginPath();x.moveTo(c,c);x.arc(c,c,c-4,-Math.PI/2-ST/2,-Math.PI/2+ST/2);x.fill();x.textAlign='center';x.textBaseline='middle';
+    for(let k=0;k<26;k++){const a=k*ST-Math.PI/2;x.fillStyle=k===0?'#b8460e':'#3a2a18';x.font=`600 ${s*.055}px JetBrains Mono, monospace`;x.fillText(AB[k],c+Math.cos(a)*c*.85,c+Math.sin(a)*c*.85);}
+    for(let k=0;k<26;k++){const a=k*ST-Math.PI/2+ang;x.fillStyle='#2f5d8a';x.font=`600 ${s*.05}px JetBrains Mono, monospace`;x.fillText(AB[k],c+Math.cos(a)*c*.56,c+Math.sin(a)*c*.56);}
+    x.fillStyle='#8a6e4a';x.font=`600 ${s*.045}px Manrope, sans-serif`;x.fillText('drehen',c,c);
+    const k=((Math.round(-ang/ST)%26)+26)%26;sh.textContent='Unter A steht '+AB[k];};
+  const snap=()=>{ang=Math.round(ang/ST)*ST;draw();};let dr=null;
+  const aAt=e=>{const rc=cv.getBoundingClientRect();return Math.atan2(e.clientY-rc.top-rc.height/2,e.clientX-rc.left-rc.width/2);};
+  cv.addEventListener('pointerdown',e=>{dr={a:aAt(e),s:ang};cv.setPointerCapture(e.pointerId);});cv.addEventListener('pointermove',e=>{if(dr){ang=dr.s+(aAt(e)-dr.a);draw();}});
+  const end=()=>{if(dr){dr=null;snap();}};cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+  l.addEventListener('click',()=>{ang+=ST;snap();});r.addEventListener('click',()=>{ang-=ST;snap();});
+  draw();const ro=new ResizeObserver(draw);ro.observe(f);
+  api.input([R.plain],'Die entschlüsselte Botschaft');
+  return {cleanup:()=>ro.disconnect()};
+},
+map(f,api){
+  const TREE='<svg viewBox="0 0 24 24"><path d="M12 2 L20 15 H4 Z" fill="#2f6b45"/><rect x="10.5" y="15" width="3" height="6" fill="#6b4523"/></svg>';
+  const WELL='<svg viewBox="0 0 24 24"><path d="M4 9 L12 3 L20 9 Z" fill="#7a3d2a"/><rect x="6" y="9" width="2" height="6" fill="#5a3a22"/><rect x="16" y="9" width="2" height="6" fill="#5a3a22"/><ellipse cx="12" cy="18" rx="8" ry="4" fill="#6b7079"/><ellipse cx="12" cy="17" rx="5" ry="2" fill="#2f4a6b"/></svg>';
+  const BENCH='<svg viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="3" fill="#6b4523"/><rect x="3" y="6" width="18" height="2.5" fill="#6b4523"/><rect x="5" y="13" width="2" height="6" fill="#4a3220"/><rect x="17" y="13" width="2" height="6" fill="#4a3220"/></svg>';
+  const STONE='<svg viewBox="0 0 24 24"><path d="M4 18 C3 12 8 7 13 8 C18 8 21 13 20 18 Z" fill="#8a8f98"/></svg>';
+  const M={A1:TREE,C1:TREE,C3:TREE,A4:TREE,D4:TREE,D2:WELL,B4:BENCH,C2:STONE};
+  f.innerHTML=`<div class="secret"><div class="sc"><strong>Hälfte für Kathleen</strong><p class="how">Stefan schaut weg.</p><p id="sk" hidden>»Das Kreuz liegt in derselben Reihe wie der Brunnen.«</p><button class="btn" type="button" id="bk">Aufdecken</button></div><div class="sc"><strong>Hälfte für Stefan</strong><p class="how">Kathleen schaut weg.</p><p id="ss" hidden>»Das Kreuz liegt in der einzigen Spalte, in der kein Baum steht.«</p><button class="btn" type="button" id="bs">Aufdecken</button></div></div><div class="map" id="map" role="grid" aria-label="Karte des Gartens"></div><p class="how" style="margin:0">Baum · Brunnen · Bank · Stein</p>`;
+  [['bk','sk'],['bs','ss']].forEach(([b,p])=>{const B=f.querySelector('#'+b),P=f.querySelector('#'+p);B.addEventListener('click',()=>{P.hidden=!P.hidden;B.textContent=P.hidden?'Aufdecken':'Wieder verdecken';});});
+  const g=f.querySelector('#map');let w=0;
+  g.appendChild(el('span','hd',''));'ABCD'.split('').forEach(c=>g.appendChild(el('span','hd',c)));
+  for(let r=1;r<=4;r++){g.appendChild(el('span','hd',String(r)));'ABCD'.split('').forEach(c=>{const id=c+r,b=el('button','cell',M[id]||'');b.type='button';b.setAttribute('aria-label','Feld '+id+(M[id]?(M[id]===TREE?', Baum':M[id]===WELL?', Brunnen':M[id]===BENCH?', Bank':', Stein'):''));
+    b.addEventListener('click',()=>{if(id==='B2'){b.classList.add('hit');b.innerHTML='<svg viewBox="0 0 24 24"><path d="M5 5 L19 19 M19 5 L5 19" stroke="#b8460e" stroke-width="3.5" stroke-linecap="round"/></svg>';api.solved();}
+      else{b.classList.add('dug');api.wrong(WRONG_DIG[w++%WRONG_DIG.length]);}});g.appendChild(b);});}
+},
+scratch(f,api,R){
+  const wrap=el('div');wrap.style.cssText='position:relative;touch-action:none';f.appendChild(wrap);
+  const w=FW(f,440),h=150,d=DPR();const base=document.createElement('canvas'),top=document.createElement('canvas');top.style.cssText='position:absolute;inset:0;touch-action:none;cursor:crosshair';top.setAttribute('aria-label','Erde zum Wegwischen');
+  [base,top].forEach(c=>{c.width=w*d;c.height=h*d;c.style.width=w+'px';c.style.height=h+'px';wrap.appendChild(c);});
+  const b=base.getContext('2d');b.setTransform(d,0,0,d,0,0);b.fillStyle='#8a8f98';b.fillRect(0,0,w,h);b.strokeStyle='#6b7079';b.lineWidth=2;for(let k=0;k<6;k++){b.beginPath();b.moveTo(Math.random()*w,0);b.lineTo(Math.random()*w,h);b.stroke();}
+  b.fillStyle='#3d424a';b.font=`700 ${Math.min(44,w/8.5)}px JetBrains Mono, monospace`;b.textAlign='center';b.textBaseline='middle';b.fillText(R.word,w/2,h/2+2);
+  const t=top.getContext('2d');t.setTransform(d,0,0,d,0,0);t.fillStyle='#4a3220';t.fillRect(0,0,w,h);for(let k=0;k<420;k++){t.fillStyle=['#5a3d26','#3a2616','#6b4a2e'][k%3];t.beginPath();t.arc(Math.random()*w,Math.random()*h,Math.random()*4+1,0,7);t.fill();}
+  t.fillStyle='rgba(243,234,216,.5)';t.font='600 14px Manrope, sans-serif';t.textAlign='center';t.fillText('Erde wegwischen',w/2,h/2+5);
+  t.globalCompositeOperation='destination-out';t.lineCap='round';t.lineWidth=36;let dn=false,lx=0,ly=0;
+  const p=e=>{const r=top.getBoundingClientRect();return [(e.clientX-r.left)*w/r.width,(e.clientY-r.top)*h/r.height];};
+  top.addEventListener('pointerdown',e=>{dn=true;top.setPointerCapture(e.pointerId);[lx,ly]=p(e);t.beginPath();t.arc(lx,ly,18,0,7);t.fill();});
+  top.addEventListener('pointermove',e=>{if(!dn)return;const [a,c]=p(e);t.beginPath();t.moveTo(lx,ly);t.lineTo(a,c);t.stroke();lx=a;ly=c;});
+  ['pointerup','pointercancel'].forEach(ev=>top.addEventListener(ev,()=>{dn=false;}));
+  api.input(R.answers,'Das Wort auf der Platte');
+},
+sort(f,api,R){
+  const pages=R.pages;let order=pages.map((_,k)=>k);do{for(let k=order.length-1;k>0;k--){const j=(Math.random()*(k+1))|0;[order[k],order[j]]=[order[j],order[k]];}}while(order.every((v,k)=>v===k));
+  const locked=new Set();const ul=el('ul','sortlist');f.appendChild(ul);const chk=el('button','btn primary','Reihenfolge prüfen');chk.type='button';f.appendChild(chk);
+  const render=()=>{ul.innerHTML='';order.forEach((v,k)=>{const li=el('li','sortitem'+(locked.has(k)?' locked':''));li.tabIndex=0;const tx=el('span','t');tx.textContent=pages[v];li.appendChild(tx);
+    const bs=el('span','btns');const up=el('button','icon','↑');up.type='button';up.setAttribute('aria-label','Seite nach oben');up.disabled=k===0||locked.has(k)||locked.has(k-1);const dn=el('button','icon','↓');dn.type='button';dn.setAttribute('aria-label','Seite nach unten');dn.disabled=k===order.length-1||locked.has(k)||locked.has(k+1);
+    up.addEventListener('click',()=>swap(k,k-1));dn.addEventListener('click',()=>swap(k,k+1));bs.append(up,dn);li.appendChild(bs);li.addEventListener('pointerdown',e=>drag(e,li,k));ul.appendChild(li);});};
+  const swap=(a,b)=>{if(locked.has(a)||locked.has(b))return;[order[a],order[b]]=[order[b],order[a]];render();};
+  const drag=(e,li,k)=>{if(e.target.closest('button')||locked.has(k))return;li.setPointerCapture(e.pointerId);li.classList.add('drag');const D={i:k,y0:e.clientY};
+    li.onpointermove=ev=>{let dy=ev.clientY-D.y0;const h=li.offsetHeight+8;
+      if(dy>h/2&&D.i<order.length-1&&!locked.has(D.i+1)){[order[D.i],order[D.i+1]]=[order[D.i+1],order[D.i]];ul.insertBefore(ul.children[D.i+1],li);D.i++;D.y0+=h;dy-=h;}
+      else if(dy<-h/2&&D.i>0&&!locked.has(D.i-1)){[order[D.i],order[D.i-1]]=[order[D.i-1],order[D.i]];ul.insertBefore(li,ul.children[D.i-1]);D.i--;D.y0-=h;dy+=h;}
+      li.style.transform=`translateY(${dy}px)`;};
+    const stop=()=>{li.onpointermove=li.onpointerup=li.onpointercancel=null;render();};li.onpointerup=stop;li.onpointercancel=stop;};
+  chk.addEventListener('click',()=>{const ok=order.filter((v,k)=>v===k).length;if(ok===order.length)api.solved();else api.wrong(`${ok} von ${order.length} Seiten liegen schon richtig. Eddie hält das für ein gutes Zeichen.`);});
+  render();
+  const tip=()=>{const wr=order.map((v,k)=>k).filter(k=>order[k]!==k&&!locked.has(k));if(!wr.length)return 'Alle Seiten liegen richtig. Jetzt prüfen.';const pos=wr[0],from=order.indexOf(pos);[order[pos],order[from]]=[order[from],order[pos]];locked.add(pos);render();return `Seite ${pos+1} liegt jetzt fest an ihrem Platz. Sie ist grün umrandet.`;};
+  return {tips:[tip,tip]};
+},
+slide(f,api){
+  const img=(()=>{const s=600,c=document.createElement('canvas');c.width=s;c.height=s;const x=c.getContext('2d');
+    x.fillStyle='#e9dfc9';x.fillRect(0,0,s,s);x.fillStyle='#8c7b62';x.fillRect(30,30,540,540);
+    x.fillStyle='#5a4a38';x.fillRect(70,60,460,60);x.fillStyle='#d9ccb1';
+    for(let r=0;r<3;r++)for(let col=0;col<6;col++){if(r>0&&col>1&&col<4)continue;const X=90+col*72,Y=130+r*72;x.fillRect(X,Y,66,66);x.strokeStyle='#6b5a44';x.lineWidth=2;x.beginPath();x.moveTo(X+14,Y+44);x.lineTo(X+52,Y+44);x.lineTo(X+46,Y+52);x.lineTo(X+20,Y+52);x.closePath();x.moveTo(X+33,Y+14);x.lineTo(X+33,Y+42);x.lineTo(X+50,Y+40);x.closePath();x.stroke();}
+    x.fillStyle='#2a221a';x.fillRect(234,202,132,140);x.fillStyle='#d98a3a';x.globalAlpha=.55;x.beginPath();x.moveTo(260,342);x.quadraticCurveTo(300,250,340,342);x.fill();x.globalAlpha=1;
+    x.fillStyle='#6b5a44';x.fillRect(70,342,460,24);
+    x.fillStyle='#4a3d2e';x.beginPath();x.ellipse(300,440,120,40,0,0,7);x.fill();
+    x.fillStyle='#3a2f24';x.beginPath();x.ellipse(290,430,70,30,0,0,7);x.fill();x.beginPath();x.arc(360,410,32,0,7);x.fill();
+    x.beginPath();x.moveTo(340,390);x.lineTo(332,360);x.lineTo(356,384);x.fill();x.beginPath();x.moveTo(372,386);x.lineTo(388,362);x.lineTo(386,394);x.fill();
+    x.fillStyle='#e9dfc9';x.beginPath();x.arc(352,406,4,0,7);x.arc(372,406,4,0,7);x.fill();x.fillStyle='#1a140e';x.beginPath();x.arc(362,420,6,0,7);x.fill();
+    x.fillStyle='rgba(0,0,0,.18)';for(let k=0;k<1500;k++)x.fillRect(Math.random()*s,Math.random()*s,1,1);
+    x.fillStyle='#3a2f24';x.font='italic 22px Georgia, serif';x.textAlign='center';x.fillText('Moritz, Winter 1962',300,520);
+    return c.toDataURL('image/png');})();
+  const n=3,N=9;let tiles=[...Array(N).keys()],empty=N-1;const nb=k=>{const r=(k/n)|0,c=k%n,o=[];if(r)o.push(k-n);if(r<n-1)o.push(k+n);if(c)o.push(k-1);if(c<n-1)o.push(k+1);return o;};
+  let prev=-1;for(let m=0;m<60;m++){const o=nb(empty).filter(j=>j!==prev);const j=o[(Math.random()*o.length)|0];[tiles[empty],tiles[j]]=[tiles[j],tiles[empty]];prev=empty;empty=j;}
+  if(tiles.every((t,k)=>t===k)){const j=nb(empty)[0];[tiles[empty],tiles[j]]=[tiles[j],tiles[empty]];empty=j;}
+  const g=el('div','puzzle');g.style.gridTemplateColumns='repeat(3,1fr)';f.appendChild(g);
+  const render=()=>{g.innerHTML='';tiles.forEach((t,k)=>{const b=el('button','tile'+(t===N-1?' empty':''));b.type='button';if(t!==N-1){const r=(t/n)|0,c=t%n;b.style.backgroundImage=`url(${img})`;b.style.backgroundSize='300% 300%';b.style.backgroundPosition=`${c*50}% ${r*50}%`;b.setAttribute('aria-label','Fotostück '+(t+1));b.addEventListener('click',()=>mv(k));}else{b.tabIndex=-1;b.setAttribute('aria-label','Lücke');}g.appendChild(b);});};
+  const mv=k=>{const rk=(k/n)|0,ck=k%n,re=(empty/n)|0,ce=empty%n;if(rk===re||ck===ce){const st=rk===re?(ck<ce?-1:1):(rk<re?-n:n);let cur=empty;while(cur!==k){const nx=cur+st;tiles[cur]=tiles[nx];cur=nx;}tiles[k]=N-1;empty=k;render();
+    if(tiles.every((t,j)=>t===j)){const last=g.children[N-1];last.className='tile';last.style.backgroundImage=`url(${img})`;last.style.backgroundSize='300% 300%';last.style.backgroundPosition='100% 100%';setTimeout(api.solved,700);}}};
+  render();
+  return {tips:[()=>{const o=el('img');o.src=img;o.alt='';o.style.cssText='position:absolute;inset:12px;margin:auto;width:min(calc(100% - 24px),300px);aspect-ratio:1;border-radius:6px;pointer-events:none;transition:opacity .6s';f.appendChild(o);setTimeout(()=>{o.style.opacity='0';setTimeout(()=>o.remove(),700);},2500);return 'So sieht das ganze Foto aus. Zweieinhalb Sekunden, gut hinschauen.';},'Legt zuerst die obere Reihe, dann die linke Spalte. Der Rest ergibt sich fast von allein.']};
+},
+anagram(f,api,R){
+  const found=CH.slice(0,6).map(c=>c.letter);const pick=[];
+  f.innerHTML=`<div class="slots" id="slots"></div><div class="ltiles" id="lt"></div>`;
+  const S=f.querySelector('#slots'),L=f.querySelector('#lt');
+  const render=()=>{S.innerHTML='';for(let k=0;k<6;k++){const b=el('button','slot ltile',pick[k]!=null?found[pick[k]]:'');b.type='button';b.setAttribute('aria-label',pick[k]!=null?'Feld '+(k+1)+': '+found[pick[k]]+', antippen zum Entfernen':'Feld '+(k+1)+' leer');b.style.cssText='border-style:'+(pick[k]!=null?'solid':'dashed');b.addEventListener('click',()=>{if(pick[k]!=null){pick.splice(k,1);render();}});S.appendChild(b);}
+    L.innerHTML='';found.forEach((ch,k)=>{const b=el('button','ltile'+(pick.includes(k)?' used':''),ch);b.type='button';b.disabled=pick.includes(k);b.setAttribute('aria-label','Buchstabe '+ch);b.addEventListener('click',()=>{if(pick.length<6&&!pick.includes(k)){pick.push(k);render();if(pick.length===6)check();}});L.appendChild(b);});};
+  const check=()=>{const w=pick.map(k=>found[k]).join('');if(w===R.word)setTimeout(api.solved,400);else{api.wrong('Das Schloss bleibt zu. Eddie seufzt hörbar.');setTimeout(()=>{pick.length=0;render();},900);}};
+  render();
+}};
+
+if(G.ch<0||!G.start)renderStart();else renderCh(G.ch);
+})();
+</script>
+</body>
+</html>
