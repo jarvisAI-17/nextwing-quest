@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Das Geheimnis der Dicken Gertrud</title>
+<meta name="description" content="Ein Kirmes-Rätselspiel für Hannelore, Markus und Stefan. Allerheiligenkirmes Soest. Jeder spielt am eigenen Handy.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&family=Shrikhand&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: Allerheiligenkirmes Soest bei Nacht. Nextwing-Kopfzeile bleibt; oben das Kirmes-Panorama (Soester Kirchtürme, Riesenrad, Feuerwerk) als Canvas, darunter Anzeigetafel mit Glühbirnen-Rahmen (Dashboard), Geschichten auf einem Kirmesplakat, Rätsel in einer Bude mit gestreifter Markise. Nur dunkel: es ist Kirmesabend. */
+:root{--surface:#0b1220;--ink:#eef2fb;--muted:#a8b0c8;--line:#2a2f52;--action:#ff6a1f;--action-hover:#ff8a4c;--on-action:#0b1220;--info:#8eacff;
+--night:#120c2a;--night-2:#1b1240;--bulb:#ffd36b;--red:#d62839;--cream:#fff3dc;--poster:#fbeed3;--p-ink:#2b1a12;--p-muted:#6d5442;--gold:#f2c14e;--teal:#2ec4b6;--pink:#ff5d8f;--wood:#6b3f1f;
+--display:"Outfit",ui-sans-serif,system-ui,sans-serif;--sans:"Manrope",ui-sans-serif,system-ui,"Segoe UI",sans-serif;--fair:"Shrikhand","Outfit",cursive;--hand:"Caveat","Segoe Print",cursive;--mono:"JetBrains Mono",ui-monospace,monospace;color-scheme:dark}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html{background:var(--night)}
+body{margin:0;color:var(--ink);font-family:var(--sans);font-size:16px;line-height:25px;padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));padding-bottom:60px;min-height:100vh;
+ background:radial-gradient(600px 400px at 15% 20%,rgba(255,93,143,.10),transparent 70%),radial-gradient(500px 400px at 85% 40%,rgba(46,196,182,.09),transparent 70%),radial-gradient(700px 500px at 50% 100%,rgba(242,193,78,.08),transparent 70%),linear-gradient(180deg,#0b1220,var(--night) 40%,#0d0820);background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:10}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:20px;padding-top:16px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:rgba(11,18,32,.92);backdrop-filter:blur(8px);margin:0 calc(-1*max(14px,env(safe-area-inset-left,0px)));padding:10px max(14px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line)}
+.topin{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:10px;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font-family:var(--display);font-size:17px}
+.brand svg{width:26px;height:26px}.brand b{font-weight:700}
+.me{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+.me .av{width:30px;height:30px}
+.tbtn{font:inherit;font-size:15px;line-height:1;min-width:36px;height:34px;border-radius:8px;border:1px solid var(--line);background:#131c2e;color:var(--ink);cursor:pointer;padding:0 8px}
+@media(max-width:480px){.brand span{display:none}}
+
+/* Panorama */
+.pano{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/9;min-height:210px;background:#0a0720;box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.pano canvas{position:absolute;inset:0;width:100%;height:100%}
+.pano .ttl{position:absolute;left:0;right:0;bottom:10px;text-align:center;pointer-events:none}
+.pano h1{margin:0;font-family:var(--fair);font-weight:400;font-size:clamp(21px,5.4vw,38px);line-height:1.1;color:#fff4d6;text-shadow:0 0 12px rgba(255,180,60,.8),0 3px 0 #b5361d,0 5px 10px rgba(0,0,0,.6)}
+.pano p{margin:2px 0 0;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#ffd9a0;text-shadow:0 1px 4px #000}
+
+/* Glühbirnen-Rahmen */
+.bulbs{position:relative;border-radius:16px;padding:6px;background:linear-gradient(180deg,#3a1d5c,#22103e)}
+.bulbs::before{content:"";position:absolute;inset:0;border-radius:16px;pointer-events:none;
+ background:radial-gradient(circle,var(--bulb) 0 2.6px,rgba(255,211,107,.35) 3.4px,transparent 5px) 0 0/18px 18px;
+ -webkit-mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);padding:6px;animation:chase 1.1s steps(2) infinite}
+@keyframes chase{50%{background-position:9px 9px}}
+.bulbs > .inner{position:relative;border-radius:11px;background:linear-gradient(180deg,#1d1440,#130c2c);padding:18px 16px}
+
+/* Anzeigetafel */
+.board h2,.bude h3{font-family:var(--fair);font-weight:400;margin:0;line-height:1.15}
+.board h2{font-size:26px;color:var(--gold);text-shadow:0 0 10px rgba(242,193,78,.45)}
+.hello{margin:4px 0 0;color:var(--muted);font-size:15px}
+.round{display:flex;gap:6px;margin:14px 0 6px}
+.round span{flex:1;height:10px;border-radius:999px;background:#2a2052}
+.round span.done{background:var(--teal)}.round span.now{background:var(--pink);box-shadow:0 0 10px var(--pink)}
+.rlabel{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#d7c9ff}
+.players{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.pl{position:relative;border-radius:12px;padding:10px 8px 12px;background:#24184d;border:1px solid #3d2f78;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.pl.self{border-color:var(--gold);box-shadow:0 0 0 2px rgba(242,193,78,.25)}
+.pl .av{width:54px;height:54px}
+.pl b{font-size:15px;line-height:18px}
+.pl small{font-size:12px;line-height:16px;color:var(--muted);min-height:32px}
+.dots{display:flex;gap:4px}
+.dots i{width:10px;height:10px;border-radius:50%;background:#3d2f78}
+.dots i.done{background:var(--teal)}.dots i.now{background:var(--pink);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.35}}
+.state{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:1px 8px}
+.state.play{background:var(--pink);color:#1a0a14}.state.wait{background:#3d2f78;color:#d7c9ff}.state.done{background:var(--teal);color:#062421}.state.away{background:#2a2052;color:#8e86b5}
+.cheer{font:inherit;font-size:12px;border:1px dashed #6d5bb8;background:transparent;color:#d7c9ff;border-radius:999px;padding:2px 10px;cursor:pointer}
+.word{margin-top:16px}
+.slots{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:6px}
+.slot{aspect-ratio:3/4;border-radius:6px;display:grid;place-items:center;font-family:var(--fair);font-size:clamp(14px,4.4vw,24px);color:#2b1a12;background:#2a2052;border:1px dashed #5a4aa0}
+.slot.got{background:linear-gradient(180deg,#fff3dc,#f2c14e);border:0;box-shadow:0 3px 0 #a5761e;animation:flip .6s}
+@keyframes flip{from{transform:rotateY(90deg)}to{transform:none}}
+.feed{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:190px;overflow:auto}
+.feed li{font-size:14px;line-height:20px;color:#d9d3f2;display:flex;gap:8px}
+.feed time{font-family:var(--mono);font-size:12px;color:#8e86b5;flex:none}
+.cta{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:16px;text-align:center}
+.wait{font-size:15px;color:#d7c9ff}
+.mode{font-size:12px;line-height:17px;color:#8e86b5;text-align:center;margin:10px 0 0}
+
+/* Plakat */
+.poster{position:relative;color:var(--p-ink);padding:26px 22px 26px;border-radius:4px;background:var(--poster);
+ background-image:radial-gradient(ellipse at 20% 10%,rgba(255,255,255,.6),transparent 50%),radial-gradient(ellipse at 90% 90%,rgba(180,120,60,.22),transparent 60%);
+ box-shadow:inset 0 0 0 6px var(--poster),inset 0 0 0 8px var(--red),inset 0 0 0 11px var(--poster),inset 0 0 0 12px #2f4a9a,0 18px 40px rgba(0,0,0,.5)}
+.poster .kick{display:block;text-align:center;font-weight:800;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
+.poster h2{font-family:var(--fair);font-weight:400;text-align:center;font-size:clamp(28px,7.4vw,40px);line-height:1.1;margin:6px 0 4px;color:#2f4a9a;text-shadow:2px 2px 0 rgba(214,40,57,.25);text-wrap:balance}
+.story{display:flex;flex-direction:column;gap:12px;margin-top:14px;font-size:17px;line-height:27px}
+.story p{margin:0;hyphens:auto}
+.cb{margin:10px 0 0;font-family:var(--hand);font-size:23px;line-height:28px;color:#b5361d;text-align:center;transform:rotate(-1deg)}
+.readbtn{align-self:center;font:inherit;font-size:14px;font-weight:700;color:#2f4a9a;background:transparent;border:1.5px solid rgba(47,74,154,.5);border-radius:999px;padding:4px 14px;cursor:pointer}
+
+/* Bude */
+.bude{position:relative;border-radius:0 0 14px 14px;padding:58px 16px 18px;background:linear-gradient(180deg,#24184d,#170f33);border:1px solid #3d2f78;box-shadow:0 18px 40px rgba(0,0,0,.5);display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.bude::before{content:"";position:absolute;left:-6px;right:-6px;top:-8px;height:52px;border-radius:6px 6px 0 0;
+ background:repeating-linear-gradient(90deg,var(--red) 0 34px,var(--cream) 34px 68px);box-shadow:0 6px 10px rgba(0,0,0,.35)}
+.bude::after{content:"";position:absolute;left:-6px;right:-6px;top:42px;height:16px;
+ background:radial-gradient(circle at 17px 0,var(--red) 16px,transparent 17px) 0 0/68px 16px repeat-x,radial-gradient(circle at 51px 0,var(--cream) 16px,transparent 17px) 0 0/68px 16px repeat-x}
+.rhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px}
+.bude h3{font-size:24px;color:#fff4d6;text-shadow:0 0 10px rgba(255,180,60,.5)}
+.tag{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:2px 10px;background:var(--gold);color:#2b1a12}
+.how{margin:0;font-size:15px;line-height:22px;color:#d7d0f0}
+.field{background:radial-gradient(ellipse at 50% 20%,#2b1f5c,#140d2e);border:1px solid #3d2f78;border-radius:12px;padding:14px 12px;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;touch-action:manipulation}
+.msg{margin:0;font-size:15px;line-height:22px;border-radius:10px;padding:10px 14px}
+.msg.ok{background:#d4f5ee;color:#0b4d45}.msg.no{background:#ffe0e4;color:#8a1426}.msg.tip{background:var(--cream);color:var(--p-ink)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.stars{font-size:22px;color:var(--gold);letter-spacing:3px}
+.btn{font:inherit;font-weight:800;border-radius:12px;padding:10px 18px;min-height:46px;cursor:pointer;border:1px solid #5a4aa0;background:#2a2052;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:var(--action);border-color:#c44d10;color:var(--on-action);box-shadow:0 4px 0 #a33c08}
+.btn.primary:hover{background:var(--action-hover)}
+.btn.gold{background:linear-gradient(180deg,#ffe08a,#e0a52a);border-color:#9a6a12;color:#2b1a12;box-shadow:0 4px 0 #9a6a12}
+.btn.tip{background:transparent;color:var(--gold);border-color:rgba(242,193,78,.5)}
+.btn.small{min-height:38px;padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,input:focus-visible,.tbtn:focus-visible,.cheer:focus-visible,.readbtn:focus-visible,.q button:focus-visible,.mcard:focus-visible,.pipe:focus-visible,.pcell:focus-visible,.car:focus-visible,.ltile:focus-visible{outline:none;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--info)}
+.answer{display:flex;gap:8px}
+.answer input{flex:1;min-width:0;font:inherit;font-size:20px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p-ink);background:var(--cream);border:2px solid #e0a52a;border-radius:10px;padding:8px 12px;min-height:50px}
+
+/* Login */
+.ticket{position:relative;max-width:420px;margin:0 auto;width:100%;color:var(--p-ink);background:var(--cream);border-radius:14px;padding:22px 20px 24px;box-shadow:0 18px 40px rgba(0,0,0,.5);
+ -webkit-mask:radial-gradient(circle 12px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 12px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat;mask:radial-gradient(circle 12px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 12px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat}
+.ticket .kick{display:block;text-align:center;font-weight:800;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--red)}
+.ticket h2{font-family:var(--fair);font-weight:400;font-size:30px;line-height:1.1;text-align:center;margin:6px 0 4px;color:#2f4a9a}
+.ticket p{margin:0;text-align:center;color:var(--p-muted);font-size:15px}
+.ticket form{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.ticket .perf{border-top:2px dashed #d9c3a0;margin:18px -20px 0;padding-top:14px}
+.ticket label{font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--p-muted)}
+
+/* Rätselbausteine */
+.q{display:flex;flex-direction:column;gap:8px;width:100%}
+.q strong{font-size:17px;line-height:24px}
+.q button{font:inherit;text-align:left;border-radius:10px;border:1px solid #5a4aa0;background:#2a2052;color:var(--ink);padding:10px 12px;cursor:pointer;min-height:46px}
+.q button.no{background:#5a1a2a;border-color:#a8324a;animation:shake .4s}
+.q button.ok{background:#0f4d45;border-color:var(--teal)}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.qprog{font-size:13px;color:var(--muted)}
+.lukas{display:flex;gap:16px;align-items:flex-end;justify-content:center;width:100%}
+.tower{position:relative;width:70px;height:300px;border-radius:8px;background:linear-gradient(90deg,#3a1d5c,#5a2d8a,#3a1d5c);border:3px solid #f2c14e;overflow:hidden}
+.tower .scale{position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 28px,rgba(255,255,255,.18) 28px 30px)}
+.tower .bell{position:absolute;top:4px;left:50%;transform:translateX(-50%);width:44px;height:30px;border-radius:22px 22px 6px 6px;background:linear-gradient(180deg,#ffe08a,#c98a1a);box-shadow:0 0 0 rgba(255,211,107,0)}
+.tower .bell.ring{animation:ring .5s}
+@keyframes ring{0%,100%{transform:translateX(-50%) rotate(0)}25%{transform:translateX(-50%) rotate(-14deg);box-shadow:0 0 30px 10px rgba(255,211,107,.8)}75%{transform:translateX(-50%) rotate(14deg)}}
+.tower .puck{position:absolute;left:50%;bottom:6px;width:30px;height:18px;margin-left:-15px;border-radius:6px;background:var(--red);box-shadow:0 0 10px var(--red);transition:bottom .45s cubic-bezier(.2,.8,.3,1)}
+.meter{width:38px;height:300px;border-radius:999px;background:linear-gradient(0deg,#2ec4b6,#f2c14e 60%,#ff5d8f 85%,#ff2a2a);position:relative;border:2px solid #fff4d6}
+.meter i{position:absolute;left:-6px;right:-6px;height:6px;border-radius:3px;background:#fff;box-shadow:0 0 6px #fff}
+.meter b{position:absolute;left:-4px;right:-4px;top:7%;height:2px;background:#1a0a14}
+.hits{font-family:var(--fair);font-size:22px;color:var(--gold)}
+.diff{display:flex;flex-direction:column;gap:8px;width:100%;max-width:440px}
+.diff svg{width:100%;height:auto;border-radius:8px;display:block}
+.diff .bot{position:relative;cursor:crosshair}
+.organ{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-width:360px;align-items:end}
+.pipe{border:0;border-radius:30px 30px 8px 8px;cursor:pointer;opacity:.55;transition:opacity .1s,transform .1s;box-shadow:inset 0 -10px 0 rgba(0,0,0,.25),inset 0 6px 0 rgba(255,255,255,.3)}
+.pipe.on{opacity:1;transform:translateY(-4px);box-shadow:0 0 26px 6px currentColor,inset 0 6px 0 rgba(255,255,255,.4)}
+.rush{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);gap:0;width:min(100%,330px);aspect-ratio:1;position:relative;background:repeating-linear-gradient(0deg,#1a1430 0 1px,transparent 1px 16.66%),repeating-linear-gradient(90deg,#1a1430 0 1px,transparent 1px 16.66%),#2a2a3a;border:4px solid #f2c14e;border-radius:10px;touch-action:none}
+.rush .exit{position:absolute;right:-14px;top:33.33%;height:16.66%;width:10px;background:var(--teal);border-radius:0 6px 6px 0;box-shadow:0 0 12px var(--teal)}
+.car{position:relative;margin:4px;border-radius:10px;border:0;cursor:grab;box-shadow:inset 0 -5px 0 rgba(0,0,0,.25),0 3px 6px rgba(0,0,0,.5);touch-action:none}
+.car::after{content:"";position:absolute;inset:22% 18%;border-radius:6px;background:rgba(255,255,255,.25)}
+.car.sel{outline:3px solid #fff}
+.pathg{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;width:min(100%,330px)}
+.pcell{aspect-ratio:1;border-radius:8px;border:1px solid #5a4aa0;background:#2a2052;cursor:pointer;color:#fff4d6;font-size:22px;display:grid;place-items:center;padding:0;font-weight:800}
+.pcell.on{background:var(--pink);border-color:#ffd0df;box-shadow:0 0 12px rgba(255,93,143,.6)}
+.pcell.head{background:var(--gold);color:#2b1a12}
+.pcell.blk{background:repeating-linear-gradient(90deg,var(--red) 0 8px,var(--cream) 8px 16px);cursor:not-allowed;font-size:20px}
+.pcell.goal{outline:2px dashed var(--teal);outline-offset:-4px}
+.sortlist{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:8px}
+.sortitem{display:flex;align-items:center;gap:10px;background:var(--cream);color:var(--p-ink);border-radius:10px;padding:10px 8px 10px 14px;font-size:16px;line-height:22px;box-shadow:0 3px 0 #c9a46a}
+.sortitem .t{flex:1}
+.sortitem .bx{display:flex;flex-direction:column;gap:4px}
+.icon{font:inherit;width:42px;height:34px;border-radius:8px;border:1px solid #9a6a12;background:linear-gradient(180deg,#ffe08a,#e0a52a);color:#2b1a12;cursor:pointer;font-weight:800}
+.cans{width:100%;max-width:420px;aspect-ratio:4/3.4;touch-action:manipulation;border-radius:10px;cursor:pointer}
+.jugs{display:flex;gap:28px;align-items:flex-end;justify-content:center}
+.jug{display:flex;flex-direction:column;align-items:center;gap:6px}
+.jug svg{width:90px;height:auto}
+.jug b{font-family:var(--fair);font-weight:400;font-size:18px;color:var(--gold)}
+.jbtns{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%;max-width:380px}
+.memory{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(100%,360px)}
+.mcard{aspect-ratio:3/4;border:0;border-radius:10px;cursor:pointer;font-size:clamp(26px,8vw,40px);display:grid;place-items:center;padding:0;background:repeating-linear-gradient(45deg,var(--red) 0 10px,#b51d2c 10px 20px);box-shadow:inset 0 0 0 3px var(--cream),0 3px 0 #6a1018;transition:transform .25s}
+.mcard.open,.mcard.done{background:var(--cream);transform:rotateY(180deg)}
+.mcard span{transform:rotateY(180deg);visibility:hidden}
+.mcard.open span,.mcard.done span{visibility:visible}
+.mcard.done{opacity:.65}
+.shoot{width:100%;max-width:440px;aspect-ratio:4/3;border-radius:10px;touch-action:manipulation;cursor:crosshair}
+.wheel{width:min(100%,290px);aspect-ratio:1;touch-action:none;cursor:grab}
+.code{display:flex;gap:8px;justify-content:center}
+.code span{width:44px;height:54px;border-radius:8px;display:grid;place-items:center;font-family:var(--fair);font-size:28px;background:#2a2052;border:1px dashed #5a4aa0;color:#fff4d6}
+.code span.f{background:var(--cream);color:var(--p-ink);border:0}
+.ltiles{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.ltile{width:44px;height:54px;border-radius:8px;font-family:var(--fair);font-size:26px;border:0;color:#2b1a12;cursor:pointer;background:linear-gradient(180deg,#fff3dc,#f2c14e);box-shadow:0 3px 0 #a5761e}
+.ltile.used{opacity:.25}
+.aslots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;padding:10px;border-radius:12px;background:#140d2e;border:1px solid #3d2f78}
+.aslot{width:40px;height:50px;border-radius:8px;border:2px dashed #5a4aa0;display:grid;place-items:center;font-family:var(--fair);font-size:24px;color:#2b1a12;background:transparent;padding:0}
+.aslot.f{background:var(--cream);border:0}
+.lose{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:rgba(10,6,24,.82);backdrop-filter:blur(4px)}
+.lose .card{width:min(86vw,320px);border-radius:16px;padding:24px;text-align:center;color:var(--p-ink);background:var(--cream);box-shadow:0 0 60px rgba(242,193,78,.5);animation:pop .6s cubic-bezier(.2,1.4,.4,1)}
+.lose .card .big{font-family:var(--fair);font-size:92px;line-height:1;color:var(--red);text-shadow:3px 3px 0 #f2c14e}
+.lose .card p{margin:8px 0 14px}
+@keyframes pop{from{transform:scale(.3) rotate(-12deg);opacity:0}to{transform:none;opacity:1}}
+.eddie{display:flex;gap:10px;align-items:flex-end}
+.bubble{position:relative;background:#fffdf6;color:#2b1a12;border:2.5px solid #2b1a12;border-radius:20px;padding:10px 16px 12px;font-family:var(--hand);font-size:22px;line-height:26px;box-shadow:3px 4px 0 var(--pink)}
+.bubble b{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:800;line-height:14px;margin-bottom:2px}
+.eddie .av{width:64px;height:64px;flex:none}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:25}
+@media(prefers-reduced-motion:reduce){.bulbs::before,.dots i.now,.slot.got,.lose .card{animation:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <a class="brand" href="../" aria-label="Zurück zu Nextwing Quest"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0b1220"/><path d="M12 22 C24 14 40 13 52 17 C42 19 30 22 20 28 Z" fill="#4d7cff"/><path d="M12 33 C24 25 40 24 52 28 C42 30 30 33 20 39 Z" fill="#ff6a1f"/><path d="M12 44 C24 36 40 35 52 39 C42 41 30 44 20 50 Z" fill="#8eacff"/></svg><span>next<b>wing</b> quest</span></a>
+  <div class="me" id="me"></div>
+  <div style="display:flex;gap:6px"><button class="tbtn" id="home" type="button" aria-label="Zur Anzeigetafel" hidden>🎪</button><button class="tbtn" id="snd" type="button" aria-label="Ton ausschalten">🔊</button></div>
+</div></header>
+<main class="wrap" id="app"></main>
+<script src="api.js"></script>
+<canvas id="fx" aria-hidden="true"></canvas>
+<script>
+window.KIRMES={
+GAME:'soest-2026',WORD:'PUMPERNICKEL',
+P:{
+ H:{name:'Hannelore',code:'MAMAPETRI',col:'#ff5d8f',title:'die Chefin'},
+ M:{name:'Markus',code:'MARKUSLUKAS',col:'#2ec4b6',title:'der Kraftprotz'},
+ S:{name:'Stefan',code:'STEFANWILDEMAUS',col:'#8eacff',title:'der Tüftler'}},
+ORDER:['H','M','S'],
+PROLOG:{
+ common:[
+  'Soest, Anfang November. Die Allerheiligenkirmes hat begonnen, die größte Altstadtkirmes Europas. Fünf Tage lang drehen sich zwischen Patrokli, Petrikirche und Wiesenkirche die Karussells, rund eine Million Menschen schieben sich durch die Gassen, und die ganze Stadt riecht nach gebrannten Mandeln, Reibekuchen und Pottwurst.',
+  'Am Mittwoch, kurz nach dem Fassanstich, klingelt bei drei Menschen gleichzeitig das Telefon. Am Apparat: Wilhelm Bullerjahn, seit 41 Jahren Kirmesdirektor und seit 41 Jahren heiser.',
+  '»Es ist eine Katastrophe«, krächzt er. »Die Dicke Gertrud spielt nicht.« Die Dicke Gertrud ist die alte Dampforgel auf dem Petrikirchhof, 1898 gebaut, drei Tonnen schwer und das Herz der Kirmes. Ohne Gertrud kein Abschlussfeuerwerk am Sonntag. Ohne Feuerwerk keine Kirmes, sagt Bullerjahn. So war es immer.',
+  '»Ihr Erbauer, der Orgelbauer Anton Haverkamp, hat sie mit einem Codewort gesichert. Zwölf Buchstaben. Er hat sie auf der ganzen Kirmes versteckt, in den Buden, in den Fahrgeschäften, überall. Ich brauche Leute, die Soest kennen. Ich brauche euch drei.«'],
+ H:'Hannelore, er hat dich zuerst angerufen. Natürlich. Wer in Soest etwas wissen will, fragt dich, und zwar meistens, bevor er die Zeitung fragt.',
+ M:'Markus, er hat dich angerufen, weil er gehört hat, dass du beim Hau den Lukas schon einmal die Glocke zum Klingen gebracht hast. Ob das stimmt, weiß nur deine Familie. Und die schweigt.',
+ S:'Stefan, er hat dich angerufen, weil du »was mit Computern« machst. Bullerjahn glaubt, Codewörter seien so etwas wie Computer. Du hast nicht widersprochen.',
+ rules:['Jeder spielt am eigenen Handy.','Es gibt vier Runden. In jeder Runde löst jeder ein eigenes Rätsel.','Jedes Rätsel bringt einen Buchstaben. Alle Buchstaben landen auf der gemeinsamen Anzeigetafel.','Eine neue Runde beginnt, wenn alle drei fertig sind. Wer schneller ist, darf die anderen anfeuern.','Am Ende setzt ihr gemeinsam das Codewort aus zwölf Buchstaben zusammen.']},
+ROUNDS:[
+ {title:'Der Fassanstich',story:[
+  'Der Petrikirchhof ist voll. Der Bürgermeister hat das erste Fass angeschlagen, die Blaskapelle spielt, und hinter einer Absperrung steht die Dicke Gertrud: bunt bemalt, mit goldenen Pfeifen, Trommeln und einer kleinen Holzfigur oben drauf, die einen Hut lüftet. Wenn sie denn spielen würde.',
+  'Bullerjahn drückt jedem von euch einen zerknitterten Zettel in die Hand. »Haverkamps Notizen«, flüstert er. »Er hat vier Runden geplant. Für jeden von euch eine Spur pro Runde. Die Kirmes dauert fünf Tage, so viel Zeit habt ihr nicht. Ihr habt heute.«']},
+ {title:'Die Fahrgeschäfte',story:[
+  'Die erste Runde ist geschafft, drei Buchstaben hängen an Bullerjahns Tafel, und er hat vor Freude so laut gehustet, dass sich ein Pony vom Pferdemarkt nach ihm umgedreht hat.',
+  'Weiter geht es zu den Fahrgeschäften. Aus der Ferne sieht man die Wiesenkirche mit ihren zwei grünen Türmen, angestrahlt wie zwei Spargel im Scheinwerferlicht. Davor dreht sich das Riesenrad, und irgendwo kreischt eine ganze Schulklasse in der Wilden Maus.']},
+ {title:'Zwischen den Buden',story:[
+  'Halbzeit. Sechs Buchstaben. Bullerjahn hat zur Feier einen Reibekuchen spendiert, für jeden einen, und für sich selbst drei.',
+  '»Wisst ihr«, sagt er kauend, »wenn man alle Buden und Fahrgeschäfte dieser Kirmes aneinanderreihen würde, wären sie drei Kilometer lang. Drei Kilometer! Und irgendwo dazwischen hat Haverkamp die nächsten Buchstaben versteckt.« Dann bestellt er sich ein Bullenauge: Mokkalikör mit einem Klecks Sahne obendrauf, das Soester Kirmesgetränk schlechthin.']},
+ {title:'Der große Abend',story:[
+  'Es ist dunkel geworden. Die Lichter der Kirmes spiegeln sich im nassen Pflaster, die Glocken von Patrokli schlagen, und Bullerjahn ist so aufgeregt, dass er seine Mütze verkehrt herum trägt.',
+  '»Die letzte Runde«, sagt er. »Haverkamp hat das Schwierigste ans Ende gelegt. Er war ein schlauer Mann. Er hat sogar den Pferdemarkt am Donnerstag erfunden. Also nicht erfunden, aber er ist immer hingegangen. Einen ganzen Tag lang, jedes Jahr.«']}
+],
+FAST:{
+ H:r=>`Hannelore war in Runde ${r} als Erste fertig. Wer zwei Söhne großgezogen hat, lässt sich von ein paar Kirmesrätseln nicht aufhalten.`,
+ M:r=>`Markus war in Runde ${r} am schnellsten und hat das vermutlich schon zweimal erwähnt, bevor die anderen fertig waren.`,
+ S:r=>`Stefan war in Runde ${r} vorn. Er schwört, er habe die Rätsel vorher nicht gekannt. Die Familie bleibt skeptisch.`},
+R:[
+ {H:{type:'quiz',title:'Das große Soest-Quiz',letter:'P',how:'Bullerjahn will wissen, ob du deine Stadt kennst. Fünf Fragen. Jede falsche Antwort ist nicht schlimm, du darfst es noch einmal versuchen.',
+   qs:[['Woraus besteht ein Bullenauge?',['Mokkalikör mit Sahne','Korn mit rohem Ei','Glühwein mit Rum','Eierlikör mit Kakao'],0],
+       ['Seit wann gibt es die Allerheiligenkirmes ungefähr?',['Seit 1950','Seit dem 14. Jahrhundert','Seit 1871','Seit Napoleon'],1],
+       ['Aus welchem Stein sind viele Soester Kirchen gebaut?',['Roter Backstein','Grauer Basalt','Grünsandstein','Weißer Marmor'],2],
+       ['Was findet am Kirmes-Donnerstag statt?',['Der Pferdemarkt','Ein Ruhetag','Das Entenrennen','Die Bürgermeisterwahl'],0],
+       ['Wie viele Besucher kommen ungefähr an den fünf Tagen?',['Etwa 25.000','Etwa 100.000','Etwa eine Million','Etwa zehn Millionen'],2]],
+   tips:['Das Bullenauge ist ein Likör, und es ist kein Ei drin.','Die Kirmes ist sehr, sehr alt. Älter als jeder Kaiser, den du kennst.'],
+   win:'Fünf von fünf. Bullerjahn nimmt die Mütze ab. »Du kennst Soest besser als der Stadtplan«, sagt er, und zieht aus seiner Westentasche ein Los. Darauf steht ein Buchstabe.'},
+  M:{type:'lukas',title:'Hau den Lukas',letter:'U',how:'Der Zeiger am Kraftmesser wandert hoch und runter. Tipp auf »Zuschlagen«, wenn er ganz oben ist. Lass die Glocke dreimal klingeln.',
+   tips:['Nicht warten, bis der Zeiger oben ist. Tipp ein kleines bisschen vorher, dein Daumen braucht einen Moment.','Der dunkle Strich oben auf der Anzeige ist die Glockenmarke. Alles darüber zählt.'],
+   win:'Dreimal die Glocke! Der Budenbesitzer, ein Mann mit Oberarmen wie Pumpernickel-Laibe, klopft dir auf die Schulter. Unter dem Hammergriff klebt ein Zettel von Haverkamp.'},
+  S:{type:'diff',title:'Das Suchbild',letter:'M',how:'Haverkamp hat zwei Bilder der Losbude hinterlassen. Im unteren sind fünf Dinge anders. Tipp sie im unteren Bild an.',
+   tips:['Schau dir die Farben genau an: die Ballons, das Dach, die Fahne.','Zähle auch nach: die Sterne auf der Markise, die Lose auf der Theke.'],
+   win:'Fünf Fehler, alle gefunden. Der Losbudenmann staunt, denn er selbst hat nach zwanzig Jahren noch nie bemerkt, dass seine Fahne andersherum hängt. Hinter der Fahne: ein Buchstabe.'}},
+ {H:{type:'organ',title:'Die kleine Kirmesorgel',letter:'P',how:'Die kleine Schwester der Dicken Gertrud spielt dir eine Melodie vor: Ihre Pfeifen leuchten nacheinander auf. Spiel sie nach. Jede Runde kommt ein Ton dazu. Schaffst du fünf Töne?',
+   tips:['Sag die Farben leise mit: rot, blau, gelb ... das hilft beim Merken.','Du kannst dir die Melodie mit dem Knopf »Noch mal vorspielen« jederzeit wieder anhören.'],
+   win:'Fünf Töne, kein Fehler. Die kleine Orgel pfeift vor Begeisterung einen Tusch, und aus der größten Pfeife rollt ein winziges Papierröllchen.'},
+  M:{type:'rush',title:'Autoscooter',letter:'E',how:'Dein roter Wagen steckt fest. Schieb die anderen Scooter aus dem Weg, bis du rechts durch die Ausfahrt kommst. Wagen antippen, dann mit den Pfeilen schieben oder einfach ziehen. Scooter fahren nur vor und zurück.',
+   tips:['Fang hinten an: Der blaue Wagen rechts muss ein Stück nach oben, dann kann der lange türkise Wagen nach rechts.','Danach den orangen Wagen ganz nach oben und den grünen ganz nach unten. Jetzt kommst du ein Stück voran. Der Rest ergibt sich.'],
+   win:'Freie Fahrt! Du rauschst durch die Ausfahrt, und der Kassierer im Kassenhäuschen reicht dir wortlos ein Kärtchen, als hätte er nur auf dich gewartet.'},
+  S:{type:'path',title:'Der Kirmesplan',letter:'R',how:'Haverkamps Weg vom Eingang (unten links) zum Riesenrad (oben rechts). Er ist durch jedes freie Feld genau einmal gegangen, nur nicht durch die Buden. Tipp Feld für Feld, immer zum Nachbarfeld.',
+   tips:['Fang unten an und geh die ganze unterste Reihe entlang.','Die Ecke oben links muss irgendwann besucht werden. Plan den Weg so, dass du dort nicht stecken bleibst.'],
+   win:'Der Weg geht auf. Jedes Feld genau einmal, und am Ende steht das Riesenrad. In Gondel Nummer 12 klemmt ein Umschlag.'}},
+ {H:{type:'sort',title:'Gebrannte Mandeln',letter:'N',how:'Die Mandelbude hat ihr Rezept durcheinandergebracht. Bring die Schritte in die richtige Reihenfolge.',
+   items:['Zucker, Wasser und Zimt im Kupferkessel aufkochen','Die Mandeln hineingeben','Rühren, bis der Zucker trocken und sandig wird','Weiterrühren, bis der Zucker schmilzt und glänzt','Auf einem Blech ausbreiten und auseinanderzupfen'],
+   tips:['Die Mandeln kommen erst in den Kessel, wenn der Zuckersirup kocht.','Erst wird der Zucker sandig, dann glänzt er.'],
+   win:'Richtig! Der Mandelmann reicht dir eine heiße Tüte. Ganz unten, unter den Mandeln, liegt ein Buchstabe aus Zuckerguss.'},
+  M:{type:'cans',title:'Dosenwerfen',letter:'I',how:'Sechs Dosen, sechs Bälle. Erst tippen, wenn die Zielhilfe richtig steht, dann noch einmal für die Wurfkraft. Wer weiter unten trifft, reißt mehr um. Räum alle sechs ab.',
+   tips:['Unten in die Mitte werfen: Dann fallen die Dosen darüber gleich mit.','Wenig Kraft trifft die untere Reihe, viel Kraft die obere.'],
+   win:'Alle sechs liegen! Die Budenfrau gibt dir einen Plüschbären, der fast so groß ist wie du. Im Etikett: ein Buchstabe.'},
+  S:{type:'jugs',title:'Das Bullenauge',letter:'C',how:'Der Wirt braucht genau 4 cl Mokkalikör für ein Bullenauge, hat aber nur ein 5-cl-Glas und ein 3-cl-Glas, ohne Striche. Fülle, schütte um und kipp weg, bis im großen Glas genau 4 cl sind.',
+   tips:['Fang mit dem großen Glas an und schütte davon in das kleine.','Wenn im großen Glas 2 cl übrig sind, leere das kleine und schütte die 2 cl hinein.'],
+   win:'Genau 4 cl. Der Wirt setzt einen perfekten Klecks Sahne obendrauf, und auf dem Bierdeckel darunter steht: ein Buchstabe.'}},
+ {H:{type:'memory',title:'Das Kirmes-Memory',letter:'K',how:'Finde alle acht Paare. Immer zwei Karten aufdecken.',
+   tips:['Fang in einer Ecke an und arbeite dich Reihe für Reihe vor.','Merk dir zuerst die Karten, die du schon gesehen hast, bevor du neue aufdeckst.'],
+   win:'Alle Paare! Bullerjahn ist so gerührt, dass er sich mit seinem Taschentuch die Augen abtupft. Dann reicht er dir das Taschentuch. Darauf ist ein Buchstabe gestickt.'},
+  M:{type:'shoot',title:'Die Schießbude',letter:'E',how:'Triff zwölf goldene Sterne in 40 Sekunden. Aber Finger weg von den Blumen, jede getroffene Blume kostet einen Stern.',
+   tips:['Tipp nicht hektisch. Ein Treffer pro Stern reicht.','Die obere Reihe ist langsamer. Fang dort an.'],
+   win:'Zwölf Sterne! Der Schießbudenmann reicht dir eine Papierrose. Um den Stiel ist ein Zettel gewickelt.'},
+  S:{type:'wheel',title:'Das Glücksrad',letter:'L',how:'Haverkamps Glücksrad ist ein Zahlenschloss. Dreh das Rad und rasten nacheinander vier Zahlen ein. Die Zahlen stecken in der Geschichte dieses Abends:',
+   clues:['Wie viele Tage dauert die Kirmes?','Wie viele Türme hat die Wiesenkirche?','Wie viele Kilometer lang wären alle Buden aneinandergereiht?','Wie viele Buchstaben hat »Bullenauge« ohne »auge«?'],code:[5,2,3,6],
+   tips:['Alle Antworten stehen in den Geschichten der Runden. Lies sie noch einmal auf der Anzeigetafel.','Die ersten beiden Zahlen sind 5 und 2.'],
+   win:'Das Rad rastet ein, klick, klick, klick, klick, und hinter dem Mittelstück springt eine kleine Klappe auf. Darin: der letzte Buchstabe.'}}
+],
+FINALE:[
+ 'Zwölf Buchstaben. Bullerjahn steht zitternd vor der Dicken Gertrud. Er tippt das Wort in die alte Messingtastatur, Buchstabe für Buchstabe. P. U. M. P. E. R. N. I. C. K. E. L.',
+ 'Einen Moment lang passiert nichts. Dann zischt es. Dampf steigt auf, die kleine Holzfigur lüftet ihren Hut, die Trommeln wirbeln, und die Dicke Gertrud spielt. Laut, schief und wunderschön. Auf dem ganzen Petrikirchhof bleiben die Leute stehen.',
+ '»Pumpernickel«, flüstert Bullerjahn. »Natürlich. Haverkamp war Bäckerssohn. In Soest gibt es eine der ältesten Pumpernickelbäckereien der Welt. Er hat immer gesagt: Das Beste braucht am längsten.« Er schnäuzt sich. »So wie ihr drei.«',
+ 'Am Sonntagabend steigt über den Türmen von Patrokli und der Wiesenkirche das große Feuerwerk. Die Dicke Gertrud spielt dazu, und auf der Ehrentribüne sitzen drei Menschen mit drei Bullenaugen. Hannelore, Markus und Stefan. Die Familie, die die Kirmes gerettet hat.']
+};
+</script>
+<script>
+(function(){
+'use strict';
+const D=window.KIRMES,{P,ORDER,ROUNDS,R}=D;
+const $=s=>document.querySelector(s);
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
+const norm=s=>String(s).toUpperCase().replace(/Ä/g,'AE').replace(/Ö/g,'OE').replace(/Ü/g,'UE').replace(/ß/g,'SS').replace(/[^A-Z0-9]/g,'');
+const DPR=()=>Math.min(2,window.devicePixelRatio||1);
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+const SS={get(k){try{return sessionStorage.getItem(k);}catch(e){return null;}},set(k,v){try{sessionStorage.setItem(k,v);}catch(e){}}};
+const app=$('#app');
+let cleanups=[];const cleanup=()=>{cleanups.forEach(f=>{try{f();}catch(e){}});cleanups=[];try{speechSynthesis.cancel();}catch(e){}};
+const NR=R.length;
+
+/* ---------- Spielstand: gemeinsamer Reducer (gleich wie im Apps Script) ---------- */
+function reduce(st,ev){
+  if(!st||ev.k==='reset')st={v:1,p:{},feed:[],fin:null};
+  const t=ev.t||Date.now();if(!ev.p)return st;
+  const p=st.p[ev.p]=st.p[ev.p]||{s:{},join:0,seen:0};
+  const push=o=>{st.feed.push(Object.assign({t,p:ev.p},o));if(st.feed.length>40)st.feed=st.feed.slice(-40);};
+  if(ev.k==='join'){if(!p.join){p.join=t;push({k:'join'});}p.seen=t;}
+  if(ev.k==='seen')p.seen=t;
+  if(ev.k==='solve'&&ev.r!=null&&!p.s[ev.r]){p.s[ev.r]={t,tips:ev.tips|0,l:String(ev.l||'').slice(0,1)};push({k:'solve',r:ev.r,tips:ev.tips|0});}
+  if(ev.k==='cheer'&&ev.to){push({k:'cheer',to:ev.to,e:String(ev.e||'👏').slice(0,4)});}
+  if(ev.k==='final'&&!st.fin){st.fin={p:ev.p,t};push({k:'final'});}
+  return st;
+}
+
+/* ---------- Sync: Apps Script, sonst lokaler Testmodus ---------- */
+const API=(window.KIRMES_API||LS.get('kirmes-api','')||'').trim();
+const LKEY='kirmes-state-'+D.GAME;
+let ST=null,onState=()=>{};
+const Sync={
+  remote:!!API,
+  async pull(){if(!API){ST=LS.get(LKEY,null)||reduce(null,{});return ST;}
+    try{const r=await fetch(API+'?g='+encodeURIComponent(D.GAME)+'&a=get',{cache:'no-store'});const j=await r.json();if(j&&j.state!==undefined)ST=j.state||reduce(null,{});}catch(e){Sync.err=true;}return ST;},
+  async send(ev){ev.t=Date.now();
+    if(!API){ST=reduce(LS.get(LKEY,null),ev);LS.set(LKEY,ST);onState();return ST;}
+    ST=reduce(JSON.parse(JSON.stringify(ST||null)),ev);onState();
+    try{const r=await fetch(API+'?g='+encodeURIComponent(D.GAME)+'&a=ev&d='+encodeURIComponent(JSON.stringify(ev)),{cache:'no-store'});const j=await r.json();if(j&&j.state)ST=j.state;Sync.err=false;}catch(e){Sync.err=true;}
+    onState();return ST;}
+};
+window.addEventListener('storage',e=>{if(e.key===LKEY&&!API){ST=LS.get(LKEY,null);onState();}});
+let poll=null;function startPoll(){clearInterval(poll);if(!API)return;poll=setInterval(async()=>{if(document.hidden)return;await Sync.pull();onState();},6000);}
+
+/* ---------- Ableitungen ---------- */
+const solved=(p,r)=>!!(ST&&ST.p[p]&&ST.p[p].s[r]);
+const nSolved=p=>{let n=0;for(let r=0;r<NR;r++)if(solved(p,r))n++;return n;};
+const roundDone=r=>ORDER.every(p=>solved(p,r));
+const curRound=()=>{let r=0;while(r<NR&&roundDone(r))r++;return r;};
+const myNext=p=>{for(let r=0;r<NR;r++)if(!solved(p,r))return r;return NR;};
+const canPlay=(p,r)=>r<NR&&!solved(p,r)&&(r===0||roundDone(r-1));
+const letters=()=>{const a=[];ORDER.forEach(p=>{for(let r=0;r<NR;r++){const s=ST&&ST.p[p]&&ST.p[p].s[r];if(s)a.push({l:s.l||R[r][p].letter,t:s.t,p,r});}});return a.sort((x,y)=>x.t-y.t);};
+const fastest=r=>{let b=null;ORDER.forEach(p=>{const s=ST.p[p]&&ST.p[p].s[r];if(s&&(!b||s.t<b.t))b={p,t:s.t};});return b&&b.p;};
+const online=p=>ST&&ST.p[p]&&Date.now()-ST.p[p].seen<90000;
+
+/* ---------- Ton ---------- */
+let AC=null,MUTE=LS.get('kirmes-mute',false);
+const ac=()=>{if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}}if(AC.state==='suspended')AC.resume();return AC;};
+let MASTER=null;const out=()=>{const a=ac();if(!a)return null;if(!MASTER){MASTER=a.createGain();MASTER.gain.value=MUTE?0:1;MASTER.connect(a.destination);}return MASTER;};
+let NB=null;const noiseBuf=a=>{if(!NB){NB=a.createBuffer(1,a.sampleRate*2,a.sampleRate);const d=NB.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}return NB;};
+function noise({dur=.2,type='bandpass',f=1000,f2=null,q=1,vol=.3,at=0,att=.005,dest=null}){const a=ac(),o=dest||out();if(!a||!o)return;const t=a.currentTime+at,s=a.createBufferSource();s.buffer=noiseBuf(a);const fl=a.createBiquadFilter();fl.type=type;fl.frequency.setValueAtTime(f,t);if(f2)fl.frequency.exponentialRampToValueAtTime(f2,t+dur);fl.Q.value=q;const g=a.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+att);g.gain.exponentialRampToValueAtTime(.001,t+dur);s.connect(fl);fl.connect(g);g.connect(o);s.start(t,Math.random()*1.5);s.stop(t+dur+.05);}
+function tone({f=440,f2=null,dur=.3,type='sine',vol=.2,at=0,att=.005,dest=null}){const a=ac(),o=dest||out();if(!a||!o)return;const t=a.currentTime+at,s=a.createOscillator();s.type=type;s.frequency.setValueAtTime(f,t);if(f2)s.frequency.exponentialRampToValueAtTime(f2,t+dur);const g=a.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+att);g.gain.exponentialRampToValueAtTime(.001,t+dur);s.connect(g);g.connect(o);s.start(t);s.stop(t+dur+.05);}
+const mf=m=>440*Math.pow(2,(m-69)/12);
+function organ(f,at,dur,vol,dest){tone({f,dur,type:'square',vol:vol*.35,at,att:.02,dest});tone({f:f*2,dur,type:'sine',vol:vol*.5,at,att:.02,dest});tone({f:f/2,dur:dur*.8,type:'triangle',vol:vol*.4,at,att:.02,dest});}
+const SFX={
+ bell(){[0,.02].forEach((d,k)=>{tone({f:1568,dur:1.4,vol:.18-k*.08,at:d});tone({f:2349,dur:1,vol:.06,at:d});tone({f:3951,dur:.5,vol:.03,at:d});});},
+ clang(){noise({dur:.15,f:900,q:1.5,vol:.5});tone({f:180,f2:90,dur:.25,type:'triangle',vol:.35});},
+ whoosh(){noise({dur:.45,f:600,f2:2400,q:1,vol:.2,att:.1});},
+ pop(){noise({dur:.06,f:2000,q:1,vol:.45});tone({f:900,f2:200,dur:.08,type:'square',vol:.06});},
+ crash(){for(let k=0;k<5;k++){tone({f:700+Math.random()*900,f2:300,dur:.2,type:'square',vol:.05,at:k*.05});noise({dur:.12,f:3000,q:2,vol:.25,at:k*.05});}},
+ bump(){tone({f:120,f2:60,dur:.15,type:'sine',vol:.45});noise({dur:.1,f:500,q:1,vol:.25});},
+ sizzle(){noise({dur:.9,type:'highpass',f:4000,vol:.12,att:.1});},
+ pour(){for(let k=0;k<10;k++)tone({f:500+k*60+Math.random()*40,dur:.07,type:'sine',vol:.08,at:k*.05});noise({dur:.5,f:1200,q:1,vol:.08});},
+ tick(){noise({dur:.02,f:3800,q:8,vol:.25});},
+ flip(){noise({dur:.08,f:2400,q:.8,vol:.16,att:.02});},
+ step(){tone({f:660,dur:.12,type:'triangle',vol:.12});},
+ wrong(){tone({f:700,f2:220,dur:.5,type:'sine',vol:.15});},
+ tip(){tone({f:1319,dur:.4,vol:.06});tone({f:1760,dur:.4,vol:.06,at:.08});},
+ tusch(){[[60,64,67,72],[60,64,67,72],[65,69,72,77],[67,71,74,79],[60,64,67,72]].forEach((ch,k)=>ch.forEach(m=>organ(mf(m),k*.18,k===4?1.2:.16,.05)));for(let k=0;k<8;k++)noise({dur:.05,type:'highpass',f:5000,vol:.12,at:k*.09});},
+ reveal(){[84,88,91,96].forEach((m,k)=>{tone({f:mf(m),dur:.9,vol:.08,at:k*.09});tone({f:mf(m)*3,dur:.3,vol:.02,at:k*.09});});},
+ boom(){noise({dur:1.4,type:'lowpass',f:380,f2:60,vol:.45,att:.01});for(let k=0;k<14;k++)noise({dur:.03,f:3000+Math.random()*3000,q:3,vol:.06,at:.25+Math.random()*1});},
+ cheer(){noise({dur:1.4,f:900,q:.6,vol:.18,att:.3});[0,.25,.5].forEach(at=>tone({f:2200,f2:2600,dur:.15,vol:.04,at}));},
+ click(){noise({dur:.03,f:3000,q:5,vol:.25});}
+};
+const sfx=n=>{if(MUTE)return;try{SFX[n]&&SFX[n]();}catch(e){}};
+const WALTZ=[[72,76,79],[84,0,79],[77,76,74],[71,0,0],[74,77,79],[83,0,79],[77,76,74],[72,0,0],[76,79,84],[84,83,81],[81,0,77],[77,76,74],[76,0,79],[77,0,74],[72,76,79],[72,0,0]];
+const CHORD={C:[48,[60,64,67]],G:[43,[59,62,65]],F:[41,[57,60,65]]};const PROG='CCGGGGCCCCFFCGCC';
+let AMB=null;
+function ambient(on){const a=ac(),o=out();if(!a||!o)return;
+  if(on&&!AMB){const bus=a.createGain();bus.gain.value=1;bus.connect(o);const mus=a.createGain();mus.gain.value=1;mus.connect(bus);
+    const s=a.createBufferSource();s.buffer=noiseBuf(a);s.loop=true;const bp=a.createBiquadFilter();bp.type='bandpass';bp.frequency.value=520;bp.Q.value=.6;const g=a.createGain();g.gain.value=.05;s.connect(bp);bp.connect(g);g.connect(bus);s.start();
+    const lfo=setInterval(()=>{g.gain.setTargetAtTime(.03+Math.random()*.04,a.currentTime,.8);},1500);
+    let bar=0;const B=.4;
+    const play=()=>{const k=bar%16,[root,ch]=CHORD[PROG[k]];organ(mf(root),0,.3,.05,mus);ch.forEach(m=>{organ(mf(m),B,.18,.022,mus);organ(mf(m),2*B,.18,.022,mus);});
+      WALTZ[k].forEach((m,j)=>{if(m){let len=1;while(j+len<3&&WALTZ[k][j+len]===0)len++;organ(mf(m),j*B,len*B*.92,.04,mus);}});
+      if(k===0)noise({dur:.15,type:'lowpass',f:200,vol:.12,dest:mus});bar++;};
+    play();const iv=setInterval(play,1200);AMB={s,lfo,iv,bus,mus};}
+  else if(!on&&AMB){try{AMB.s.stop();}catch(e){}clearInterval(AMB.lfo);clearInterval(AMB.iv);try{AMB.bus.disconnect();}catch(e){}AMB=null;}}
+function duck(ms){if(!AMB||!AC)return;const g=AMB.mus.gain,t=AC.currentTime;g.cancelScheduledValues(t);g.setValueAtTime(g.value,t);g.linearRampToValueAtTime(0,t+.15);g.setValueAtTime(0,t+ms/1000);g.linearRampToValueAtTime(1,t+ms/1000+.8);}
+function setMute(m){MUTE=m;LS.set('kirmes-mute',m);if(MASTER)MASTER.gain.value=m?0:1;ambient(!m&&!!ME);sndBtn();}
+function sndBtn(){const b=$('#snd');b.textContent=MUTE?'🔇':'🔊';b.setAttribute('aria-label',MUTE?'Ton einschalten':'Ton ausschalten');}
+$('#snd').addEventListener('click',()=>setMute(!MUTE));sndBtn();
+
+/* ---------- Panorama: Soester Türme, Riesenrad, Kettenkarussell, Feuerwerk ---------- */
+const BUL=['#ffd36b','#ff5d8f','#2ec4b6','#8eacff','#ff6a1f'];
+function pano(root,{title,sub}={}){const box=el('div','pano');box.innerHTML=`<canvas aria-hidden="true"></canvas><div class="ttl"><h1>${title||'Das Geheimnis der Dicken Gertrud'}</h1><p>${sub||'Allerheiligenkirmes · Soest'}</p></div>`;root.appendChild(box);
+  const cv=box.querySelector('canvas'),x=cv.getContext('2d');let W=0,H=0,raf=0,t0=performance.now();const fw=[];const stars=Array.from({length:60},()=>[Math.random(),Math.random()*.5,Math.random()]);
+  const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rs=()=>{const d=DPR();W=box.clientWidth;H=box.clientHeight;cv.width=W*d;cv.height=H*d;x.setTransform(d,0,0,d,0,0);};rs();
+  const tower=(cx,base,w,h,roof,col)=>{x.fillStyle=col;x.fillRect(cx-w/2,base-h,w,h);x.beginPath();x.moveTo(cx-w/2-2,base-h);x.lineTo(cx,base-h-roof);x.lineTo(cx+w/2+2,base-h);x.fill();};
+  const draw=now=>{const t=(now-t0)/1000;
+    const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#090620');g.addColorStop(.7,'#26124a');g.addColorStop(1,'#4a1d4a');x.fillStyle=g;x.fillRect(0,0,W,H);
+    stars.forEach(([sx,sy,ph])=>{x.fillStyle=`rgba(255,240,220,${.3+.5*Math.abs(Math.sin(t*1.5+ph*9))})`;x.fillRect(sx*W,sy*H,1.4,1.4);});
+    const base=H*.78,u=H/100;
+    // Patrokli
+    x.fillStyle='#1a1430';tower(W*.18,base,u*13,u*40,u*12,'#1a1430');x.fillRect(W*.18-u*12,base-u*20,u*24,u*20);[-1,1].forEach(s=>{tower(W*.18+s*u*7.5,base-u*40,u*2.4,u*4,u*6,'#1a1430');});
+    // Petri
+    tower(W*.33,base,u*7,u*30,u*4,'#1d1636');x.beginPath();x.moveTo(W*.33-u*2.5,base-u*34);x.quadraticCurveTo(W*.33,base-u*46,W*.33+u*2.5,base-u*34);x.fill();x.fillRect(W*.33-.7,base-u*52,1.4,u*8);
+    // Wiesenkirche: zwei grüne Spitzen
+    x.fillStyle='#163a33';[W*.47,W*.53].forEach(cx=>{x.fillRect(cx-u*2.6,base-u*36,u*5.2,u*36);x.beginPath();x.moveTo(cx-u*3,base-u*36);x.lineTo(cx,base-u*62);x.lineTo(cx+u*3,base-u*36);x.fill();});x.fillRect(W*.45,base-u*24,W*.1,u*24);
+    // Häuser
+    x.fillStyle='#120d26';for(let i=0;i<14;i++){const hx=i*W/13-10,hh=u*(14+(i*37)%10);x.beginPath();x.moveTo(hx,base);x.lineTo(hx,base-hh);x.lineTo(hx+W/26,base-hh-u*7);x.lineTo(hx+W/13,base-hh);x.lineTo(hx+W/13,base);x.fill();x.fillStyle='rgba(255,200,110,.55)';x.fillRect(hx+W/40,base-hh+u*4,u*2.4,u*3);x.fillStyle='#120d26';}
+    // Riesenrad
+    const rx=W*.8,ry=base-u*34,rr=u*30;x.strokeStyle='#5a4a8a';x.lineWidth=2;x.beginPath();x.moveTo(rx,ry);x.lineTo(rx-u*14,base);x.moveTo(rx,ry);x.lineTo(rx+u*14,base);x.stroke();
+    const rot=red?0:t*.18;x.strokeStyle='rgba(255,211,107,.35)';x.lineWidth=1.2;x.beginPath();x.arc(rx,ry,rr,0,7);x.stroke();
+    for(let k=0;k<16;k++){const a=rot+k*Math.PI/8,ex=rx+Math.cos(a)*rr,ey=ry+Math.sin(a)*rr;x.beginPath();x.moveTo(rx,ry);x.lineTo(ex,ey);x.stroke();
+      const on=(Math.floor(t*4)+k)%3!==0;x.fillStyle=on?BUL[k%5]:'#3a2a5a';x.beginPath();x.arc(ex,ey,u*1.1,0,7);x.fill();if(on){x.fillStyle=BUL[k%5]+'33';x.beginPath();x.arc(ex,ey,u*3,0,7);x.fill();}
+      if(k%2===0){x.fillStyle=BUL[(k/2)%5];x.fillRect(ex-u*2,ey+u*1,u*4,u*3.2);}}
+    x.fillStyle='#ffd36b';x.beginPath();x.arc(rx,ry,u*2,0,7);x.fill();
+    // Kettenkarussell
+    const kx=W*.62,ky=base-u*30;x.fillStyle='#d62839';x.beginPath();x.moveTo(kx-u*12,ky);x.lineTo(kx,ky-u*8);x.lineTo(kx+u*12,ky);x.fill();x.fillStyle='#5a4a8a';x.fillRect(kx-1.5,ky,3,u*30);
+    for(let k=0;k<8;k++){const a=(red?0:t*1.6)+k*Math.PI/4,sx=kx+Math.cos(a)*u*16,depth=Math.sin(a);if(depth<-.2)continue;x.strokeStyle='rgba(255,255,255,.5)';x.lineWidth=1;x.beginPath();x.moveTo(kx+Math.cos(a)*u*10,ky);x.lineTo(sx,ky+u*12);x.stroke();x.fillStyle=BUL[k%5];x.fillRect(sx-u*1.5,ky+u*12,u*3,u*2);}
+    // Buden vorne mit Lichterketten
+    for(let i=0;i<7;i++){const bx=i*W/6.5-W*.02,bw=W/7,by=H*.86;x.fillStyle=i%2?'#d62839':'#2f4a9a';x.beginPath();x.moveTo(bx,by);x.lineTo(bx+bw/2,by-u*8);x.lineTo(bx+bw,by);x.fill();x.fillStyle='#1b1240';x.fillRect(bx+2,by,bw-4,H-by);x.fillStyle='rgba(255,200,110,.35)';x.fillRect(bx+6,by+u*2,bw-12,u*6);}
+    x.lineWidth=1;for(let k=0;k<40;k++){const lx=k*W/39,ly=H*.62+Math.sin(k/39*Math.PI*3)*u*4;const on=(Math.floor(t*5)+k)%2===0;x.fillStyle=on?BUL[k%5]:'#2a2050';x.beginPath();x.arc(lx,ly,u*.8,0,7);x.fill();}
+    // Feuerwerk
+    if(!red&&Math.random()<.012&&fw.length<4){const fx=W*(.15+Math.random()*.7),fy=H*(.1+Math.random()*.25),c=BUL[Math.floor(Math.random()*5)];fw.push({x:fx,y:fy,c,t:t,ps:Array.from({length:36},(_,k)=>[Math.cos(k/36*6.283),Math.sin(k/36*6.283),.6+Math.random()*.6])});}
+    for(let i=fw.length-1;i>=0;i--){const f=fw[i],age=t-f.t;if(age>1.8){fw.splice(i,1);continue;}const rr2=age*u*22;x.fillStyle=f.c;x.globalAlpha=Math.max(0,1-age/1.8);f.ps.forEach(([dx,dy,sp])=>{x.beginPath();x.arc(f.x+dx*rr2*sp,f.y+dy*rr2*sp+age*age*u*6,u*.7,0,7);x.fill();});x.globalAlpha=1;}
+    raf=requestAnimationFrame(draw);};
+  raf=requestAnimationFrame(draw);const ro=new ResizeObserver(rs);ro.observe(box);
+  cleanups.push(()=>{cancelAnimationFrame(raf);ro.disconnect();});}
+
+/* Vollbild-Feuerwerk */
+const FX=$('#fx');let fxRaf=0;
+function fireworks(sec=3){const x=FX.getContext('2d');const d=DPR();FX.width=innerWidth*d;FX.height=innerHeight*d;x.setTransform(d,0,0,d,0,0);const W=innerWidth,H=innerHeight;let ps=[],end=performance.now()+sec*1000,last=0;
+  cancelAnimationFrame(fxRaf);if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const step=now=>{x.clearRect(0,0,W,H);if(now<end&&now-last>350){last=now;const cx=W*(.15+Math.random()*.7),cy=H*(.12+Math.random()*.35),c=BUL[Math.floor(Math.random()*5)];for(let k=0;k<60;k++){const a=Math.random()*6.283,s=2+Math.random()*4;ps.push({x:cx,y:cy,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:1,c});}sfx('boom');}
+    ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.06;p.vx*=.985;p.l-=.012;x.globalAlpha=Math.max(0,p.l);x.fillStyle=p.c;x.fillRect(p.x,p.y,2.5,2.5);});x.globalAlpha=1;ps=ps.filter(p=>p.l>0);
+    if(ps.length||now<end)fxRaf=requestAnimationFrame(step);else x.clearRect(0,0,W,H);};fxRaf=requestAnimationFrame(step);}
+
+/* Avatare */
+const AV={
+ H:`<svg class="av" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#3a1d5c"/><path d="M14 34 Q12 14 32 13 Q52 14 50 34 Q46 26 32 25 Q18 26 14 34 Z" fill="#c9c3d9"/><circle cx="32" cy="35" r="14" fill="#f1d3b8"/><path d="M18 30 Q20 18 32 18 Q44 18 46 30 Q40 24 32 24 Q24 24 18 30 Z" fill="#dcd6e8"/><circle cx="26.5" cy="35" r="4.5" fill="none" stroke="#5a2d8a" stroke-width="1.6"/><circle cx="37.5" cy="35" r="4.5" fill="none" stroke="#5a2d8a" stroke-width="1.6"/><path d="M31 35 h2" stroke="#5a2d8a" stroke-width="1.6"/><circle cx="26.5" cy="35" r="1.4" fill="#2b1a12"/><circle cx="37.5" cy="35" r="1.4" fill="#2b1a12"/><path d="M27 42 q5 4 10 0" stroke="#b5361d" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M16 64 Q18 50 32 50 Q46 50 48 64 Z" fill="#ff5d8f"/><circle cx="32" cy="54" r="2" fill="#ffd36b"/></svg>`,
+ M:`<svg class="av" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#123a3a"/><circle cx="32" cy="34" r="14" fill="#efc9a8"/><path d="M18 30 Q18 17 32 17 Q46 17 46 30 L44 27 Q32 20 20 27 Z" fill="#4a3424"/><circle cx="26.5" cy="33" r="1.6" fill="#2b1a12"/><circle cx="37.5" cy="33" r="1.6" fill="#2b1a12"/><path d="M24 29 h5 M35 29 h5" stroke="#4a3424" stroke-width="2" stroke-linecap="round"/><path d="M26 41 q6 4 12 0" stroke="#7a3a2a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M12 64 Q14 48 32 48 Q50 48 52 64 Z" fill="#2ec4b6"/><path d="M50 26 l8 -8 M54 22 l4 4" stroke="#c9a14a" stroke-width="3" stroke-linecap="round"/><rect x="52" y="12" width="9" height="6" rx="1" transform="rotate(45 56 15)" fill="#8a5a2a"/></svg>`,
+ S:`<svg class="av" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#1d2a5a"/><circle cx="32" cy="34" r="14" fill="#efc9a8"/><path d="M18 31 Q17 17 32 16 Q47 17 46 31 Q42 22 34 23 Q26 21 18 31 Z" fill="#6b4a2a"/><rect x="22" y="30" width="9" height="7" rx="2" fill="none" stroke="#1a1a2a" stroke-width="1.6"/><rect x="33" y="30" width="9" height="7" rx="2" fill="none" stroke="#1a1a2a" stroke-width="1.6"/><path d="M31 33 h2" stroke="#1a1a2a" stroke-width="1.6"/><circle cx="26.5" cy="33.5" r="1.3" fill="#2b1a12"/><circle cx="37.5" cy="33.5" r="1.3" fill="#2b1a12"/><path d="M27 42 q5 3 10 0" stroke="#7a3a2a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M12 64 Q14 48 32 48 Q50 48 52 64 Z" fill="#8eacff"/><path d="M28 48 L32 56 L36 48" fill="#f4f1ea"/></svg>`,
+ B:`<svg class="av" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#4a1d2a"/><circle cx="32" cy="36" r="15" fill="#f1d3b8"/><path d="M14 30 Q32 14 50 30 Z" fill="#2f4a9a"/><rect x="12" y="28" width="40" height="5" rx="2" fill="#1d2a5a"/><circle cx="26" cy="36" r="1.8" fill="#2b1a12"/><circle cx="38" cy="36" r="1.8" fill="#2b1a12"/><path d="M22 44 Q32 40 42 44 Q38 47 32 46 Q26 47 22 44 Z" fill="#8a8a8a"/><circle cx="32" cy="40" r="2.6" fill="#e08a8a"/><path d="M14 64 Q16 52 32 52 Q48 52 50 64 Z" fill="#d62839"/></svg>`
+};
+const bubble=t=>`<div class="eddie">${AV.B}<div class="bubble"><b>Kirmesdirektor Bullerjahn</b>${t}</div></div>`;
+
+/* ---------- Anmeldung ---------- */
+let ME=null;
+function codeToP(c){const n=norm(c);return ORDER.find(p=>P[p].code===n)||null;}
+function login(p){ME=p;SS.set('kirmes-me',p);LS.set('kirmes-me',p);Sync.send({k:'join',p});ac();if(!MUTE)ambient(true);renderTop();route();}
+function logout(){ME=null;try{sessionStorage.removeItem('kirmes-me');localStorage.removeItem('kirmes-me');}catch(e){}ambient(false);renderTop();renderLogin();}
+function renderTop(){const m=$('#me');m.innerHTML=ME?`${AV[ME]}<span>${P[ME].name}</span>`:'';$('#home').hidden=!ME;}
+$('#home').addEventListener('click',()=>{sfx('click');renderDash();});
+function renderLogin(){cleanup();window.scrollTo({top:0,behavior:'instant'});app.innerHTML='';pano(app,{sub:'Allerheiligenkirmes Soest'});
+  const t=el('section','ticket',`<span class="kick">Eintrittskarte · Allerheiligenkirmes</span><h2>Willkommen auf der Kirmes</h2><p>Gib deinen persönlichen Code ein. Jeder von euch hat einen eigenen.</p>
+   <form id="lf"><label for="lc">Dein Code</label><div class="answer"><input id="lc" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Code aus deiner Nachricht"></div><button class="btn primary" type="submit">Eintreten</button><p class="msg no" id="lm" hidden></p></form>
+   <div class="perf"><p style="font-size:13px">Eine Runde dauert etwa 15 Minuten. Am besten mit Ton.</p></div>`);
+  app.appendChild(t);
+  $('#lf').addEventListener('submit',e=>{e.preventDefault();const p=codeToP($('#lc').value);if(!p){const m=$('#lm');m.textContent='Diesen Code kennt die Kasse nicht. Schau noch einmal in deine Nachricht.';m.hidden=false;sfx('wrong');return;}sfx('bell');login(p);});}
+
+/* ---------- Anzeigetafel ---------- */
+const ago=t=>{const d=new Date(t);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');};
+const feedText=f=>{const n=P[f.p]?P[f.p].name:'?';if(f.k==='join')return `${n} ist auf der Kirmes angekommen.`;if(f.k==='solve'){const rd=R[f.r]&&R[f.r][f.p];return `${n} hat »${rd?rd.title:'ein Rätsel'}« gelöst${f.tips?` (${f.tips} ${f.tips===1?'Tipp':'Tipps'})`:''}.`;}if(f.k==='cheer')return `${n} feuert ${P[f.to]?P[f.to].name:'?'} an ${f.e}`;if(f.k==='final')return `${n} hat das Codewort eingegeben. Die Dicke Gertrud spielt!`;return '';};
+let lastFeedLen=-1;
+function renderDash(){cleanup();window.scrollTo({top:0,behavior:'instant'});app.innerHTML='';pano(app);
+  const sec=el('section','bulbs board');sec.innerHTML='<div class="inner" id="dash"></div>';app.appendChild(sec);
+  const stor=el('section','poster');app.appendChild(stor);
+  const paint=()=>{const d=$('#dash');if(!d)return;const cr=curRound(),nx=myNext(ME),L=letters();
+    const stat=p=>{const n=myNext(p);if(n>=NR)return['done','fertig'];if(canPlay(p,n))return online(p)||p===ME?['play','spielt']:['away','am Zug'];return['wait','wartet'];};
+    d.innerHTML=`<h2>Anzeigetafel</h2><p class="hello">${ME?`Hallo ${P[ME].name}, ${P[ME].title}.`:''} ${Sync.remote?'':'<b style="color:#ffd36b">Testmodus</b>'}</p>
+     <div class="round">${R.map((_,r)=>`<span class="${roundDone(r)?'done':r===cr?'now':''}"></span>`).join('')}</div><div class="rlabel">${cr>=NR?'Alle Runden geschafft':`Runde ${cr+1} von ${NR}: ${ROUNDS[cr].title}`}</div>
+     <div class="players">${ORDER.map(p=>{const [k,lab]=stat(p),n=myNext(p);const what=n<NR&&canPlay(p,n)?R[n][p].title:n>=NR?'alle Rätsel gelöst':'wartet auf die anderen';return `<div class="pl${p===ME?' self':''}">${AV[p]}<b>${P[p].name}</b><span class="state ${k}">${lab}</span><div class="dots">${R.map((_,r)=>`<i class="${solved(p,r)?'done':r===n&&canPlay(p,r)?'now':''}"></i>`).join('')}</div><small>${what}</small>${p!==ME&&k!=='done'?`<button class="cheer" type="button" data-to="${p}">Anfeuern 📣</button>`:''}</div>`;}).join('')}</div>
+     <div class="word"><div class="rlabel">Gesammelte Buchstaben (${L.length} von 12)</div><div class="slots">${Array.from({length:12},(_,k)=>L[k]?`<span class="slot got" title="von ${P[L[k].p].name}">${L[k].l}</span>`:'<span class="slot"></span>').join('')}</div></div>
+     <div class="cta" id="cta"></div>
+     <ul class="feed" aria-live="polite">${(ST.feed||[]).slice().reverse().slice(0,12).map(f=>`<li><time>${ago(f.t)}</time><span>${feedText(f)}</span></li>`).join('')}</ul>
+     <p class="mode">${Sync.remote?(Sync.err?'Verbindung wackelt, ich versuche es weiter.':'Live verbunden. Die Tafel aktualisiert sich alle paar Sekunden.'):'Testmodus: Der Spielstand liegt nur in diesem Browser. Zum Ausprobieren in drei Tabs mit den drei Codes anmelden.'} <button class="cheer" id="lo" type="button">Abmelden</button>${ME==='S'?' <button class="cheer" id="rs" type="button">Spiel zurücksetzen</button>':''}</p>`;
+    const cta=$('#cta');
+    if(ST.fin){cta.innerHTML=`<p class="wait">Die Dicke Gertrud spielt! ${P[ST.fin.p].name} hat das Codewort eingegeben.</p><button class="btn gold" id="go" type="button">Zum großen Finale</button>`;$('#go').onclick=()=>renderFinal();}
+    else if(L.length>=12){cta.innerHTML=`<p class="wait">Alle zwölf Buchstaben sind da. Jetzt das Codewort zusammensetzen!</p><button class="btn gold" id="go" type="button">Zur Dicken Gertrud</button>`;$('#go').onclick=()=>renderWord();}
+    else if(nx>=NR)cta.innerHTML=`<p class="wait">Du hast alle deine Rätsel gelöst. Feuere die anderen an!</p>`;
+    else if(canPlay(ME,nx))cta.innerHTML=`<button class="btn primary" id="go" type="button">${nx===0&&!LS.get('kirmes-read-'+ME,false)?'Die Geschichte beginnt':'Runde '+(nx+1)+': '+R[nx][ME].title}</button>`,$('#go').onclick=()=>{sfx('click');if(nx===0&&!LS.get('kirmes-read-'+ME,false))renderProlog();else renderRound(nx);};
+    else{const wait=ORDER.filter(p=>!solved(p,nx-1)).map(p=>P[p].name).join(' und ');cta.innerHTML=`<p class="wait">Runde ${nx+1} startet, sobald ${wait} fertig ${wait.includes(' und ')?'sind':'ist'}. Zeit für ein Bullenauge.</p>`;}
+    d.querySelectorAll('[data-to]').forEach(b=>b.onclick=()=>{const e=['📣','👏','🎉','💪','🍺'][Math.floor(Math.random()*5)];Sync.send({k:'cheer',p:ME,to:b.dataset.to,e});sfx('cheer');b.disabled=true;b.textContent='Angefeuert!';});
+    $('#lo').onclick=logout;
+    const rs=$('#rs');if(rs){let arm=false;rs.onclick=()=>{if(!arm){arm=true;rs.textContent='Wirklich alles löschen? Noch mal tippen';setTimeout(()=>{arm=false;rs.textContent='Spiel zurücksetzen';},3000);return;}Sync.send({k:'reset',p:ME}).then(()=>{ORDER.forEach(p=>{LS.set('kirmes-read-'+p,false);LS.set('kirmes-tips-'+p,{});});Sync.send({k:'join',p:ME});});};}
+    // Neuigkeiten mit Klang
+    const fl=(ST.feed||[]).length;if(lastFeedLen>=0&&fl>lastFeedLen){const f=ST.feed[fl-1];if(f.p!==ME){if(f.k==='solve')sfx('bell');if(f.k==='cheer'&&f.to===ME){sfx('cheer');fireworks(1.2);}}}lastFeedLen=fl;
+    // Geschichten zum Nachlesen
+    const read=[];for(let r=0;r<=Math.min(cr,NR-1);r++)read.push(r);
+    stor.innerHTML=`<span class="kick">Zum Nachlesen</span><h2>Die Geschichte bisher</h2><div class="story"><p>${D.PROLOG.common.join('</p><p>')}</p>${read.map(r=>`<p><b>Runde ${r+1}: ${ROUNDS[r].title}.</b> ${ROUNDS[r].story.join(' ')}</p>`).join('')}</div>`;
+  };
+  onState=paint;paint();Sync.send({k:'seen',p:ME});
+  cleanups.push(()=>{onState=()=>{};});}
+
+/* ---------- Prolog und Runden ---------- */
+function speakBtn(parent,text){const b=el('button','readbtn','Vorlesen lassen');b.type='button';if(!('speechSynthesis' in window)){b.hidden=true;}else b.onclick=()=>{if(speechSynthesis.speaking){speechSynthesis.cancel();b.textContent='Vorlesen lassen';return;}const u=new SpeechSynthesisUtterance(text);u.lang='de-DE';u.rate=.97;const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.startsWith('de'));if(v)u.voice=v;u.onend=()=>{b.textContent='Vorlesen lassen';};speechSynthesis.speak(u);b.textContent='Vorlesen stoppen';};parent.appendChild(b);}
+function renderProlog(){cleanup();window.scrollTo({top:0,behavior:'instant'});app.innerHTML='';pano(app,{sub:'Prolog'});const pr=D.PROLOG;
+  const s=el('article','poster',`<span class="kick">Soest · Allerheiligenkirmes</span><h2>Ein Anruf am Mittwoch</h2><div class="story">${pr.common.map(p=>`<p>${p}</p>`).join('')}<p><b>${pr[ME]}</b></p></div>`);app.appendChild(s);
+  speakBtn(s.querySelector('.story'),pr.common.join(' ')+' '+pr[ME]);
+  const r=el('section','bude',`<div class="rhead"><h3>So wird gespielt</h3></div><ul class="how" style="padding-left:20px;margin:0">${pr.rules.map(x=>`<li style="margin:4px 0">${x}</li>`).join('')}</ul><button class="btn primary" id="go" type="button">Zur ersten Runde</button>`);app.appendChild(r);
+  app.appendChild(el('div','',bubble('Ich zähle auf euch. Und auf meine Lunge, die hält das nicht mehr lange durch.')));
+  $('#go').onclick=()=>{LS.set('kirmes-read-'+ME,true);sfx('tusch');renderRound(0);};}
+
+function renderRound(r){cleanup();window.scrollTo({top:0,behavior:'instant'});app.innerHTML='';
+  if(!canPlay(ME,r)){renderDash();return;}
+  pano(app,{title:ROUNDS[r].title,sub:`Runde ${r+1} von ${NR}`});
+  const prev=r>0?fastest(r-1):null;
+  const s=el('article','poster',`<span class="kick">Runde ${r+1}</span><h2>${ROUNDS[r].title}</h2>${prev?`<p class="cb">${D.FAST[prev](r)}</p>`:''}<div class="story">${ROUNDS[r].story.map(p=>`<p>${p}</p>`).join('')}</div>`);app.appendChild(s);
+  speakBtn(s.querySelector('.story'),(prev?D.FAST[prev](r)+' ':'')+ROUNDS[r].story.join(' '));
+  const Rd=R[r][ME];const tipsAll=LS.get('kirmes-tips-'+ME,{});const tips=()=>tipsAll[r]||0;
+  const stars=()=>{const n=Math.max(1,3-tips());return '★'.repeat(n)+'☆'.repeat(3-n);};
+  const b=el('section','bude',`<div class="rhead"><h3>${Rd.title}</h3><span class="tag">Für ${P[ME].name}</span></div><p class="how">${Rd.how}</p><div class="field" id="field"></div><form class="answer" id="af" hidden><input id="ans" autocomplete="off" aria-label="Antwort"><button class="btn primary" type="submit">Prüfen</button></form><p class="msg" id="rm" hidden aria-live="polite"></p><div class="foot"><span class="stars" id="stars">${stars()}</span><button class="btn tip" id="tipB" type="button"></button></div>`);app.appendChild(b);
+  const field=$('#field'),rm=$('#rm'),tipB=$('#tipB');
+  const say=(t,k)=>{rm.textContent=t;rm.className='msg '+(k||'tip');rm.hidden=false;};
+  let done=false;
+  const api={field,say,wrong:t=>{sfx('wrong');say(t||'Leider nicht. Versuch es noch einmal oder hol dir einen Tipp.','no');},
+    solved(){if(done)return;done=true;sfx('tusch');Sync.send({k:'solve',p:ME,r,tips:tips(),l:Rd.letter});setTimeout(()=>showLetter(r,Rd),700);}};
+  const tl=Rd.tips||[];const upd=()=>{tipB.textContent=`Tipp (${Math.min(tips(),tl.length)}/${tl.length})`;tipB.disabled=tips()>=tl.length;$('#stars').textContent=stars();};upd();
+  tipB.onclick=()=>{const t=tl[tips()];tipsAll[r]=tips()+1;LS.set('kirmes-tips-'+ME,tipsAll);upd();sfx('tip');say(t,'tip');};
+  if(/[?&]test=1/.test(location.search))window.__solve=()=>api.solved();const ex=PUZ[Rd.type](field,api,Rd)||{};if(ex.cleanup)cleanups.push(ex.cleanup);
+  app.appendChild(el('div','',bubble(['Haverkamp hat das hier versteckt. Ich hab nie verstanden, warum. Aber ich hab auch nie verstanden, warum Leute freiwillig Wilde Maus fahren.','Ich halte dir die Daumen. Beide. Deshalb kann ich gerade nichts anderes halten.','Wenn du fertig bist, gibt es ein Bullenauge. Für mich. Aus Nervosität.','Die letzte Runde! Ich bin so aufgeregt, ich hab meine Bratwurst verkehrt herum gegessen.'][r])));
+  const ping=setInterval(()=>Sync.send({k:'seen',p:ME}),45000);cleanups.push(()=>clearInterval(ping));}
+
+function showLetter(r,Rd){const o=el('div','lose',`<div class="card" role="dialog" aria-label="Buchstabe gewonnen"><div style="font-weight:800;letter-spacing:.2em;font-size:12px;text-transform:uppercase;color:#b5361d">Gewinnlos</div><div class="big">${Rd.letter}</div><p>${Rd.win}</p><button class="btn primary" type="button">Zur Anzeigetafel</button></div>`);document.body.appendChild(o);sfx('reveal');fireworks(2.4);
+  o.querySelector('button').onclick=()=>{o.remove();renderDash();};}
+
+/* ---------- Codewort ---------- */
+function renderWord(){cleanup();window.scrollTo({top:0,behavior:'instant'});app.innerHTML='';pano(app,{title:'Die Dicke Gertrud',sub:'Das Codewort'});
+  const L=letters().map(x=>x.l);const tiles=L.slice().sort(()=>Math.random()-.5);
+  const b=el('section','bude',`<div class="rhead"><h3>Das Codewort</h3><span class="tag">Für alle</span></div><p class="how">Zwölf Buchstaben, ein Wort. Bullerjahn murmelt: »Haverkamp war Bäckerssohn. Und Soest ist berühmt für ein ganz bestimmtes schwarzes Brot.« Tipp die Buchstaben in der richtigen Reihenfolge an.</p><div class="field"><div class="aslots" id="as">${L.map(()=>'<button class="aslot" type="button"></button>').join('')}</div><div class="ltiles" id="lt">${tiles.map((l,k)=>`<button class="ltile" type="button" data-k="${k}">${l}</button>`).join('')}</div><button class="btn small" id="clr" type="button">Zurücksetzen</button></div><p class="msg" id="rm" hidden></p>`);app.appendChild(b);
+  let seq=[];const slots=[...b.querySelectorAll('.aslot')];
+  const paint=()=>{slots.forEach((s,k)=>{s.textContent=seq[k]!=null?tiles[seq[k]]:'';s.classList.toggle('f',seq[k]!=null);});b.querySelectorAll('.ltile').forEach(t=>t.classList.toggle('used',seq.includes(+t.dataset.k)));};
+  b.querySelectorAll('.ltile').forEach(t=>t.onclick=()=>{const k=+t.dataset.k;if(seq.includes(k)||seq.length>=12)return;seq.push(k);sfx('click');paint();if(seq.length===12){const w=seq.map(i=>tiles[i]).join('');if(w===D.WORD){Sync.send({k:'final',p:ME}).then(()=>renderFinal(true));}else{sfx('wrong');const m=$('#rm');m.textContent='Die Gertrud zischt nur. Das ist es noch nicht.';m.className='msg no';m.hidden=false;}}});
+  slots.forEach((s,k)=>s.onclick=()=>{if(seq[k]!=null){seq.splice(k,1);paint();}});
+  $('#clr').onclick=()=>{seq=[];paint();};
+  app.appendChild(el('div','',bubble('Schwarzes Brot, zwölf Buchstaben. Mehr verrate ich nicht. Ich hab sowieso schon zu viel verraten, sagt meine Frau.')));}
+
+function renderFinal(fresh){cleanup();window.scrollTo({top:0,behavior:'instant'});app.innerHTML='';pano(app,{title:'Die Gertrud spielt!',sub:'Finale'});
+  const st={};ORDER.forEach(p=>{let tp=0,n=0;for(let r=0;r<NR;r++){const s=ST.p[p]&&ST.p[p].s[r];if(s){tp+=s.tips;n++;}}st[p]={tp,n};});
+  const firsts={H:0,M:0,S:0};for(let r=0;r<NR;r++){const f=fastest(r);if(f)firsts[f]++;}
+  const champ=ORDER.slice().sort((a,b)=>firsts[b]-firsts[a]||st[a].tp-st[b].tp)[0];
+  const s=el('article','poster',`<span class="kick">Finale</span><h2>Pumpernickel!</h2><div class="story">${D.FINALE.map(p=>`<p>${p}</p>`).join('')}</div>`);app.appendChild(s);
+  speakBtn(s.querySelector('.story'),D.FINALE.join(' '));
+  const t=el('section','bulbs board',`<div class="inner"><h2>Ehrentribüne</h2><div class="players">${ORDER.map(p=>`<div class="pl${p===champ?' self':''}">${AV[p]}<b>${P[p].name}</b><small>${firsts[p]}× als Erste${p==='H'?'':'r'} fertig<br>${st[p].tp} ${st[p].tp===1?'Tipp':'Tipps'}</small>${p===champ?'<span class="state done">Kirmeskönig'+(p==='H'?'in':'')+'</span>':''}</div>`).join('')}</div><div class="cta"><button class="btn gold" id="fw" type="button">Noch ein Feuerwerk</button></div></div>`);app.appendChild(t);
+  app.appendChild(el('div','',bubble('Ihr habt die Kirmes gerettet. Nächstes Jahr bekommt ihr Freifahrten. Lebenslang. Also, auf dem Kinderkarussell.')));
+  $('#fw').onclick=()=>{fireworks(4);sfx('tusch');};
+  if(fresh!==false){setTimeout(()=>{fireworks(6);sfx('tusch');},400);}}
+
+/* ---------- Router ---------- */
+function route(){if(!ME){renderLogin();return;}renderDash();}
+
+/* ---------- Rätsel ---------- */
+function booth(dif){const D2=dif||{};const balloon=['#ff5d8f','#2ec4b6',D2.bal?'#2ec4b6':'#ffd36b','#8eacff'];
+  const starsN=D2.star?4:5;const tick=D2.tick?3:4;
+  return `<svg viewBox="0 0 400 240" aria-hidden="true"><rect width="400" height="240" fill="#1d1440"/>${Array.from({length:30},(_,k)=>`<circle cx="${(k*71)%400}" cy="${(k*29)%70}" r="1" fill="#fff" opacity=".5"/>`).join('')}
+  <rect x="70" y="90" width="260" height="130" fill="#3a1d5c"/><path d="M60 92 L200 40 L340 92 Z" fill="${D2.roof?'#2f4a9a':'#d62839'}"/>${Array.from({length:starsN},(_,k)=>`<path d="M${130+k*35} 72 l3 7 h7 l-6 4 l2 7 l-6 -4 l-6 4 l2 -7 l-6 -4 h7 Z" fill="#ffd36b"/>`).join('')}
+  <rect x="96" y="104" width="208" height="30" rx="4" fill="#fff3dc"/><text x="200" y="126" text-anchor="middle" font-family="Shrikhand,serif" font-size="20" fill="#d62839">${D2.txt?'LOSE · LOSE':'LOSE · GLÜCK'}</text>
+  <rect x="80" y="180" width="240" height="14" fill="#6b3f1f"/>${Array.from({length:tick},(_,k)=>`<rect x="${110+k*24}" y="168" width="18" height="12" fill="#fff3dc" transform="rotate(${k*7-10} ${119+k*24} 174)"/>`).join('')}
+  <circle cx="270" cy="160" r="16" fill="#f2c14e"/><path d="M262 160 h16 M270 152 v16" stroke="#6b3f1f" stroke-width="2"/>
+  ${balloon.map((c,k)=>`<path d="M${36+k*12} 120 Q${40+k*10} 160 ${44+k*8} 200" stroke="#ddd" stroke-width="1" fill="none"/><ellipse cx="${36+k*12}" cy="${108-k%2*14}" rx="11" ry="14" fill="${c}"/>`).join('')}
+  <path d="M344 60 V200" stroke="#bbb" stroke-width="3"/><path d="M344 62 ${D2.flag?'L314 74 L344 86':'L374 74 L344 86'} Z" fill="#2ec4b6"/>
+  <rect y="220" width="400" height="20" fill="#120c2a"/></svg>`;}
+const DIFFS=[{k:'bal',x:60,y:92,r:24},{k:'roof',x:200,y:58,r:34},{k:'star',x:270,y:76,r:22},{k:'txt',x:240,y:120,r:30},{k:'flag',x:340,y:74,r:28}];
+
+const PUZ={
+quiz(f,api,R){let i=0;const show=()=>{const [q,opts,a]=R.qs[i];f.innerHTML=`<div class="q"><span class="qprog">Frage ${i+1} von ${R.qs.length}</span><strong>${q}</strong>${opts.map((o,k)=>`<button type="button" data-k="${k}">${o}</button>`).join('')}</div>`;
+  f.querySelectorAll('button').forEach(b=>b.onclick=()=>{if(+b.dataset.k===a){b.classList.add('ok');sfx('bell');setTimeout(()=>{i++;if(i>=R.qs.length)api.solved();else show();},650);}else{b.classList.remove('no');void b.offsetWidth;b.classList.add('no');sfx('wrong');}});};show();},
+lukas(f,api){f.innerHTML=`<div class="lukas"><div class="tower"><div class="scale"></div><div class="bell" id="bell"></div><div class="puck" id="puck"></div></div><div class="meter" id="meter"><b></b><i id="ptr"></i></div></div><div class="hits" id="hits">Glocke: ☆☆☆</div><button class="btn primary" id="hit" type="button" style="min-width:200px">🔨 Zuschlagen!</button>`;
+  const ptr=f.querySelector('#ptr'),puck=f.querySelector('#puck'),bell=f.querySelector('#bell'),hb=f.querySelector('#hit');let v=0,dir=1,sp=1.5,hits=0,raf=0,lock=false,last=performance.now();
+  const loop=now=>{const dt=Math.min(.05,(now-last)/1000);last=now;if(!lock){v+=dir*sp*dt;if(v>1){v=1;dir=-1;}if(v<0){v=0;dir=1;}ptr.style.bottom=`calc(${v*100}% - 3px)`;}raf=requestAnimationFrame(loop);};raf=requestAnimationFrame(loop);
+  hb.onclick=()=>{if(lock)return;lock=true;sfx('clang');const h=v;puck.style.bottom=`calc(${Math.min(.93,h)*100}% - 10px)`;
+    setTimeout(()=>{if(h>=.93){hits++;bell.classList.remove('ring');void bell.offsetWidth;bell.classList.add('ring');sfx('bell');api.say(['Ding! Einmal!','Ding! Zweimal!','Ding! Dreimal!'][hits-1],'ok');}else api.say(h>.75?'Knapp! Fast an der Glocke.':h>.45?'Na, das war eher ein Streicheln.':'Der Lukas hat nicht mal gemerkt, dass du da warst.','no');
+      f.querySelector('#hits').textContent='Glocke: '+'★'.repeat(hits)+'☆'.repeat(3-hits);
+      setTimeout(()=>{puck.style.bottom='6px';lock=false;sp=Math.min(2.4,sp+.15);if(hits>=3){cancelAnimationFrame(raf);api.solved();}},600);},480);};
+  return {cleanup:()=>cancelAnimationFrame(raf)};},
+diff(f,api){f.innerHTML=`<div class="diff"><div>${booth()}</div><div class="bot" id="bot">${booth({bal:1,roof:1,star:1,txt:1,flag:1})}<svg viewBox="0 0 400 240" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" id="marks"></svg></div></div><div class="hits" id="cnt">0 von 5</div>`;
+  const bot=f.querySelector('#bot'),marks=f.querySelector('#marks');const got=new Set();
+  bot.addEventListener('click',e=>{const r=bot.getBoundingClientRect();const x=(e.clientX-r.left)/r.width*400,y=(e.clientY-r.top)/r.height*240;const hit=DIFFS.findIndex((d,k)=>!got.has(k)&&Math.hypot(d.x-x,d.y-y)<d.r+6);
+    if(hit<0){sfx('click');return;}got.add(hit);const d=DIFFS[hit];marks.insertAdjacentHTML('beforeend',`<circle cx="${d.x}" cy="${d.y}" r="${d.r}" fill="none" stroke="#ffd36b" stroke-width="4"/>`);sfx('bell');f.querySelector('#cnt').textContent=got.size+' von 5';if(got.size===5)setTimeout(()=>api.solved(),500);});},
+organ(f,api){const C=[['#ff5d8f',60,170],['#8eacff',64,200],['#ffd36b',67,230],['#2ec4b6',72,260]];
+  f.innerHTML=`<div class="organ">${C.map(([c,m,h],k)=>`<button class="pipe" type="button" data-k="${k}" aria-label="Pfeife ${k+1}" style="background:${c};color:${c};height:${h}px"></button>`).join('')}</div><div class="hits" id="lvl">Töne: 1 von 5</div><button class="btn" id="rep" type="button">Noch mal vorspielen</button>`;
+  const pipes=[...f.querySelectorAll('.pipe')];const seq=Array.from({length:5},()=>Math.floor(Math.random()*4));let n=1,pos=0,busy=true,tms=[];
+  const light=(k,ms)=>{pipes[k].classList.add('on');organ(mf(C[k][1]),0,ms/1000,.09);tms.push(setTimeout(()=>pipes[k].classList.remove('on'),ms));};
+  const playSeq=()=>{busy=true;pos=0;duck(n*700+600);seq.slice(0,n).forEach((k,i)=>tms.push(setTimeout(()=>light(k,450),500+i*650)));tms.push(setTimeout(()=>busy=false,500+n*650));};
+  pipes.forEach(p=>p.onclick=()=>{if(busy)return;const k=+p.dataset.k;light(k,260);if(k!==seq[pos]){api.wrong('Schiefer Ton! Hör noch einmal hin.');busy=true;tms.push(setTimeout(playSeq,900));return;}pos++;if(pos>=n){if(n>=5){busy=true;tms.push(setTimeout(()=>api.solved(),500));return;}n++;f.querySelector('#lvl').textContent=`Töne: ${n} von 5`;api.say('Richtig! Jetzt ein Ton mehr.','ok');tms.push(setTimeout(playSeq,900));}});
+  f.querySelector('#rep').onclick=()=>{if(!busy)playSeq();};tms.push(setTimeout(playSeq,600));
+  return {cleanup:()=>tms.forEach(clearTimeout)};},
+rush(f,api){const CARS=[[2,0,2,1],[4,2,3,1],[4,0,2,1],[3,5,2,0],[2,3,2,0],[0,4,2,1],[0,2,3,0],[5,4,2,1]];const COL=['#ff2a3a','#2ec4b6','#ffd36b','#8eacff','#ff6a1f','#c77dff','#5fd3a0','#ff5d8f'];
+  const cars=CARS.map(c=>c.slice());let sel=0,moves=0;
+  f.innerHTML=`<div class="rush" id="rush"><span class="exit"></span></div><div class="ctrl" style="display:flex;gap:8px"><button class="icon" data-d="-1" type="button" aria-label="Zurück">◀</button><button class="icon" data-d="1" type="button" aria-label="Vor">▶</button><span class="how" id="mv" style="align-self:center">Züge: 0</span><button class="btn small" id="rst" type="button">Neu</button></div>`;
+  const g=f.querySelector('#rush');
+  const occ=skip=>{const o=new Set();cars.forEach(([r,c,l,h],i)=>{if(i===skip)return;for(let k=0;k<l;k++)o.add(h?r*6+c+k:(r+k)*6+c);});return o;};
+  const can=(i,d)=>{const [r,c,l,h]=cars[i],o=occ(i);if(h){const nc=d<0?c-1:c+l;return nc>=0&&nc<6&&!o.has(r*6+nc);}const nr=d<0?r-1:r+l;return nr>=0&&nr<6&&!o.has(nr*6+c);};
+  const draw=()=>{g.querySelectorAll('.car').forEach(e=>e.remove());cars.forEach(([r,c,l,h],i)=>{const b=el('button','car'+(i===sel?' sel':''));b.type='button';b.style.cssText=`grid-row:${r+1}/span ${h?1:l};grid-column:${c+1}/span ${h?l:1};background:${COL[i]}`;b.setAttribute('aria-label',(i===0?'Dein roter Wagen':'Scooter '+i)+(h?', fährt waagerecht':', fährt senkrecht'));b.dataset.i=i;g.appendChild(b);});};
+  let won=false;const move=(i,d)=>{if(won)return false;if(!can(i,d)){sfx('bump');return false;}const cr=cars[i];if(cr[3])cr[1]+=d;else cr[0]+=d;moves++;f.querySelector('#mv').textContent='Züge: '+moves;sfx('click');draw();if(cars[0][1]===4){won=true;sfx('whoosh');setTimeout(()=>api.solved(),400);}return true;};
+  g.addEventListener('click',e=>{const b=e.target.closest('.car');if(b){sel=+b.dataset.i;sfx('tick');draw();}});
+  let dr=null;g.addEventListener('pointerdown',e=>{const b=e.target.closest('.car');if(!b)return;sel=+b.dataset.i;dr={x:e.clientX,y:e.clientY};g.setPointerCapture(e.pointerId);draw();});
+  g.addEventListener('pointermove',e=>{if(!dr)return;const cell=g.clientWidth/6,h=cars[sel][3],dd=h?e.clientX-dr.x:e.clientY-dr.y;if(Math.abs(dd)>cell*.6){const s=dd>0?1:-1;if(move(sel,s)){if(h)dr.x+=s*cell;else dr.y+=s*cell;}else dr=null;}});
+  const up=()=>{dr=null;};g.addEventListener('pointerup',up);g.addEventListener('pointercancel',up);
+  f.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>move(sel,+b.dataset.d));
+  f.querySelector('#rst').onclick=()=>{CARS.forEach((c,i)=>cars[i]=c.slice());moves=0;f.querySelector('#mv').textContent='Züge: 0';draw();};draw();},
+path(f,api){const N=5,BL=['1,2','2,4'],S='4,0',E='0,4';let path=[S];
+  f.innerHTML=`<div class="pathg" id="pg">${Array.from({length:25},(_,i)=>{const r=Math.floor(i/5),c=i%5,k=r+','+c;return `<button class="pcell${BL.includes(k)?' blk':''}${k===E?' goal':''}" type="button" data-k="${k}" aria-label="Feld ${r+1},${c+1}">${BL.includes(k)?(k==='1,2'?'🌭':'🍺'):k===E?'🎡':k===S?'🚪':''}</button>`;}).join('')}</div><div class="ctrl" style="display:flex;gap:8px"><button class="btn small" id="un" type="button">Schritt zurück</button><button class="btn small" id="rs" type="button">Von vorn</button></div>`;
+  const total=25-BL.length;
+  const paint=()=>f.querySelectorAll('.pcell').forEach(b=>{const k=b.dataset.k,ix=path.indexOf(k);b.classList.toggle('on',ix>=0);b.classList.toggle('head',ix===path.length-1);if(!BL.includes(k)&&k!==E&&k!==S)b.textContent=ix>0?ix+1:'';});
+  f.querySelectorAll('.pcell').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(BL.includes(k)){sfx('bump');return;}if(path.includes(k)){if(k===path[path.length-2]){path.pop();paint();}return;}const [r,c]=path[path.length-1].split(',').map(Number),[r2,c2]=k.split(',').map(Number);if(Math.abs(r-r2)+Math.abs(c-c2)!==1){sfx('bump');return;}path.push(k);sfx('step');paint();
+    if(k===E){if(path.length===total)setTimeout(()=>api.solved(),400);else{api.wrong(`Am Riesenrad angekommen, aber ${total-path.length} Felder fehlen noch. Haverkamp war überall.`);}}
+    else if(path.length===total)api.wrong('Alle Felder besucht, aber nicht am Riesenrad gelandet.');});
+  f.querySelector('#un').onclick=()=>{if(path.length>1){path.pop();paint();}};f.querySelector('#rs').onclick=()=>{path=[S];paint();};paint();},
+sort(f,api,R){const order=R.items.map((_,k)=>k);do{order.sort(()=>Math.random()-.5);}while(order.every((v,k)=>v===k));
+  const ul=el('ol','sortlist');f.appendChild(ul);const btn=el('button','btn primary','Rezept prüfen');btn.type='button';f.appendChild(btn);
+  const paint=()=>{ul.innerHTML=order.map((v,k)=>`<li class="sortitem"><span class="t">${R.items[v]}</span><span class="bx"><button class="icon" type="button" data-u="${k}" aria-label="Nach oben" ${k===0?'disabled':''}>▲</button><button class="icon" type="button" data-d="${k}" aria-label="Nach unten" ${k===order.length-1?'disabled':''}>▼</button></span></li>`).join('');
+    ul.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>{const k=+b.dataset.u;[order[k-1],order[k]]=[order[k],order[k-1]];sfx('flip');paint();});ul.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{const k=+b.dataset.d;[order[k+1],order[k]]=[order[k],order[k+1]];sfx('flip');paint();});};paint();
+  btn.onclick=()=>{const ok=order.filter((v,k)=>v===k).length;if(ok===order.length){sfx('sizzle');api.solved();}else api.wrong(`${ok} von ${order.length} Schritten stehen schon richtig.`);};},
+cans(f,api){f.innerHTML=`<canvas class="cans" id="cv" aria-label="Dosenwerfen"></canvas><div class="hits" id="hud"></div><button class="btn primary" id="thr" type="button" style="min-width:200px">Zielen</button>`;
+  const cv=f.querySelector('#cv'),x=cv.getContext('2d'),hud=f.querySelector('#hud'),tb=f.querySelector('#thr');
+  const CAN=[[-1,0],[0,0],[1,0],[-.5,1],[.5,1],[0,2]];let up=CAN.map(()=>true),balls=6,phase=0,aim=0,ad=1,pow=0,pd=1,raf=0,last=performance.now(),fly=null;
+  const W=()=>cv.clientWidth,H=()=>cv.clientHeight;
+  const rs=()=>{const d=DPR();cv.width=W()*d;cv.height=H()*d;x.setTransform(d,0,0,d,0,0);};rs();
+  const cp=i=>{const w=W(),h=H(),u=w/9;return [w/2+CAN[i][0]*u*1.05,h*.62-CAN[i][1]*u*1.25,u*.9,u*1.2];};
+  const draw=now=>{const dt=Math.min(.05,(now-last)/1000);last=now;const w=W(),h=H();
+    const g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,'#3a1d5c');g.addColorStop(1,'#1d1440');x.fillStyle=g;x.fillRect(0,0,w,h);
+    for(let k=0;k<12;k++){x.fillStyle=k%2?'#d62839':'#fff3dc';x.fillRect(k*w/12,0,w/12+1,h*.08);}
+    x.fillStyle='#6b3f1f';x.fillRect(w*.15,h*.62+w/9*.6,w*.7,h*.05);
+    CAN.forEach((_,i)=>{if(!up[i])return;const [cx,cy,cw,ch]=cp(i);x.fillStyle=['#2ec4b6','#ff5d8f','#ffd36b','#8eacff','#ff6a1f','#c77dff'][i];x.fillRect(cx-cw/2,cy+w/9*.6-ch,cw,ch);x.fillStyle='rgba(255,255,255,.35)';x.fillRect(cx-cw/2+3,cy+w/9*.6-ch+4,cw*.18,ch-8);});
+    if(phase===0){aim+=ad*dt*.9;if(aim>1){aim=1;ad=-1;}if(aim<-1){aim=-1;ad=1;}}
+    if(phase===1){pow+=pd*dt*1.1;if(pow>1){pow=1;pd=-1;}if(pow<0){pow=0;pd=1;}}
+    const ax=w/2+aim*w*.32;x.strokeStyle='#fff';x.setLineDash([6,6]);x.lineWidth=2;x.beginPath();x.moveTo(w/2,h*.97);x.lineTo(ax,h*.62-w/9*1.25*2.4);x.stroke();x.setLineDash([]);
+    x.fillStyle='rgba(0,0,0,.4)';x.fillRect(w*.9,h*.25,w*.05,h*.6);x.fillStyle=phase>=1?'#ffd36b':'#5a4a8a';const ph=h*.6*(phase>=1?pow:0);x.fillRect(w*.9,h*.85-ph,w*.05,ph);
+    if(fly){fly.t+=dt*2.2;const k=Math.min(1,fly.t),bx=w/2+(fly.tx-w/2)*k,by=h*.97+(fly.ty-h*.97)*k-Math.sin(k*Math.PI)*h*.15;x.fillStyle='#fff3dc';x.beginPath();x.arc(bx,by,w*.025*(1.4-k*.6),0,7);x.fill();if(k>=1){fly.done();fly=null;}}
+    raf=requestAnimationFrame(draw);};raf=requestAnimationFrame(draw);
+  const hudP=()=>{hud.textContent='Bälle: '+'⚪'.repeat(balls)+'  Dosen: '+up.filter(Boolean).length;};hudP();
+  const support={0:[3],1:[3,4],2:[4],3:[5],4:[5]};
+  const knock=i=>{if(!up[i])return;up[i]=false;(support[i]||[]).forEach(j=>knock(j));};
+  tb.onclick=()=>{if(fly||balls<=0)return;if(phase===0){phase=1;pow=0;tb.textContent='Werfen!';sfx('tick');return;}
+    phase=2;balls--;sfx('whoosh');const w=W(),h=H(),u=w/9;const row=pow<.4?0:pow<.75?1:2;const tx=w/2+aim*w*.32,ty=h*.62-row*u*1.25+u*.6;
+    fly={t:0,tx,ty,done:()=>{const col=(tx-w/2)/(u*1.05);let best=-1,bd=9;CAN.forEach(([c,r],i)=>{if(r!==row||!up[i])return;const dd=Math.abs(c-col);if(dd<.62&&dd<bd){bd=dd;best=i;}});
+      if(best>=0){knock(best);sfx('crash');}else sfx('bump');hudP();
+      if(up.every(v=>!v)){setTimeout(()=>api.solved(),500);return;}
+      if(balls<=0){api.say('Keine Bälle mehr. Die Budenfrau stellt alles wieder auf und gibt dir sechs neue.','no');setTimeout(()=>{up=CAN.map(()=>true);balls=6;hudP();},1200);}
+      phase=0;tb.textContent='Zielen';}};};
+  const ro=new ResizeObserver(rs);ro.observe(cv);return {cleanup:()=>{cancelAnimationFrame(raf);ro.disconnect();}};},
+jugs(f,api){let a=0,b=0;const A=5,B=3;
+  const glass=(v,cap,lab)=>`<div class="jug"><svg viewBox="0 0 90 ${cap*24+20}"><path d="M10 6 L18 ${cap*24+14} H72 L80 6" fill="rgba(255,255,255,.08)" stroke="#fff3dc" stroke-width="3"/><path d="M${10+8*(1-v/cap)} ${6+cap*24*(1-v/cap)+2} L18 ${cap*24+12} H72 L${80-8*(1-v/cap)} ${6+cap*24*(1-v/cap)+2} Z" fill="#5a2d14" opacity="${v?1:0}"/></svg><b>${v} cl</b><span class="how">${lab}</span></div>`;
+  f.innerHTML=`<div class="jugs" id="jg"></div><div class="jbtns"><button class="btn small" data-a="fa" type="button">Großes füllen</button><button class="btn small" data-a="fb" type="button">Kleines füllen</button><button class="btn small" data-a="ab" type="button">Groß → Klein</button><button class="btn small" data-a="ba" type="button">Klein → Groß</button><button class="btn small" data-a="ea" type="button">Großes leeren</button><button class="btn small" data-a="eb" type="button">Kleines leeren</button></div>`;
+  const paint=()=>{f.querySelector('#jg').innerHTML=glass(a,A,'5-cl-Glas')+glass(b,B,'3-cl-Glas');};paint();
+  f.querySelectorAll('[data-a]').forEach(btn=>btn.onclick=()=>{const k=btn.dataset.a;if(k==='fa')a=A;if(k==='fb')b=B;if(k==='ea')a=0;if(k==='eb')b=0;if(k==='ab'){const m=Math.min(a,B-b);a-=m;b+=m;}if(k==='ba'){const m=Math.min(b,A-a);b-=m;a+=m;}
+    sfx(k[0]==='e'?'sizzle':'pour');paint();if(a===4)setTimeout(()=>api.solved(),500);});},
+memory(f,api){const IC=['🎡','🎠','🍭','🎈','🍺','🥨','🌭','❤️'];const deck=IC.concat(IC).sort(()=>Math.random()-.5);let open=[],done=0,lock=false,tries=0;
+  f.innerHTML=`<div class="memory">${deck.map((c,k)=>`<button class="mcard" type="button" data-k="${k}" aria-label="Karte ${k+1}"><span>${c}</span></button>`).join('')}</div><div class="how" id="tr">Versuche: 0</div>`;
+  const cards=[...f.querySelectorAll('.mcard')];
+  cards.forEach(b=>b.onclick=()=>{if(lock||b.classList.contains('open')||b.classList.contains('done'))return;b.classList.add('open');sfx('flip');open.push(b);if(open.length===2){tries++;f.querySelector('#tr').textContent='Versuche: '+tries;const [x1,x2]=open;if(deck[x1.dataset.k]===deck[x2.dataset.k]){x1.classList.add('done');x2.classList.add('done');open=[];done++;sfx('bell');if(done===8)setTimeout(()=>api.solved(),500);}else{lock=true;setTimeout(()=>{x1.classList.remove('open');x2.classList.remove('open');open=[];lock=false;},850);}}});},
+shoot(f,api){f.innerHTML=`<canvas class="shoot" id="cv" aria-label="Schießbude"></canvas><div class="hits" id="hud"></div><button class="btn primary" id="st" type="button">Los geht's!</button>`;
+  const cv=f.querySelector('#cv'),x=cv.getContext('2d'),hud=f.querySelector('#hud'),sb=f.querySelector('#st');let T=[],score=0,time=40,run=false,raf=0,last=0,shots=[];
+  const W=()=>cv.clientWidth,H=()=>cv.clientHeight;const rs=()=>{const d=DPR();cv.width=W()*d;cv.height=H()*d;x.setTransform(d,0,0,d,0,0);};rs();
+  const init=()=>{T=[];[[.24,40,1],[.5,-60,-1],[.76,80,1]].forEach(([y,sp],row)=>{for(let k=0;k<6;k++)T.push({row,y,sp:sp*(row===0?.8:1),x:k/6,good:(k+row)%3!==1,alive:true});});};init();
+  const star=(cx,cy,r)=>{x.beginPath();for(let k=0;k<10;k++){const a=k*Math.PI/5-Math.PI/2,rr=k%2?r*.45:r;x.lineTo(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr);}x.closePath();x.fill();};
+  const flower=(cx,cy,r)=>{x.fillStyle='#ff5d8f';for(let k=0;k<6;k++){const a=k*Math.PI/3;x.beginPath();x.arc(cx+Math.cos(a)*r*.55,cy+Math.sin(a)*r*.55,r*.42,0,7);x.fill();}x.fillStyle='#ffd36b';x.beginPath();x.arc(cx,cy,r*.35,0,7);x.fill();};
+  const draw=now=>{const dt=last?Math.min(.05,(now-last)/1000):0;last=now;const w=W(),h=H(),r=w*.05;
+    x.fillStyle='#1d1440';x.fillRect(0,0,w,h);for(let k=0;k<10;k++){x.fillStyle=k%2?'#d62839':'#fff3dc';x.fillRect(k*w/10,0,w/10+1,h*.07);}
+    [.24,.5,.76].forEach(y=>{x.fillStyle='#6b3f1f';x.fillRect(0,h*y+r*1.1,w,6);});
+    T.forEach(t=>{if(run)t.x=(t.x+t.sp*dt/w+1.2)%1.2;if(!t.alive)return;const cx=t.x*w*1.2-w*.1,cy=h*t.y;if(t.good){x.fillStyle='#ffd36b';star(cx,cy,r);}else flower(cx,cy,r);});
+    shots=shots.filter(s=>now-s.t<300);shots.forEach(s=>{x.strokeStyle='#fff';x.lineWidth=2;x.beginPath();x.arc(s.x,s.y,(now-s.t)/300*20,0,7);x.stroke();});
+    if(run){time-=dt;if(time<=0){run=false;sb.hidden=false;sb.textContent='Noch einmal';api.say(`Zeit um! ${score} von 12 Sternen. Neuer Versuch?`,'no');}}
+    hud.textContent=`Sterne: ${score}/12 · Zeit: ${Math.max(0,Math.ceil(time))} s`;raf=requestAnimationFrame(draw);};raf=requestAnimationFrame(draw);
+  sb.onclick=()=>{score=0;time=40;init();run=true;sb.hidden=true;api.say('Feuer frei!','tip');sfx('pop');};
+  cv.addEventListener('pointerdown',e=>{if(!run)return;const rc=cv.getBoundingClientRect(),px=e.clientX-rc.left,py=e.clientY-rc.top,w=W(),h=H(),r=w*.05;shots.push({x:px,y:py,t:performance.now()});sfx('pop');
+    const t=T.find(t=>t.alive&&Math.hypot(t.x*w*1.2-w*.1-px,h*t.y-py)<r*1.25);if(!t)return;t.alive=false;if(t.good){score++;sfx('bell');}else{score=Math.max(0,score-1);sfx('wrong');}setTimeout(()=>{t.alive=true;},2500);
+    if(score>=12){run=false;setTimeout(()=>api.solved(),300);}});
+  const ro=new ResizeObserver(rs);ro.observe(cv);return {cleanup:()=>{cancelAnimationFrame(raf);ro.disconnect();}};},
+wheel(f,api,R){f.innerHTML=`<ol class="how" style="margin:0;padding-left:22px;align-self:stretch">${R.clues.map(c=>`<li>${c}</li>`).join('')}</ol><canvas class="wheel" id="wh" aria-label="Glücksrad zum Drehen"></canvas><div class="code" id="cd">${R.code.map(()=>'<span></span>').join('')}</div><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="icon" id="l" type="button" aria-label="Links drehen">◀</button><button class="btn gold small" id="ok" type="button">Zahl einrasten</button><button class="icon" id="r" type="button" aria-label="Rechts drehen">▶</button><button class="btn small" id="cl" type="button">Löschen</button></div>`;
+  const cv=f.querySelector('#wh'),x=cv.getContext('2d');let ang=0,picked=[];const ST=Math.PI*2/10;const COLS=['#d62839','#fff3dc'];
+  const cur=()=>((Math.round(-ang/ST)%10)+10)%10;
+  const draw=()=>{const s=Math.min(f.clientWidth-24,290),d=DPR();cv.width=s*d;cv.height=s*d;cv.style.width=s+'px';cv.style.height=s+'px';x.setTransform(d,0,0,d,0,0);const c=s/2,r=c-10;
+    for(let k=0;k<10;k++){const a0=-Math.PI/2-ST/2+k*ST+ang;x.fillStyle=k%2?'#2f4a9a':'#d62839';x.beginPath();x.moveTo(c,c);x.arc(c,c,r,a0,a0+ST);x.fill();x.save();x.translate(c,c);x.rotate(a0+ST/2);x.fillStyle='#fff3dc';x.font=`${s*.1}px Shrikhand, serif`;x.textAlign='center';x.textBaseline='middle';x.fillText(String(k),r*.72,0);x.restore();}
+    for(let k=0;k<20;k++){const a=k*Math.PI/10+ang;x.fillStyle=k%2?'#ffd36b':'#fff';x.beginPath();x.arc(c+Math.cos(a)*(r+3),c+Math.sin(a)*(r+3),3,0,7);x.fill();}
+    x.fillStyle='#ffd36b';x.beginPath();x.arc(c,c,s*.09,0,7);x.fill();x.fillStyle='#fff3dc';x.beginPath();x.moveTo(c-12,2);x.lineTo(c+12,2);x.lineTo(c,26);x.fill();};
+  const snap=()=>{ang=Math.round(ang/ST)*ST;draw();};let dr=null,lastI=cur();
+  const aAt=e=>{const rc=cv.getBoundingClientRect();return Math.atan2(e.clientY-rc.top-rc.height/2,e.clientX-rc.left-rc.width/2);};
+  cv.addEventListener('pointerdown',e=>{dr={a:aAt(e),s:ang};cv.setPointerCapture(e.pointerId);});cv.addEventListener('pointermove',e=>{if(!dr)return;ang=dr.s+(aAt(e)-dr.a);const i=cur();if(i!==lastI){lastI=i;sfx('tick');}draw();});
+  const end=()=>{if(dr){dr=null;snap();}};cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+  f.querySelector('#l').onclick=()=>{ang+=ST;sfx('tick');snap();};f.querySelector('#r').onclick=()=>{ang-=ST;sfx('tick');snap();};
+  const paint=()=>{f.querySelectorAll('#cd span').forEach((s,k)=>{s.textContent=picked[k]!=null?picked[k]:'';s.classList.toggle('f',picked[k]!=null);});};
+  f.querySelector('#ok').onclick=()=>{if(picked.length>=4)return;picked.push(cur());sfx('clang');paint();if(picked.length===4){if(picked.every((v,k)=>v===R.code[k]))setTimeout(()=>api.solved(),400);else{api.wrong('Das Schloss bleibt zu. Prüf deine vier Zahlen.');setTimeout(()=>{picked=[];paint();},1100);}}};
+  f.querySelector('#cl').onclick=()=>{picked=[];paint();};
+  draw();const ro=new ResizeObserver(draw);ro.observe(f);return {cleanup:()=>ro.disconnect()};}
+};
+
+/* ---------- Start ---------- */
+(async()=>{
+  const h=decodeURIComponent((location.hash||'').slice(1));const hp=h?codeToP(h):null;
+  if(hp){SS.set('kirmes-me',hp);try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}
+  const saved=SS.get('kirmes-me')||LS.get('kirmes-me',null);
+  app.innerHTML='<p class="wait" style="text-align:center;margin-top:40px">Die Kirmes öffnet …</p>';
+  await Sync.pull();startPoll();
+  if(saved&&P[saved]){ME=saved;renderTop();Sync.send({k:'join',p:ME});route();
+    const first=()=>{ac();if(!MUTE)ambient(true);document.removeEventListener('pointerdown',first);};document.addEventListener('pointerdown',first);}
+  else renderLogin();
+})();
+})();
+</script>
+</body>
+</html>
