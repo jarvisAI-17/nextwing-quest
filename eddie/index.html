@@ -32,6 +32,8 @@ a{color:var(--info)}
 .meta{display:flex;gap:6px;align-items:center;font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .lt{display:inline-grid;place-items:center;width:22px;height:24px;border-radius:4px;background:linear-gradient(180deg,#f2d27a,#b8862b);color:#3b2a17;font-family:var(--caps);font-weight:700;font-size:15px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.25)}
 .meta #timer{margin-right:6px}
+.snd{font:inherit;font-size:16px;line-height:1;width:36px;height:32px;margin-left:6px;border-radius:8px;border:1px solid var(--line);background:#131c2e;color:var(--ink);cursor:pointer}
+.snd:focus-visible{outline:none;box-shadow:0 0 0 2px var(--info)}
 
 /* Pergament */
 .page{position:relative;color:var(--p-ink);font-family:var(--serif);font-size:19px;line-height:31px;padding:30px 26px 34px;border-radius:3px;
@@ -180,7 +182,7 @@ dialog.lb::backdrop{background:rgba(5,8,15,.86);backdrop-filter:blur(3px)}
 <header class="top"><div class="topin">
   <a class="brand" href="../" aria-label="Zurück zu Nextwing Quest"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0b1220"/><path d="M12 22 C24 14 40 13 52 17 C42 19 30 22 20 28 Z" fill="#4d7cff"/><path d="M12 33 C24 25 40 24 52 28 C42 30 30 33 20 39 Z" fill="#ff6a1f"/><path d="M12 44 C24 36 40 35 52 39 C42 41 30 44 20 50 Z" fill="#8eacff"/></svg><span>next<b>wing</b> quest</span></a>
   <div class="prog" id="prog" aria-label="Fortschritt"></div>
-  <div class="meta"><span id="timer" aria-label="Spielzeit">00:00</span><span id="lets" aria-label="Gesammelte Buchstaben" style="display:flex;gap:3px"></span></div>
+  <div class="meta"><span id="timer" aria-label="Spielzeit">00:00</span><span id="lets" aria-label="Gesammelte Buchstaben" style="display:flex;gap:3px"></span><button class="snd" id="snd" type="button" aria-label="Ton ausschalten">🔊</button></div>
 </div></header>
 <main class="wrap" id="app"></main>
 <dialog class="lb" id="lb" aria-labelledby="lbT"><div class="lbin"><div id="lbImg"></div><div class="row"><div><h3 id="lbT"></h3><p id="lbP"></p></div><button class="close" id="lbX" type="button">Schließen</button></div></div></dialog>
@@ -336,8 +338,8 @@ const FIND={
 };
 const findSvg=(f,lbl)=>`<svg viewBox="0 0 400 280" role="img" aria-label="${lbl}">${f.svg}</svg>`;
 const lb=$('#lb');
-function openFind(f){if(!lb)return;$('#lbImg').innerHTML=findSvg(f,f.t);$('#lbT').textContent=f.t;$('#lbP').textContent=f.cap;try{lb.showModal();}catch(e){lb.setAttribute('open','');}}
-if(lb){$('#lbX').addEventListener('click',()=>lb.close());lb.addEventListener('click',e=>{if(e.target===lb)lb.close();});}
+function openFind(f){if(!lb)return;$('#lbImg').innerHTML=findSvg(f,f.t);$('#lbT').textContent=f.t;$('#lbP').textContent=f.cap;sfx('open');try{lb.showModal();}catch(e){lb.setAttribute('open','');}}
+if(lb){$('#lbX').addEventListener('click',()=>lb.close());lb.addEventListener('close',()=>sfx('close'));lb.addEventListener('click',e=>{if(e.target===lb)lb.close();});}
 
 /* ---------- Kopfzeile ---------- */
 function top(){
@@ -349,8 +351,65 @@ function timer(){clearInterval(tInt);const t=$('#timer');const f=()=>{if(!G.star
 
 /* ---------- Bellen ---------- */
 let AC=null;
-function bark(n,onEach){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();
-  for(let i=0;i<n;i++)setTimeout(()=>{onEach&&onEach(i);if(!AC)return;const t=AC.currentTime,o=AC.createOscillator(),f=AC.createBiquadFilter(),g=AC.createGain();o.type='sawtooth';o.frequency.setValueAtTime(520,t);o.frequency.exponentialRampToValueAtTime(170,t+.16);f.type='bandpass';f.frequency.value=900;f.Q.value=1.2;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.5,t+.015);g.gain.exponentialRampToValueAtTime(.001,t+.2);o.connect(f);f.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.22);},i*480);}
+function bark(n,onEach){ac();if(MUTE&&!onEach)return;
+  for(let i=0;i<n;i++)setTimeout(()=>{onEach&&onEach(i);if(!AC)return;const t=AC.currentTime,o=AC.createOscillator(),f=AC.createBiquadFilter(),g=AC.createGain();o.type='sawtooth';o.frequency.setValueAtTime(520,t);o.frequency.exponentialRampToValueAtTime(170,t+.16);f.type='bandpass';f.frequency.value=900;f.Q.value=1.2;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.5,t+.015);g.gain.exponentialRampToValueAtTime(.001,t+.2);o.connect(f);f.connect(g);g.connect(out()||AC.destination);o.start(t);o.stop(t+.22);},i*480);}
+
+/* ---------- Klang: alles live synthetisiert, keine Audiodateien ---------- */
+let MUTE=false;try{MUTE=localStorage.getItem('eddie-sound')==='off';}catch(e){}
+const ac=()=>{if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}}if(AC.state==='suspended')AC.resume();return AC;};
+let MASTER=null;
+const out=()=>{const a=ac();if(!a)return null;if(!MASTER){MASTER=a.createGain();MASTER.gain.value=MUTE?0:1;MASTER.connect(a.destination);}return MASTER;};
+let NB=null;const noiseBuf=a=>{if(!NB){NB=a.createBuffer(1,a.sampleRate*2,a.sampleRate);const d=NB.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}return NB;};
+function noise({dur=.2,type='bandpass',f=1000,f2=null,q=1,vol=.3,at=0,att=.005}){const a=ac(),o=out();if(!a||!o)return;const t=a.currentTime+at,s=a.createBufferSource();s.buffer=noiseBuf(a);const fl=a.createBiquadFilter();fl.type=type;fl.frequency.setValueAtTime(f,t);if(f2)fl.frequency.exponentialRampToValueAtTime(f2,t+dur);fl.Q.value=q;const g=a.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+att);g.gain.exponentialRampToValueAtTime(.001,t+dur);s.connect(fl);fl.connect(g);g.connect(o);s.start(t,Math.random()*1.5);s.stop(t+dur+.05);}
+function tone({f=440,f2=null,dur=.3,type='sine',vol=.2,at=0,att=.005}){const a=ac(),o=out();if(!a||!o)return;const t=a.currentTime+at,s=a.createOscillator();s.type=type;s.frequency.setValueAtTime(f,t);if(f2)s.frequency.exponentialRampToValueAtTime(f2,t+dur);const g=a.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+att);g.gain.exponentialRampToValueAtTime(.001,t+dur);s.connect(g);g.connect(o);s.start(t);s.stop(t+dur+.05);}
+const box=(f,at,v=.09)=>{tone({f,dur:1.1,vol:v,at});tone({f:f*3,dur:.35,vol:v*.25,at});};
+const SFX={
+ page(){noise({dur:.4,f:2600,f2:800,q:.7,vol:.22,att:.03});noise({dur:.2,f:4200,q:.6,vol:.1,at:.22});},
+ open(){noise({dur:.28,f:1900,f2:600,q:.8,vol:.16,att:.02});},
+ close(){noise({dur:.15,f:1400,f2:700,q:.8,vol:.12});},
+ click(){noise({dur:.035,f:3200,q:5,vol:.35});tone({f:2400,dur:.025,type:'square',vol:.04});},
+ tick(){noise({dur:.025,f:2600,q:6,vol:.18});},
+ clack(){tone({f:620,f2:340,dur:.09,type:'triangle',vol:.22});noise({dur:.05,f:1300,q:2,vol:.18});},
+ slide(){noise({dur:.16,type:'lowpass',f:900,vol:.3,att:.03});tone({f:210,f2:150,dur:.09,type:'triangle',vol:.16,at:.13});},
+ dig(){noise({dur:.32,type:'lowpass',f:520,f2:140,vol:.5});noise({dur:.16,f:1600,q:1,vol:.12,at:.06});},
+ paper(){noise({dur:.13,f:3200,q:.8,vol:.14,att:.02});},
+ scrape(){noise({dur:.09,f:1500+Math.random()*800,q:1.5,vol:.09});},
+ wrong(){tone({f:196,f2:140,dur:.4,type:'triangle',vol:.22});tone({f:207,f2:146,dur:.4,type:'triangle',vol:.12});},
+ tip(){box(1175,0,.06);box(1568,.12,.06);},
+ unlock(){noise({dur:.05,f:2600,q:3,vol:.4});tone({f:190,f2:90,dur:.2,type:'square',vol:.1,at:.07});noise({dur:.12,f:1100,q:2,vol:.3,at:.13});},
+ solve(){[523,659,784,1047].forEach((f,k)=>box(f,.2+k*.13));},
+ letter(){[1568,2093,2637,3136].forEach((f,k)=>tone({f,dur:.6,vol:.05,at:k*.08}));},
+ fanfare(){[[523,0],[659,.2],[784,.4],[1047,.6],[784,.95],[1047,1.15],[1319,1.5]].forEach(([f,t])=>box(f,t,.1));tone({f:131,dur:2.4,type:'triangle',vol:.08,at:.6});}
+};
+const sfx=n=>{if(MUTE)return;try{SFX[n]&&SFX[n]();}catch(e){}};
+
+/* Kaminfeuer und Spieluhr im Hintergrund */
+let AMB=null;
+function ambient(on){const a=ac(),o=out();if(!a||!o)return;
+  if(on&&!AMB){const s=a.createBufferSource();s.buffer=noiseBuf(a);s.loop=true;const fl=a.createBiquadFilter();fl.type='lowpass';fl.frequency.value=300;const g=a.createGain();g.gain.value=.06;s.connect(fl);fl.connect(g);g.connect(o);s.start();
+    const pop=setInterval(()=>{if(Math.random()<.5)noise({dur:.02+Math.random()*.05,f:1400+Math.random()*2800,q:3,vol:.03+Math.random()*.07});},170);
+    const tune=[[659,0],[784,.5],[880,1],[784,1.5],[659,2],[587,2.75],[523,3.25],[587,4],[659,4.5]];
+    const play=()=>tune.forEach(([f,t])=>box(f,t,.03));const t0=setTimeout(play,2500);const mel=setInterval(play,22000);
+    AMB={s,pop,mel,t0};}
+  else if(!on&&AMB){try{AMB.s.stop();}catch(e){}clearInterval(AMB.pop);clearInterval(AMB.mel);clearTimeout(AMB.t0);AMB=null;}}
+function setMute(m){MUTE=m;try{localStorage.setItem('eddie-sound',m?'off':'on');}catch(e){}if(MASTER)MASTER.gain.value=m?0:1;ambient(!m&&G.start&&G.ch>=0);sndBtn();}
+function sndBtn(){const b=$('#snd');if(!b)return;b.textContent=MUTE?'🔇':'🔊';b.setAttribute('aria-label',MUTE?'Ton einschalten':'Ton ausschalten');b.setAttribute('aria-pressed',String(!MUTE));}
+{const b=$('#snd');if(b){b.addEventListener('click',()=>setMute(!MUTE));sndBtn();}}
+
+/* Geräusche an Rätselteilen, ohne die Rätsel selbst anzufassen */
+document.addEventListener('click',e=>{const t=e.target;if(!t.closest)return;
+  if(t.closest('.icon'))sfx('click');
+  else if(t.closest('.tile:not(.empty)'))sfx('slide');
+  else if(t.closest('.ltile,.slot'))sfx('clack');
+  else if(t.closest('.cell'))sfx('dig');
+  else if(t.closest('.who .btn'))sfx('click');
+  else if(t.closest('.sc .btn'))sfx('paper');},true);
+let lastT=0;
+document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('.sortitem'))sfx('paper');},true);
+document.addEventListener('pointermove',e=>{if(!e.buttons)return;const t=e.target,n=performance.now();
+  if(t.matches&&t.matches('canvas.cipher')&&n-lastT>85){lastT=n;sfx('tick');}
+  else if(t.matches&&t.matches('canvas[aria-label="Erde zum Wegwischen"]')&&n-lastT>70){lastT=n;sfx('scrape');}},true);
+
 
 const ORN=`<svg class="orn" viewBox="0 0 180 18" aria-hidden="true"><path d="M4 9 H70 M110 9 H176" stroke="currentColor" stroke-width="1.2"/><path d="M90 2 L97 9 L90 16 L83 9 Z" fill="currentColor"/><circle cx="76" cy="9" r="2.4" fill="currentColor"/><circle cx="104" cy="9" r="2.4" fill="currentColor"/></svg>`;
 const ROM=['I','II','III','IV','V','VI'];
@@ -367,12 +426,13 @@ function renderStart(){
       <li>Lest die Geschichte abwechselnd vor oder lasst sie euch vorlesen.</li>
       <li>Was Eddie findet, liegt als Foto auf der Seite. Antippen, dann wird es groß.</li>
       <li>Bei manchen Rätseln hat jeder eine eigene Karte. Nicht spicken.</li>
+      <li>Mit Ton macht es mehr Spaß: Kaminfeuer, Spieluhr, knarzende Schlösser. Oben rechts lässt er sich abschalten.</li>
       <li>Tipps gibt es jederzeit. Jeder Tipp kostet einen Stern.</li>
       <li>Etwa eine Stunde, sieben Rätsel. Euer Fortschritt bleibt gespeichert.</li>
     </ul>
     <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:18px"><button class="btn primary" id="go" type="button">${resume?'Weiterlesen: '+(CH[G.ch].finale?'Finale':'Kapitel '+ROM[G.ch]):'Die Geschichte beginnt'}</button>${resume?'<button class="readbtn" id="restart" type="button">Von vorn beginnen</button>':''}</div>
   </section>`;
-  $('#go').addEventListener('click',()=>{if(!G.start){G.start=Date.now();G.ch=0;save();}renderCh(G.ch<0?0:G.ch);});
+  $('#go').addEventListener('click',()=>{ac();if(!G.start){G.start=Date.now();G.ch=0;save();}renderCh(G.ch<0?0:G.ch);});
   const r=$('#restart');if(r){let arm=false;r.addEventListener('click',()=>{if(!arm){arm=true;r.textContent='Wirklich? Noch einmal tippen';setTimeout(()=>{arm=false;r.textContent='Von vorn beginnen';},3000);return;}G=fresh();save();renderStart();});}
 }
 
@@ -380,7 +440,7 @@ function renderStart(){
 const para=(p,k)=>typeof p==='string'?`<p${k===0?' class="first"':''}>${p}</p>`:`<p class="letter">${p.letter}</p>`;
 const plainText=arr=>arr.map(p=>typeof p==='string'?p:p.letter.replace(/<br>/g,' ')).join(' ');
 function renderCh(i){
-  cleanup();G.ch=i;save();top();timer();window.scrollTo({top:0,behavior:'instant'});
+  cleanup();G.ch=i;save();top();timer();window.scrollTo({top:0,behavior:'instant'});sfx('page');if(!MUTE)ambient(true);
   const c=CH[i];const prevWho=i>0?G.who[i-1]:null;const finds=FIND[i]||[];
   app.innerHTML=`${illu(c.illu)}
   <article class="page tilt">${ORN}<span class="chap">${c.finale?'Finale':'Kapitel '+ROM[i]}</span><h2>${c.title}</h2>
@@ -408,12 +468,12 @@ function riddle(i){
   const field=$('#field'),rm=$('#rm'),tipB=$('#tipB');
   const say=(t,k)=>{rm.textContent=t;rm.className='msg '+(k||'tip');rm.hidden=false;};
   let answers=null;
-  const api={field,say,wrong:t=>say(t||'Das ist es leider nicht. Versucht es noch einmal oder holt euch einen Tipp.','no'),
+  const api={field,say,wrong:t=>(sfx('wrong'),say)(t||'Das ist es leider nicht. Versucht es noch einmal oder holt euch einen Tipp.','no'),
     input(list,ph){answers=list.map(norm);$('#af').hidden=false;if(ph)$('#ans').placeholder=ph;},
-    solved(){if(G.solved[i])return;G.solved[i]=true;if(c.finale){G.who[i]='B';G.end=Date.now();}save();top();riddle(i);setTimeout(()=>{const w=$('#after');if(w)w.scrollIntoView({behavior:'smooth',block:'start'});},50);}};
+    solved(){if(G.solved[i])return;G.solved[i]=true;if(R.type==='lock'||R.type==='anagram')sfx('unlock');sfx(c.finale?'fanfare':'solve');if(c.finale){G.who[i]='B';G.end=Date.now();}save();top();riddle(i);setTimeout(()=>{const w=$('#after');if(w)w.scrollIntoView({behavior:'smooth',block:'start'});},50);}};
   const tipList=Array.isArray(R.tips)?R.tips:[];let tipFns=[];
   const updTip=()=>{const n=tipFns.length;tipB.textContent=`Tipp (${Math.min(tips(),n)}/${n})`;tipB.disabled=tips()>=n;$('#stars').textContent=stars();};
-  tipB.addEventListener('click',()=>{const f=tipFns[tips()];G.tips[i]=tips()+1;save();updTip();const r=typeof f==='function'?f():f;if(r)say(r,'tip');});
+  tipB.addEventListener('click',()=>{const f=tipFns[tips()];G.tips[i]=tips()+1;save();updTip();sfx('tip');const r=typeof f==='function'?f():f;if(r)say(r,'tip');});
   $('#af').addEventListener('submit',e=>{e.preventDefault();const v=norm($('#ans').value);if(!v){say('Gebt zuerst eine Antwort ein.','no');return;}if(answers.includes(v))api.solved();else api.wrong();});
   $('#ans').addEventListener('input',()=>{if(rm.classList.contains('no'))rm.hidden=true;});
   const extra=PUZ[R.type](field,api,R,i)||{};
@@ -425,7 +485,7 @@ function after(i){
   if(c.finale){renderEnd(w);return;}
   if(!G.who[i]){
     w.innerHTML=`<div class="page"><div class="who"><strong>Wer hat's gelöst?</strong><span style="font-style:italic;color:var(--p-muted)">Die Geschichte merkt es sich. Im nächsten Kapitel kommt es zur Sprache.</span><div class="row"><button class="btn" data-w="K" type="button">${K}</button><button class="btn" data-w="S" type="button">${S}</button><button class="btn" data-w="B" type="button">Beide zusammen</button></div></div></div>`;
-    w.querySelectorAll('[data-w]').forEach(b=>b.addEventListener('click',()=>{G.who[i]=b.dataset.w;save();top();after(i);}));return;}
+    w.querySelectorAll('[data-w]').forEach(b=>b.addEventListener('click',()=>{G.who[i]=b.dataset.w;save();top();after(i);sfx('letter');}));return;}
   w.innerHTML=`<div class="page">${ORN}<div class="story"><p class="first">${c.reward}</p></div><div class="reward"><div class="bigl">${c.letter}</div><p>Buchstabe ${Object.keys(G.who).filter(k=>CH[k].letter).length} von 6. Gut aufheben, er wird am Ende gebraucht.</p></div></div>${bubble(c.after)}<button class="btn primary next" id="next" type="button">${CH[i+1].finale?'Weiter zum Finale':'Weiter zu Kapitel '+ROM[i+1]}</button>`;
   $('#next').addEventListener('click',()=>renderCh(i+1));
 }
@@ -440,7 +500,7 @@ function renderEnd(w){
   <div class="stats"><div class="stat"><b>${min} Min.</b><span>Spielzeit</span></div><div class="stat"><b>${total} / 21</b><span>Sterne</span></div><div class="stat"><b>${tipsAll}</b><span>Tipps genutzt</span></div><div class="stat"><b>${counts.K} · ${counts.S} · ${counts.B}</b><span>gelöst von Kathleen · Stefan · beiden</span></div></div>
   <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px"><button class="btn primary" id="again" type="button">Noch einmal spielen</button><a class="btn" href="../">Zu Nextwing Quest</a></div></section>
   ${bubble('Zwei Scheiben Käse. Ich sage nichts mehr. Bestes Abenteuer meines Lebens.')}`;
-  $('#again').addEventListener('click',()=>{G=fresh();save();renderStart();});
+  $('#again').addEventListener('click',()=>{G=fresh();save();ambient(false);renderStart();});
 }
 
 /* ---------- Rätsel ---------- */
