@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Der Stern von Lissabon</title>
+<meta name="description" content="Ein Kriminalfall für Kathleen, Stefan und Polizeihund Eddie. Berlin, Silvester 1928. Etwa eine Stunde.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Manrope:wght@400;500;600;700&family=Limelight&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Caveat:wght@500;700&display=swap">
+<style>
+/* Layout: Berlin 1928, Art-déco-Noir. Nextwing-Kopfzeile bleibt; jedes Kapitel ist eine Ermittlungsakte (Manila-Karton, Schreibmaschine, Büroklammer, roter Stempel), Beweisstücke als nummerierte Fotos, Rätsel auf dem grünen Ermittlertisch unter einer Lampe, Regen über jeder Szene. Bewusst nur dunkel: es ist Silvesternacht. */
+:root{--surface:#0b1220;--ink:#eef2fb;--muted:#98a3bd;--line:#25304a;--action:#ff6a1f;--action-hover:#ff8a4c;--on-action:#0b1220;--info:#8eacff;
+--manila:#e9d9ae;--manila-2:#d9c48f;--type:#1f1b16;--type-muted:#5f5240;--stamp:#b0261c;--gold:#d8b45a;--gold-2:#9a7a2c;--felt:#17382a;--felt-2:#0e261c;--brass:#c9a14a;--noir:#0d0d10;
+--display:"Outfit",ui-sans-serif,system-ui,sans-serif;--sans:"Manrope",ui-sans-serif,system-ui,"Segoe UI",sans-serif;--mono:"Courier Prime","Courier New",ui-monospace,monospace;--deco:"Limelight","Outfit",serif;--typew:"Special Elite","Courier Prime",monospace;--hand:"Caveat","Segoe Print",cursive;color-scheme:dark}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html{background:#08080b}
+body{margin:0;color:var(--ink);font-family:var(--sans);font-size:16px;line-height:26px;padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));padding-bottom:56px;
+ background:radial-gradient(900px 500px at 50% -10%,#1d2236 0%,rgba(8,8,11,0) 70%),repeating-linear-gradient(90deg,rgba(216,180,90,.035) 0 1px,transparent 1px 80px),#08080b;background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:10}
+a{color:var(--info)}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:22px;padding-top:22px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(11,18,32,.92);backdrop-filter:blur(8px);margin:0 calc(-1*max(14px,env(safe-area-inset-left,0px)));padding:10px max(14px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line)}
+.topin{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:10px;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font-family:var(--display);font-size:17px}
+.brand svg{width:26px;height:26px}.brand b{font-weight:700}
+.prog{display:flex;gap:5px;align-items:center}
+.prog i{width:18px;height:6px;border-radius:999px;background:var(--line)}
+.prog i.done{background:var(--action)}.prog i.now{background:var(--info)}
+.meta{display:flex;gap:8px;align-items:center;font-family:var(--mono);font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.evc{display:inline-flex;align-items:center;gap:4px;color:var(--gold)}
+.evc svg{width:16px;height:16px}
+.snd{font:inherit;font-size:16px;line-height:1;width:36px;height:32px;border-radius:8px;border:1px solid var(--line);background:#131c2e;color:var(--ink);cursor:pointer}
+@media(max-width:520px){.brand span{display:none}.prog i{width:12px}}
+
+/* Szene mit Regen */
+.scene{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:16/7;box-shadow:0 0 0 1px var(--gold-2),0 0 0 5px #111,0 0 0 6px var(--gold-2),0 18px 36px rgba(0,0,0,.6);margin:6px}
+.scene svg{display:block;width:100%;height:100%}
+.scene canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.scene .flash{position:absolute;inset:0;background:#dfe8ff;opacity:0;pointer-events:none;mix-blend-mode:screen}
+.scene .flash.go{animation:flash .9s ease-out}
+@keyframes flash{0%{opacity:0}8%{opacity:.75}16%{opacity:.1}24%{opacity:.55}100%{opacity:0}}
+
+/* Akte */
+.file{position:relative;color:var(--type);font-family:var(--mono);font-size:17px;line-height:28px;padding:34px 22px 30px;border-radius:2px 10px 4px 4px;
+ background-color:var(--manila);
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .1 0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"),linear-gradient(180deg,rgba(255,255,255,.18),rgba(0,0,0,.06));
+ box-shadow:inset 0 0 50px rgba(120,90,30,.35),0 2px 0 #b9a46e,0 4px 0 #a8935e,0 22px 40px rgba(0,0,0,.55)}
+.file::before{content:"";position:absolute;top:-14px;left:22px;width:150px;height:18px;border-radius:8px 8px 0 0;background:var(--manila-2);box-shadow:inset 0 -2px 0 rgba(0,0,0,.08)}
+.clip{position:absolute;top:-16px;right:42px;width:22px;height:62px;border:3px solid #9aa3ad;border-radius:12px;border-bottom-color:transparent;transform:rotate(8deg)}
+.clip::after{content:"";position:absolute;left:3px;right:3px;top:8px;bottom:-6px;border:3px solid #9aa3ad;border-radius:8px;border-top-color:transparent}
+.fhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;font-family:var(--typew);font-size:14px;letter-spacing:.06em;color:var(--type-muted);border-bottom:1.5px solid rgba(31,27,22,.35);padding-bottom:8px}
+.stampr{font-family:var(--typew);color:var(--stamp);border:2.5px solid var(--stamp);border-radius:4px;padding:2px 8px;transform:rotate(-6deg);font-size:14px;letter-spacing:.12em;opacity:.85;white-space:nowrap}
+.file h2{font-family:var(--deco);font-weight:400;font-size:clamp(30px,7.4vw,42px);line-height:1.08;margin:14px 0 4px;color:var(--type);text-wrap:balance}
+.story{display:flex;flex-direction:column;gap:14px;margin-top:12px}
+.story p{margin:0;hyphens:auto}
+.callback{margin:12px 0 0;font-family:var(--hand);font-size:23px;line-height:28px;color:#24366b;transform:rotate(-.6deg)}
+.callback::before{content:"Notiz: ";font-weight:700}
+.note{position:relative;background:#fffdf3;color:#24366b;font-family:var(--hand);font-size:23px;line-height:29px;padding:16px 18px 18px;margin:6px 6px;transform:rotate(1deg);box-shadow:0 6px 14px rgba(40,25,5,.35);background-image:repeating-linear-gradient(180deg,transparent 0 28px,rgba(120,140,200,.35) 28px 29px)}
+.note::before{content:"";position:absolute;top:-8px;left:40%;width:70px;height:18px;background:rgba(240,228,190,.8);transform:rotate(-4deg)}
+.readbtn{font-family:var(--typew);font-size:14px;letter-spacing:.06em;color:var(--type);background:transparent;border:1.5px solid rgba(31,27,22,.45);border-radius:4px;padding:4px 12px;cursor:pointer;align-self:flex-start}
+
+/* Beweisstücke */
+.finds{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin:20px 0 4px}
+.find{position:relative;background:#f4f1ea;border:0;padding:8px 8px 34px;cursor:zoom-in;box-shadow:0 8px 18px rgba(30,20,5,.45);transform:rotate(-2deg);transition:transform .2s;width:min(240px,78%)}
+.find:nth-child(even){transform:rotate(2.5deg)}
+.find:hover{transform:rotate(0) scale(1.03)}
+.find svg{display:block;width:100%;height:auto;background:#1a1a1e;filter:grayscale(.15) contrast(1.05)}
+.find span{position:absolute;left:0;right:0;bottom:7px;text-align:center;font-family:var(--typew);font-size:14px;color:var(--type)}
+.find em{position:absolute;left:-8px;top:14px;background:#f2e2a0;color:#1f1b16;font-style:normal;font-family:var(--typew);font-size:12px;padding:2px 8px;box-shadow:0 2px 4px rgba(0,0,0,.3);transform:rotate(-8deg)}
+.find small{position:absolute;right:8px;top:12px;background:rgba(11,18,32,.78);color:#eef2fb;font-family:var(--sans);font-size:11px;font-weight:600;border-radius:999px;padding:1px 8px}
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(94vw,900px);width:100%;color:var(--ink)}
+dialog.lb::backdrop{background:rgba(3,3,6,.88);backdrop-filter:blur(3px)}
+.lbin{background:#f4f1ea;padding:12px 12px 16px;box-shadow:0 20px 60px rgba(0,0,0,.7);display:flex;flex-direction:column;gap:10px}
+.lbin svg{display:block;width:100%;height:auto;max-height:70vh;background:#1a1a1e}
+.lbin h3{margin:0;font-family:var(--typew);font-size:22px;line-height:28px;color:var(--type)}
+.lbin p{margin:0;font-family:var(--mono);font-size:16px;line-height:25px;color:var(--type)}
+.lbin .row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.close{font:inherit;font-weight:700;border-radius:8px;padding:8px 14px;min-height:44px;cursor:pointer;border:1px solid #b9a46e;background:var(--manila);color:var(--type)}
+.camflash{position:fixed;inset:0;background:#fff;pointer-events:none;opacity:0;z-index:20}
+.camflash.go{animation:cam .6s ease-out}
+@keyframes cam{0%{opacity:.9}100%{opacity:0}}
+
+/* Eddie */
+.eddie{display:flex;gap:12px;align-items:flex-end;margin:4px 0}
+.eddie svg.av{width:70px;height:70px;flex:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.5))}
+.bubble{position:relative;background:#fffdf6;color:#1d1a14;border:2.5px solid #1d1a14;border-radius:20px;padding:10px 16px 12px;font-family:var(--hand);font-size:23px;line-height:27px;box-shadow:3px 4px 0 rgba(216,180,90,.9)}
+.bubble::before{content:"";position:absolute;left:-14px;bottom:14px;border:9px solid transparent;border-right:14px solid #1d1a14}
+.bubble::after{content:"";position:absolute;left:-8px;bottom:16px;border:7px solid transparent;border-right:10px solid #fffdf6}
+.bubble b{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8a2a1a;font-weight:700;line-height:14px;margin-bottom:2px}
+
+/* Ermittlertisch */
+.board{position:relative;color:#efe6cf;border-radius:10px;padding:18px 16px;display:flex;flex-direction:column;gap:12px;
+ background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(255,226,150,.18),rgba(255,226,150,0) 70%),repeating-linear-gradient(45deg,rgba(255,255,255,.012) 0 2px,transparent 2px 4px),linear-gradient(180deg,var(--felt),var(--felt-2));
+ border:2px solid var(--gold-2);box-shadow:inset 0 0 0 4px #0a1a12,inset 0 0 0 5px rgba(216,180,90,.4),inset 0 0 50px rgba(0,0,0,.55),0 16px 34px rgba(0,0,0,.6)}
+.rhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.rhead h3{font-family:var(--deco);font-weight:400;font-size:24px;margin:0;color:var(--gold);letter-spacing:.02em}
+.stamp{font-family:var(--typew);font-size:13px;letter-spacing:.1em;border:2px solid currentColor;border-radius:4px;padding:0 8px;line-height:22px;transform:rotate(-4deg)}
+.stamp.open{color:#ffb38a}.stamp.done{color:#8fe0b4}
+.how{margin:0;font-size:15px;line-height:22px;color:#d9d0b8}
+.field{background:radial-gradient(ellipse at 50% 30%,#123224,#0a1d15);border:1px solid #2c5a44;border-radius:8px;padding:14px 12px;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;touch-action:manipulation}
+.answer{display:flex;gap:8px;flex-wrap:wrap}
+.answer input{flex:1;min-width:0;font-family:var(--typew);font-size:20px;letter-spacing:.08em;color:var(--type);background:#f4f1ea;border:1px solid #b9a46e;border-radius:6px;padding:8px 12px;min-height:48px;text-transform:uppercase}
+.btn{font:inherit;font-weight:700;border-radius:8px;padding:10px 16px;min-height:46px;cursor:pointer;border:1px solid #b9a46e;background:var(--manila);color:var(--type);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:var(--action);border-color:#c44d10;color:var(--on-action);box-shadow:0 3px 0 #a33c08}
+.btn.primary:hover{background:var(--action-hover)}
+.btn.tip{background:transparent;color:var(--gold);border-color:rgba(216,180,90,.55)}
+.btn.brass{background:linear-gradient(180deg,#e9c46a,#a57a24);border-color:#6b4a12;color:#1f1b16;box-shadow:0 3px 0 #6b4a12}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,input:focus-visible,.find:focus-visible,.close:focus-visible,.readbtn:focus-visible,.gcell:focus-visible,.pcard:focus-visible,.rec:focus-visible,.acard:focus-visible,.snd:focus-visible{outline:none;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--info)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.stars{font-size:22px;color:var(--gold);letter-spacing:3px}
+.msg{margin:0;font-family:var(--mono);font-size:16px;line-height:24px;border-radius:6px;padding:10px 14px}
+.msg.ok{background:#dff0e2;color:#1f5a34}
+.msg.no{background:#f6dcd6;color:#8a1f12}
+.msg.tip{background:var(--manila);color:var(--type)}
+.who{display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
+.who strong{font-family:var(--deco);font-weight:400;font-size:24px}
+.who .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.next{align-self:center}
+.evline{display:flex;gap:12px;align-items:center;margin-top:16px;padding-top:12px;border-top:1.5px dashed rgba(31,27,22,.35)}
+.evline .tag{font-family:var(--typew);background:#f2e2a0;padding:4px 10px;transform:rotate(-3deg);box-shadow:0 2px 4px rgba(0,0,0,.25);white-space:nowrap}
+.evline p{margin:0;font-size:15px;line-height:22px;color:var(--type-muted)}
+
+/* Rätsel: Taschenlampe */
+.dark{position:relative;width:100%;aspect-ratio:4/3;max-width:520px;border-radius:6px;overflow:hidden;touch-action:none;user-select:none;cursor:none;background:#000}
+.dark svg.room{position:absolute;inset:0;width:100%;height:100%}
+.dark .mask{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle var(--r,64px) at var(--x,50%) var(--y,40%),rgba(0,0,0,0) 0,rgba(0,0,0,.25) 55%,rgba(0,0,0,.965) 100%)}
+.dark .clue{position:absolute;width:15%;aspect-ratio:1;transform:translate(-50%,-50%);border:0;background:transparent;padding:0;cursor:none}
+.dark .clue svg{width:100%;height:100%}
+.dark .clue.got{outline:2px dashed var(--gold);outline-offset:4px;border-radius:50%}
+.dark .clue.got::after{content:attr(data-n);position:absolute;top:-10px;right:-10px;width:22px;height:22px;border-radius:50%;background:#f2e2a0;color:#1f1b16;font:700 13px/22px var(--mono);text-align:center}
+.found{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;font-family:var(--typew);font-size:14px}
+.found span{background:rgba(242,226,160,.12);border:1px dashed rgba(242,226,160,.5);border-radius:4px;padding:2px 10px;color:#f2e2a0}
+.found span.got{background:#f2e2a0;color:#1f1b16;border-style:solid}
+/* Uhr */
+.watch{width:min(100%,280px);aspect-ratio:1;touch-action:none;user-select:none;cursor:grab;filter:drop-shadow(0 10px 18px rgba(0,0,0,.6))}
+.ctrl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
+.ctrl .btn{min-width:58px;padding:8px 10px}
+.digital{font-family:var(--typew);font-size:22px;color:#f2e2a0;min-width:80px;text-align:center}
+/* Gitter */
+.secret{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+@media(max-width:480px){.secret{grid-template-columns:1fr}}
+.sc{background:#fffdf3;color:#24366b;border-radius:2px;padding:12px;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 10px rgba(0,0,0,.4);background-image:repeating-linear-gradient(180deg,transparent 0 26px,rgba(120,140,200,.3) 26px 27px)}
+.sc strong{font-family:var(--typew);font-size:15px;color:#1f1b16}
+.sc ul{margin:0;padding-left:18px;font-family:var(--hand);font-size:21px;line-height:26px}
+.sc .btn{align-self:flex-start;padding:6px 12px;min-height:40px}
+.grid{display:grid;grid-template-columns:minmax(88px,1.4fr) repeat(4,1fr);gap:4px;width:100%;max-width:520px}
+.grid .h{font-family:var(--typew);font-size:11px;line-height:14px;color:#f2e2a0;display:grid;place-items:end center;text-align:center;padding-bottom:4px;hyphens:manual;overflow-wrap:normal}
+.grid .rowh{font-family:var(--typew);font-size:13px;line-height:16px;color:#efe6cf;display:flex;align-items:center;gap:6px}
+.grid .rowh i{width:10px;height:10px;border-radius:50%;flex:none}
+.gcell{aspect-ratio:1;border-radius:4px;border:1px solid #b9a46e;background:#f4f1ea;cursor:pointer;font:700 24px/1 var(--mono);color:#1f1b16;padding:0;display:grid;place-items:center}
+.gcell.x{color:#9a2a1a}.gcell.y{background:#cfe8d4;color:#1f5a34}
+/* Morse */
+.telegraph{display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center}
+.lamp{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#5a3a1a,#2a1a0a);border:4px solid var(--brass);box-shadow:inset 0 2px 6px rgba(0,0,0,.7)}
+.lamp.on{background:radial-gradient(circle at 40% 35%,#fff6c8,#ffb030 60%,#c46a10);box-shadow:0 0 30px 8px rgba(255,180,50,.6),inset 0 2px 6px rgba(255,255,255,.4)}
+.tape{font-family:var(--mono);font-size:22px;letter-spacing:.12em;background:#efe6cf;color:#1f1b16;padding:6px 12px;border-radius:3px;min-height:40px;max-width:100%;overflow-x:auto;white-space:nowrap}
+.mtable{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:4px 10px;width:100%;font-family:var(--mono);font-size:14px;color:#efe6cf;background:rgba(0,0,0,.25);padding:10px;border-radius:6px;border:1px solid #2c5a44}
+.mtable b{color:#f2e2a0;margin-right:6px}
+/* Fingerabdruck */
+.glass{position:relative;width:min(100%,300px);aspect-ratio:1;border-radius:8px;overflow:hidden;background:#0a0a0c;touch-action:none;cursor:none}
+.glass > svg{position:absolute;inset:0;width:100%;height:100%}
+.lens{position:absolute;width:44%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:6px solid #c9a14a;box-shadow:0 0 0 2px #5a3d10,0 10px 20px rgba(0,0,0,.6),inset 0 0 20px rgba(255,255,255,.25);transform:translate(-50%,-50%);pointer-events:none}
+.lens svg{position:absolute;width:250%;height:250%}
+.pcards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%}
+@media(max-width:480px){.pcards{grid-template-columns:repeat(2,1fr)}}
+.pcard{border:2px solid transparent;border-radius:4px;background:#f4f1ea;padding:6px 6px 8px;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;color:#1f1b16;font:inherit;box-shadow:0 4px 8px rgba(0,0,0,.4)}
+.pcard svg{width:100%;aspect-ratio:1;background:#fff}
+.pcard span{font-family:var(--typew);font-size:12px;line-height:14px;text-align:center}
+.pcard.sel{border-color:var(--action);transform:translateY(-3px)}
+/* Schallplatte */
+.recs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;width:100%}
+.rec{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;background:#1a1712;border:2px solid #4a3a1e;border-radius:8px;padding:10px 8px;cursor:pointer;color:#efe6cf;font:inherit}
+.rec .disc{width:min(110px,70%);aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(circle,#111 0 2px,#1d1d1d 2px 4px);position:relative;box-shadow:0 4px 10px rgba(0,0,0,.6)}
+.rec .disc::after{content:"";position:absolute;inset:36%;border-radius:50%;background:radial-gradient(circle,#0a0a0a 0 8%,var(--lbl,#a8322a) 9%)}
+.rec.play .disc{animation:spin 1.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.rec b{font-family:var(--typew);font-size:18px;color:#f2e2a0;font-weight:400}
+.rec small{font-size:12px;color:#b8ae95}
+.rec.mark{border-color:var(--action);box-shadow:0 0 0 3px rgba(255,106,31,.35)}
+.rec .chk{position:absolute;top:6px;right:8px;font-family:var(--typew);font-size:12px;color:#ffb38a}
+.wave{width:100%;height:28px}
+/* Anklage */
+.acols{display:grid;grid-template-columns:1fr;gap:14px;width:100%}
+.acol h4{margin:0 0 6px;font-family:var(--deco);font-weight:400;font-size:19px;color:#f2e2a0}
+.aopts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.acard{font:inherit;text-align:left;border:2px solid #b9a46e;border-radius:4px;background:#f4f1ea;color:#1f1b16;padding:10px;cursor:pointer;font-family:var(--typew);font-size:14px;line-height:18px;min-height:52px}
+.acard.sel{border-color:var(--action);background:#ffe3d1;box-shadow:0 0 0 3px rgba(255,106,31,.3)}
+/* Start und Ende */
+.cover{position:relative;border-radius:4px;padding:34px 22px;text-align:center;color:var(--gold);background:radial-gradient(ellipse at 50% 0%,#2a2a3a,#0d0d12 70%);border:2px solid var(--gold-2);box-shadow:inset 0 0 0 6px #0d0d12,inset 0 0 0 7px rgba(216,180,90,.5),0 22px 46px rgba(0,0,0,.6);overflow:hidden}
+.cover::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(216,180,90,.06) 22px 23px);pointer-events:none}
+.cover .sun{width:120px;height:60px;margin:0 auto}
+.cover h1{position:relative;font-family:var(--deco);font-weight:400;font-size:clamp(36px,9vw,56px);line-height:1.05;margin:10px 0;color:#f2dc9a;text-shadow:0 0 24px rgba(216,180,90,.35);text-wrap:balance}
+.cover p{position:relative;margin:0 auto;font-family:var(--mono);font-size:16px;line-height:25px;color:#d9cfb6;max-width:42ch}
+.cover small{display:block;font-family:var(--typew);letter-spacing:.24em;font-size:13px;color:#b89a52;margin-top:12px}
+.cast{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px;position:relative}
+.cast span{font-family:var(--typew);font-size:13px;color:#efe6cf;border:1px solid rgba(216,180,90,.5);border-radius:999px;padding:3px 12px}
+.file ul{margin:8px 0 0;padding-left:20px}
+.file li{margin:5px 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+.stat{background:rgba(255,255,255,.35);border:1px solid rgba(31,27,22,.25);border-radius:4px;padding:10px 12px}
+.stat b{display:block;font-family:var(--deco);font-weight:400;font-size:24px;line-height:30px}
+.stat span{font-size:14px;color:var(--type-muted)}
+.cork{position:relative;border-radius:6px;padding:16px;background:radial-gradient(circle at 30% 30%,#b88a55,#8a6236);box-shadow:inset 0 0 0 8px #4a3220,inset 0 0 30px rgba(0,0,0,.4),0 16px 30px rgba(0,0,0,.5)}
+.cork svg{display:block;width:100%;height:auto}
+@media(prefers-reduced-motion:reduce){.scene .flash.go,.camflash.go,.rec.play .disc{animation:none}.find{transition:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <a class="brand" href="../" aria-label="Zurück zu Nextwing Quest"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0b1220"/><path d="M12 22 C24 14 40 13 52 17 C42 19 30 22 20 28 Z" fill="#4d7cff"/><path d="M12 33 C24 25 40 24 52 28 C42 30 30 33 20 39 Z" fill="#ff6a1f"/><path d="M12 44 C24 36 40 35 52 39 C42 41 30 44 20 50 Z" fill="#8eacff"/></svg><span>next<b>wing</b> quest</span></a>
+  <div class="prog" id="prog" aria-label="Fortschritt"></div>
+  <div class="meta"><span id="timer" aria-label="Spielzeit">00:00</span><span class="evc" id="evc" aria-label="Beweisstücke"></span><button class="snd" id="snd" type="button" aria-label="Ton ausschalten">🔊</button></div>
+</div></header>
+<main class="wrap" id="app"></main>
+<div class="camflash" id="cam" aria-hidden="true"></div>
+<dialog class="lb" id="lb" aria-labelledby="lbT"><div class="lbin"><div id="lbImg"></div><div class="row"><div><h3 id="lbT"></h3><p id="lbP"></p></div><button class="close" id="lbX" type="button">Schließen</button></div></div></dialog>
+<script>
+window.KRIMI={K:'Kathleen',S:'Stefan',
+SUS:[
+ {id:'vera',name:'Baronin Vera von Stein',role:'Stammgast, Diamantensammlerin',c:'#8a2a4a'},
+ {id:'leo',name:'Leo Marek',role:'Pianist des Hauses',c:'#2f4a7a'},
+ {id:'ida',name:'Ida Brandt',role:'Sekretärin von Konrad Falk',c:'#3f6b4a'},
+ {id:'kuehn',name:'August Kühn',role:'Hoteldirektor',c:'#6b4a2a'}],
+CH:[
+{title:'Die dunkle Suite', illu:'hotel', ev:'Manschettenknopf, Streichholzheft, Taschenuhr',
+ story:[
+  'Berlin, Silvester 1928. Es regnete, als hätte der Himmel beschlossen, das neue Jahr gründlich abzuwaschen. Vor dem Grandhotel Adlerhof standen drei Polizeiwagen, ein Portier mit einem zerknautschten Regenschirm und ein Hund, der aussah, als hätte er die Lage bereits vollständig durchschaut.',
+  'Der Hund hieß Eddie. Offiziell war er Polizeihund Nummer 7 der Kripo am Alexanderplatz. Inoffiziell war er der einzige Beamte im Präsidium, der noch nie eine Akte verloren hatte, was vor allem daran lag, dass er keine las.',
+  'Kommissarin Kathleen stieg als Erste aus dem Wagen. Inspektor Stefan folgte, den Hut tief im Gesicht, weil er gelesen hatte, dass Inspektoren das so machen. »Was haben wir?«, fragte er. Der Hoteldirektor, ein Herr namens August Kühn, rang die Hände so heftig, dass man um seine Finger fürchten musste.',
+  '»Herr Konrad Falk«, sagte Kühn. »Juwelier. Er wollte um Mitternacht den Stern von Lissabon präsentieren, den größten blauen Diamanten Europas. Um kurz nach halb zwölf hat man ihn in seiner Suite gefunden. Niedergeschlagen. Er lebt, aber er erinnert sich an nichts. Und der Stern ist fort.«',
+  'In der Suite war der Strom ausgefallen. Irgendjemand hatte die Sicherung herausgedreht, und der Hauselektriker feierte irgendwo zwischen der zweiten und dritten Flasche Sekt. Stefan zog eine Taschenlampe aus dem Mantel. Kathleen nickte. »Dann eben auf die altmodische Art.«'],
+ eddie:'Ich rieche Zigarrenrauch, Parfüm und Angst. Und irgendwo da drin liegt ein Würstchen. Ich sage nur, wie es ist.',
+ riddle:{type:'torch',title:'Den Tatort absuchen',how:'Leuchtet mit der Taschenlampe durch die dunkle Suite. Zieht den Lichtkegel mit dem Finger oder der Maus. Findet drei Spuren und tippt sie an, wenn sie im Licht liegen.',
+  tips:['Spuren liegen gern dort, wo jemand in Eile war: am Boden, am Tisch, unter Möbeln.','Eddie hilft: Wo er hinschaut, liegt meistens etwas.','Eine Spur liegt beim Sessel links, eine auf dem Tisch in der Mitte, eine am Kamin rechts.']},
+ reward:'Drei Spuren lagen auf dem Tisch des Hotelfotografen, säuberlich mit Nummern versehen: ein goldener Manschettenknopf mit einem verschnörkelten V. Ein Streichholzheft vom »Club Kranich«, einer Jazzbar in der Friedrichstraße. Und Falks Taschenuhr, das Glas zersprungen, die Zeiger stehen geblieben. Das Blitzlicht zischte, und für einen Moment sah die Suite aus wie ein Bild aus der Zeitung von morgen.',
+ after:'Ein V. Ich kenne nur ein Wort mit V, und das ist Vorspeise.',
+ cb:{K:'Kathleen hatte im Dunkeln alle drei Spuren gefunden, während Stefan noch versuchte, die Taschenlampe so zu halten wie im Kino.',S:'Stefan hatte im Dunkeln alle drei Spuren gefunden und dabei nur einmal gegen den Kamin geleuchtet, in der Annahme, er sei ein Verdächtiger.',B:'Zu zweit hatten sie die Suite abgeleuchtet, Lichtkegel an Lichtkegel. Eddie hatte die ganze Zeit in die richtige Richtung gestarrt und fand, das hätte man auch schneller haben können.'}},
+
+{title:'Die stehengebliebene Uhr', illu:'watch', ev:'Tatzeit',
+ story:[
+  'Die Taschenuhr lag schwer in Kathleens Hand. Feines Gold, ein Monogramm, K. F. Die Zeiger standen auf 23 Uhr 47. »Da hat ihn jemand niedergeschlagen«, sagte Stefan. »Die Uhr ist beim Sturz kaputtgegangen. Klassischer Fall.«',
+  'Ida Brandt, Falks Sekretärin, saß blass auf einem Samtsofa im Flur und schüttelte langsam den Kopf. Sie war eine schmale Frau mit einem Notizblock, den sie festhielt wie andere Leute einen Rettungsring.',
+  {note:'Herr Falk hat seine Uhr nie richtig gestellt. Sie ging immer eine Viertelstunde vor. Er sagte, so komme er nie zu spät, und wenn doch, sei es die Schuld der Uhr.<br><br>– aus der Aussage von Ida Brandt, protokolliert von Inspektor Stefan, in sehr schöner Schrift'},
+  'Kathleen drehte die Uhr im Licht der Flurlampe. Wenn die Uhr eine Viertelstunde vorging, dann zeigte sie nicht, wann es passiert war. Sie zeigte, wann es Herr Falk geglaubt hätte. Ein kleiner Unterschied, und genau die Art Unterschied, an der Alibis zerbrechen.'],
+ eddie:'Uhren interessieren mich nicht. Ich weiß immer, wie spät es ist. Es ist entweder Fressenszeit oder kurz davor.',
+ riddle:{type:'clock',title:'Die echte Tatzeit',how:'Stellt die Zeiger auf die Uhrzeit, zu der Falk wirklich niedergeschlagen wurde. Zieht den großen Zeiger oder nehmt die Knöpfe. Dann prüft ihr.',target:692,start:707,
+  tips:['Die Uhr zeigt 23:47. Sie ging aber vor, nicht nach.','Eine Viertelstunde sind fünfzehn Minuten. Dreht den Minutenzeiger zurück.']},
+ reward:'»Halb zwölf und zwei Minuten«, sagte Kathleen. »23 Uhr 32. Nicht 23 Uhr 47.« Stefan schrieb es auf, unterstrich es zweimal und malte, weil es so wichtig war, noch einen kleinen Stern daneben. Fünfzehn Minuten. Wer für 23 Uhr 47 ein wasserdichtes Alibi hatte, war plötzlich gar nicht mehr so wasserdicht.',
+ after:'23 Uhr 32. Ich habe um diese Zeit ein Brötchen gesucht. Das ist mein Alibi, und ich stehe dazu.',
+ cb:{K:'Kathleen hatte die Uhr richtig gestellt und Stefans »Klassischer Fall« seitdem nicht mehr kommentiert. Sie lächelte nur jedes Mal, wenn er auf seine eigene Uhr sah.',S:'Stefan hatte die Uhr richtig gestellt und daraus die Lehre gezogen, dass klassische Fälle selten klassisch sind. Er notierte das als Merksatz Nummer 1.',B:'Gemeinsam hatten sie die echte Tatzeit ermittelt. Eddie hatte die Uhr ausgiebig beschnüffelt und war zu dem Schluss gekommen, dass sie nicht essbar war.'}},
+
+{title:'Vier Verdächtige', illu:'ballroom', ev:'Alibis um 23:32',
+ story:[
+  'Im Ballsaal spielte keine Musik mehr. Die Gäste standen in kleinen Gruppen zwischen umgefallenen Sektgläsern, und jeder sah aus, als hätte er etwas zu verbergen, was bei Silvesterfeiern ohnehin der Normalzustand ist.',
+  'Vier Personen hatten an diesem Abend Zugang zur Suite gehabt. Die Baronin Vera von Stein, eine Dame mit Pelzstola und einer Sammlung von Diamanten, die angeblich größer war als ihre Geduld. Leo Marek, der Pianist des Hauses, mit schmalen Händen und einem Lächeln, das bei Damen gut ankam und bei Kommissarinnen weniger. Ida Brandt, die Sekretärin. Und August Kühn, der Direktor, der immer noch die Hände rang.',
+  '»Wo waren Sie um 23 Uhr 32?«, fragte Kathleen in die Runde. Vier Antworten kamen gleichzeitig, und keine davon war brauchbar. Also teilten sie sich auf. Kathleen befragte das Personal an der Garderobe, Stefan den Barkeeper und den Portier. Danach verglichen sie ihre Notizen im Treppenhaus, wo es ruhig war und nach Bohnerwachs roch.'],
+ eddie:'Die Baronin hat mich gestreichelt. Sie ist also unschuldig. So funktioniert das bei mir.',
+ riddle:{type:'grid',title:'Wer war wo?',how:'Jeder deckt nur seine eigenen Notizen auf und liest sie vor. Tippt in die Tabelle: einmal für Nein, zweimal für Ja, dreimal zum Löschen. In jeder Zeile und jeder Spalte gibt es genau ein Ja.',
+  places:['Ball&shy;saal','Bar','Ter&shy;rasse','Telefon&shy;zelle'],sol:{vera:2,leo:0,ida:3,kuehn:1},
+  notesK:['Der Direktor war weder draußen noch hat er telefoniert. Das sagt die Garderobiere, und die sieht alles.','Die Baronin hasst Tanzmusik. Im Ballsaal war sie ganz sicher nicht.','Ida Brandt hat um halb zwölf ein Ferngespräch nach Hamburg angemeldet.'],
+  notesS:['Leo Marek war weder an der Bar noch auf der Terrasse, sagt der Barkeeper.','Ida Brandt war nicht im Ballsaal und nicht an der Bar.','In der Telefonzelle stand eine Frau, sagt der Portier. Mehr hat er durch das beschlagene Glas nicht erkannt.'],
+  tips:['Fangt mit Leo an. Er kommt nur für zwei Orte in Frage, und einer davon war von einer Frau besetzt.','Wer Ferngespräche anmeldet, steht dabei meistens in einer Telefonzelle.','Leo im Ballsaal, Ida in der Telefonzelle. Der Rest ergibt sich aus den Notizen zum Direktor.']},
+ reward:'Die Tabelle war voll. Die Baronin auf der Terrasse, mit einer Zigarre, die sie angeblich nur aus Gesundheitsgründen rauchte. Ida Brandt in der Telefonzelle, am Apparat mit Hamburg. Der Direktor an der Bar. Und Leo Marek im Ballsaal, am Flügel, vor zweihundert Gästen. »Alle haben ein Alibi«, sagte Stefan. »Das ist das Problem mit Alibis«, sagte Kathleen. »Wenn alle eins haben, lügt meistens einer.«',
+ after:'Hamburg. Da war ich noch nie. Riecht nach Fisch. Klingt eigentlich gut.',
+ cb:{K:'Kathleen hatte die Tabelle gelöst, bevor Stefan das Wort »Ausschlussverfahren« ganz ausgesprochen hatte.',S:'Stefan hatte die Tabelle gelöst und dabei so konzentriert ausgesehen, dass ein Kellner ihm unaufgefordert einen Kaffee brachte.',B:'Notiz für Notiz hatten sie die Tabelle gemeinsam gefüllt. Eddie hatte sich währenddessen auf Stefans Fuß gelegt, aus Solidarität.'}},
+
+{title:'Das Telegramm', illu:'telegraph', ev:'Telegramm nach Hamburg',
+ story:[
+  'Im Keller des Hotels lag das Telegrafenbüro, ein enger Raum mit einem grünen Schirm über der Lampe und einem Telegrafisten namens Otto, der seit 1911 dort saß und behauptete, er könne an der Art, wie jemand die Taste drückt, erkennen, ob er lügt.',
+  '»Um zwanzig vor zwölf kam ein Herr herunter«, sagte Otto. »Gut angezogen. Schöne Hände, wie ein Musiker. Hat ein Telegramm nach Hamburg aufgegeben und darauf bestanden, es selbst zu morsen. Ein Wort, sonst nichts. Ich hab den Durchschlag nicht mehr, aber der Lochstreifen-Rekorder läuft immer mit.«',
+  'Er legte eine kleine Rolle in das Wiedergabegerät, drückte einen Hebel, und im Keller begann es zu piepen. Eine kleine Lampe blinkte im selben Takt. Kurz, lang, Pause. Kathleen und Stefan sahen sich an. Keiner von beiden hatte Morsen gelernt. Aber an der Wand hing eine Tafel.'],
+ eddie:'Dieses Piepen ist eine Beleidigung für meine Ohren. Ich bleibe trotzdem, aus Pflichtgefühl. Und weil Otto Kekse hat.',
+ riddle:{type:'morse',title:'Die Morsebotschaft',how:'Spielt das Telegramm ab. Kurze Töne sind Punkte, lange Töne Striche, nach jedem Buchstaben kommt eine kleine Pause. Entschlüsselt das Wort mit der Tafel.',word:'HAFEN',answers:['hafen'],
+  tips:['Der Streifen schreibt mit: Jeder Block zwischen zwei Abständen ist ein Buchstabe. Sucht ihn in der Tafel.','Fünf Buchstaben. Der erste besteht aus vier Punkten, das ist ein H. Das Wort hat mit Schiffen zu tun.']},
+ reward:'»Hafen«, sagte Stefan. »Ein einziges Wort nach Hamburg.« Otto nickte. »Ging an einen gewissen Herrn Brenner, postlagernd.« Direktor Kühn, der ihnen in den Keller gefolgt war, wurde blass. »Hamburg«, murmelte er. »Ausgerechnet. Am zweiten Januar geht unser Bechstein-Flügel nach Hamburg, er ist für eine Konzertreise auf einem Ozeandampfer verliehen. Vom Hafen aus.« Kathleen schrieb sich das auf. Man weiß nie.',
+ after:'Herr Brenner. Klingt nach jemandem, der Hunde nicht mag.',
+ cb:{K:'Kathleen hatte das Morsetelegramm entschlüsselt. Otto, der Telegrafist, hatte ihr anerkennend auf die Schulter geklopft und ihr einen Keks angeboten, den dann Eddie bekam.',S:'Stefan hatte das Morsetelegramm entschlüsselt und morst seitdem heimlich mit dem Kugelschreiber auf dem Tisch. Niemand versteht, was er sagt, am wenigsten er selbst.',B:'Kurz, lang, Pause: Gemeinsam hatten sie das Telegramm geknackt. Eddie hatte bei jedem Piepen das Ohr gedreht, was eindeutig geholfen hatte.'}},
+
+{title:'Der Champagnerkelch', illu:'glass', ev:'Fingerabdruck auf dem Glas',
+ story:[
+  'Im Labor im dritten Stock, das eigentlich die Wäschekammer war, hatte der Erkennungsdienst ein Champagnerglas aus der Suite eingepudert. Auf dem Kelch prangte ein halber Fingerabdruck, grau auf glänzend, deutlich genug, um jemanden nervös zu machen.',
+  'Von allen vier Verdächtigen waren Fingerabdrücke genommen worden. Die Baronin hatte dabei verkündet, das sei die größte Demütigung seit der Inflation. Leo Marek hatte gelächelt. Ida Brandt hatte geweint. Und Direktor Kühn hatte gefragt, ob die Tinte wieder abgehe, weil er um eins noch Hände schütteln müsse.',
+  'Kathleen nahm die große Lupe vom Tisch. Stefan legte die vier Karten nebeneinander. Es gab Wirbel, Schleifen und Bögen, und irgendwo dazwischen versteckte sich die Wahrheit.'],
+ eddie:'Fingerabdrücke. Ich habe Pfotenabdrücke. Die sind viel eindeutiger und sehen hübscher aus.',
+ riddle:{type:'prints',title:'Der Abdruck auf dem Glas',how:'Fahrt mit der Lupe über den Abdruck auf dem Glas. Vergleicht das Muster mit den vier Karten. Achtet auf die Form der Linien und auf besondere Merkmale. Tippt die passende Karte an und vergleicht.',sol:'leo',
+  tips:['Auf dem Glas sieht man einen Wirbel, also Linien, die im Kreis laufen. Damit fallen zwei Karten weg.','Seht euch die Narbe genau an. Sie läuft schräg durch den Abdruck. In welche Richtung?']},
+ reward:'Der Abdruck gehörte Leo Marek. Der Wirbel, die schräge Narbe vom Daumen bis zur Mitte, alles passte. Aber als sie ihn damit konfrontierten, lächelte Marek nur. »Natürlich ist das mein Abdruck. Ich habe Herrn Falk um zehn ein Glas Champagner in die Suite gebracht. Er hat mich darum gebeten. Fragen Sie das Zimmermädchen.« Das Zimmermädchen bestätigte es. Stefan fluchte leise. Kathleen sagte nichts. Sie sah auf Mareks Hände. Musikerhände.',
+ after:'Er riecht nach Pomade und schlechtem Gewissen. Das sage ich nur, falls es jemanden interessiert.',
+ cb:{K:'Kathleen hatte den Abdruck zugeordnet. Mit der Lupe in der Hand hatte sie so überzeugend ausgesehen, dass ein Hotelgast sie um ein Autogramm bat.',S:'Stefan hatte den Abdruck zugeordnet und dabei die Lupe so dicht vor das Auge gehalten, dass Eddie kurz dachte, er habe ein neues, sehr großes Auge.',B:'Zu zweit über die Lupe gebeugt, hatten sie den Abdruck gefunden. Ihre Köpfe waren dabei zweimal zusammengestoßen, was sie als Teamarbeit verbuchten.'}},
+
+{title:'Die Funkstunde', illu:'gramophone', ev:'Aufnahmen der Funkstunde',
+ story:[
+  'Es war Stefan, der auf die Idee kam. »Der Rundfunk! Die Funkstunde hat den Ball live übertragen. Die schneiden doch immer mit, für die Wiederholung.« Ein Anruf, ein müder Toningenieur, und zwanzig Minuten später brachte ein Bote vier Wachsplatten ins Hotel, jede beschriftet mit einer Uhrzeit.',
+  'Leo Mareks Alibi war die Musik. Zweihundert Gäste hatten ihn um halb zwölf spielen hören. Aber hatten sie ihn auch gesehen? Der Flügel stand hinter einer Palme, die der Direktor für dekorativ hielt und alle anderen für einen Fehler.',
+  'Und dann erinnerte sich die Garderobiere an etwas. Im Ballsaal stehe seit Weihnachten ein neues Grammophon. Mit einer Schallplatte, die Marek selbst eingespielt habe, im Herbst, im Studio. »Klingt fast wie echt«, habe er gesagt. »Nur ein bisschen rauschiger.«'],
+ eddie:'Rauschen höre ich sofort. Ich höre auch, wenn im Nachbarhaus jemand ein Leberwurstglas öffnet. Ich bin quasi ein Messinstrument.',
+ riddle:{type:'record',title:'Live oder Schallplatte?',how:'Hört euch die vier Aufnahmen der Funkstunde an. Bei manchen spielt Leo live, bei manchen läuft seine Schallplatte. Eine Platte knistert und rauscht. Markiert alle Aufnahmen, auf denen die Schallplatte läuft.',sol:[1,2],times:['23:15','23:25','23:35','23:45'],
+  tips:['Achtet auf das Hintergrundgeräusch: ein leises Knistern, wie Regen auf einem Blechdach.','Es sind zwei Aufnahmen, direkt hintereinander. Sie umschließen die Tatzeit.']},
+ reward:'23 Uhr 25 und 23 Uhr 35: Rauschen. Knistern. Und bei der zweiten Aufnahme sprang die Nadel sogar kurz zurück, ein winziger Hüpfer im Takt, den kein lebender Pianist je gespielt hätte. Zehn Minuten lang hatte niemand am Flügel gesessen. Zehn Minuten, genug für drei Treppen, eine dunkle Suite und einen Schlag mit dem Kerzenleuchter. Leos Alibi war eine Schallplatte gewesen.',
+ after:'Ich hab es ja gleich gesagt. Also, gedacht. Laut. Mit Ohrenbewegungen.',
+ cb:{K:'Kathleen hatte das Knistern der Schallplatte als Erste gehört und Stefan dabei mit erhobenem Zeigefinger zum Schweigen gebracht, eine Geste, die er seitdem bewundernd nachübt.',S:'Stefan hatte das Knistern der Schallplatte als Erster gehört. Er behauptet, das liege an seinen Jahren als Plattensammler, die es nie gegeben hat.',B:'Ohr an Ohr hatten sie die Aufnahmen verglichen. Eddie hatte bei jedem Knistern geknurrt. Das war im Grunde schon die Lösung gewesen.'}},
+
+{title:'Die Anklage', illu:'piano', finale:true,
+ story:[
+  'Kurz vor eins ließ Kathleen alle im Ballsaal versammeln. Die Baronin, die Sekretärin, den Direktor und den Pianisten. Und Otto, den Telegrafisten, weil er darum gebeten hatte und weil er Kekse dabei hatte. Draußen regnete es noch immer. Drinnen war es so still, dass man das Grammophon hätte knistern hören, wenn es gelaufen wäre.',
+  'Stefan stand am Flügel und klopfte sich den Regen vom Hut, was dramatisch aussehen sollte und auch fast so aussah. Kathleen legte die Akte auf den Tisch. Die Uhr. Die Tabelle. Das Telegramm. Der Abdruck. Die Wachsplatten.',
+  '»Einer von Ihnen«, sagte sie, »hat Konrad Falk um 23 Uhr 32 niedergeschlagen und den Stern von Lissabon gestohlen. Und der Stern hat dieses Hotel nie verlassen. Die Polizei hat um 23 Uhr 50 alle Türen abgeriegelt. Er ist noch hier.« Alle Augen wanderten durch den Saal. Nur eine Person sah nicht hin, sondern zu Boden.'],
+ eddie:'Jetzt kommt der Teil, wo jemand »Das können Sie nicht beweisen« sagt. Ich liebe diesen Teil.',
+ riddle:{type:'accuse',title:'Fall abschließen',how:'Wählt in jeder Spalte eine Karte: Wer war es, welcher Beweis bricht das Alibi, und wo ist der Stern jetzt? Erst wenn alles stimmt, ist der Fall gelöst.',
+  cols:[{q:'Wer war es?',o:['Baronin von Stein','Leo Marek','Ida Brandt','August Kühn'],a:1},{q:'Was bricht das Alibi?',o:['Der Manschettenknopf','Die Schallplatte','Das Ferngespräch','Die Taschenuhr allein'],a:1},{q:'Wo ist der Stern?',o:['Im Zug nach Hamburg','Im Hoteltresor','Im Bechstein-Flügel','In der Pelzstola'],a:2}],
+  tips:['Wessen Alibi bestand nur aus Musik?','Der Stern hat das Hotel nie verlassen. Was verlässt das Hotel am zweiten Januar in Richtung Hamburger Hafen?']}}
+],
+FINALE:[
+ 'Kathleen ging zum Flügel, hob den schweren Deckel und griff zwischen die Saiten, dort, wo der Filz der Dämpfer am dicksten war. Als sie die Hand wieder hervorzog, lag darin ein Samtbeutel. Und in dem Beutel funkelte etwas so blau, dass sogar die Baronin für einen Moment vergaß, empört zu sein.',
+ 'Leo Marek sagte tatsächlich: »Das können Sie nicht beweisen.« Eddie bellte einmal, sehr zufrieden. Dann gestand Marek. Er hatte die Schallplatte aufgelegt, war über die Dienstbotentreppe nach oben geschlichen, hatte die Sicherung herausgedreht und Falk im Dunkeln niedergeschlagen. Den Manschettenknopf der Baronin hatte er schon Tage vorher an der Garderobe gestohlen, um eine falsche Spur zu legen. Und den Stern hatte er im Flügel versteckt, der am zweiten Januar nach Hamburg ging, wo ein Herr Brenner ihn am Hafen in Empfang nehmen sollte.',
+ '»Ein Wort«, sagte Kathleen. »Ein einziges Wort per Telegramm. Das war Ihr Fehler.« Marek zuckte mit den Schultern. »Ich bin Pianist. Ich hätte bei den Noten bleiben sollen.«',
+ 'Um halb zwei, mit anderthalb Stunden Verspätung, präsentierte Konrad Falk den Stern von Lissabon doch noch. Mit einem Verband um den Kopf und einem Glas Sekt in der Hand, das er diesmal selbst eingeschenkt hatte. Draußen hörte es endlich auf zu regnen. Und Eddie, Polizeihund Nummer 7, bekam vom Hotelkoch ein ganzes Würstchen. Es war das beste Jahr, das bisher angefangen hatte.']
+};
+</script>
+<script>
+(function(){
+'use strict';
+const {CH,FINALE,K,S,SUS}=window.KRIMI;
+const $=s=>document.querySelector(s);
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
+const norm=s=>String(s).toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]/g,'');
+const DPR=()=>Math.min(2,window.devicePixelRatio||1);
+const KEY='krimi-stern-v1';
+let G;try{G=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){G=null;}
+const fresh=()=>({ch:-1,solved:{},who:{},tips:{},start:null,end:null});
+if(!G||typeof G!=='object')G=fresh();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(G));}catch(e){}};
+const app=$('#app');
+let cleanups=[];const cleanup=()=>{cleanups.forEach(f=>{try{f();}catch(e){}});cleanups=[];try{speechSynthesis.cancel();}catch(e){}};
+const ROM=['I','II','III','IV','V','VI'];
+
+/* ---------- Klang: live synthetisiert ---------- */
+let AC=null,MUTE=false;try{MUTE=localStorage.getItem('krimi-sound')==='off';}catch(e){}
+const ac=()=>{if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}}if(AC.state==='suspended')AC.resume();return AC;};
+let MASTER=null;const out=()=>{const a=ac();if(!a)return null;if(!MASTER){MASTER=a.createGain();MASTER.gain.value=MUTE?0:1;MASTER.connect(a.destination);}return MASTER;};
+let NB=null;const noiseBuf=a=>{if(!NB){NB=a.createBuffer(1,a.sampleRate*2,a.sampleRate);const d=NB.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}return NB;};
+function noise({dur=.2,type='bandpass',f=1000,f2=null,q=1,vol=.3,at=0,att=.005,dest=null}){const a=ac(),o=dest||out();if(!a||!o)return;const t=a.currentTime+at,s=a.createBufferSource();s.buffer=noiseBuf(a);const fl=a.createBiquadFilter();fl.type=type;fl.frequency.setValueAtTime(f,t);if(f2)fl.frequency.exponentialRampToValueAtTime(f2,t+dur);fl.Q.value=q;const g=a.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+att);g.gain.exponentialRampToValueAtTime(.001,t+dur);s.connect(fl);fl.connect(g);g.connect(o);s.start(t,Math.random()*1.5);s.stop(t+dur+.05);}
+function tone({f=440,f2=null,dur=.3,type='sine',vol=.2,at=0,att=.005,dest=null}){const a=ac(),o=dest||out();if(!a||!o)return;const t=a.currentTime+at,s=a.createOscillator();s.type=type;s.frequency.setValueAtTime(f,t);if(f2)s.frequency.exponentialRampToValueAtTime(f2,t+dur);const g=a.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+att);g.gain.exponentialRampToValueAtTime(.001,t+dur);s.connect(g);g.connect(o);s.start(t);s.stop(t+dur+.05);}
+const piano=(f,at,v=.12,dest)=>{tone({f,dur:1.2,type:'triangle',vol:v,at,dest});tone({f:f*2,dur:.5,vol:v*.3,at,dest});tone({f:f*3,dur:.25,vol:v*.12,at,dest});};
+const SFX={
+ type(){for(let k=0;k<9;k++){const at=k*.075+Math.random()*.03;noise({dur:.04,f:2200+Math.random()*900,q:3,vol:.25,at});tone({f:140,dur:.03,type:'square',vol:.03,at});}tone({f:2100,dur:.9,vol:.08,at:.75});tone({f:4200,dur:.4,vol:.02,at:.75});},
+ open(){noise({dur:.28,f:1900,f2:600,q:.8,vol:.14,att:.02});},
+ close(){noise({dur:.15,f:1400,f2:700,q:.8,vol:.1});},
+ torch(){noise({dur:.03,f:3500,q:5,vol:.35});noise({dur:.03,f:2500,q:5,vol:.25,at:.06});},
+ cam(){noise({dur:.06,f:3000,q:1,vol:.4});tone({f:900,f2:3800,dur:.7,vol:.05,at:.05});},
+ tick(){noise({dur:.02,f:4200,q:8,vol:.2});},
+ pencil(){noise({dur:.12,f:4500,f2:2500,q:2,vol:.12,att:.02});},
+ click(){noise({dur:.035,f:3000,q:5,vol:.3});},
+ ting(){tone({f:2637,dur:.6,vol:.05});tone({f:3951,dur:.4,vol:.02});},
+ paper(){noise({dur:.13,f:3200,q:.8,vol:.13,att:.02});},
+ wrong(){tone({f:147,dur:.28,type:'triangle',vol:.22});tone({f:139,dur:.5,type:'triangle',vol:.22,at:.3});},
+ tip(){tone({f:1319,dur:.5,vol:.05});tone({f:1760,dur:.5,vol:.05,at:.1});},
+ solve(){[[262,330,392,494],[294,370,440,523]].forEach((ch,k)=>ch.forEach(f=>piano(f,.15+k*.35,.07)));tone({f:587,dur:1.3,type:'sawtooth',vol:.03,at:.85});tone({f:880,dur:1.3,type:'sine',vol:.05,at:.85});},
+ evidence(){noise({dur:.08,f:1800,q:1,vol:.25});tone({f:180,f2:120,dur:.15,type:'triangle',vol:.2,at:.02});},
+ gavel(){[0,.25].forEach(at=>{tone({f:220,f2:90,dur:.18,type:'triangle',vol:.35,at});noise({dur:.08,f:900,q:1,vol:.35,at});});},
+ whistle(){const a=ac(),o=out();if(!a||!o)return;[0,.5].forEach(at=>{const t=a.currentTime+at,s=a.createOscillator(),l=a.createOscillator(),lg=a.createGain(),g=a.createGain();s.type='sine';s.frequency.value=2800;l.frequency.value=28;lg.gain.value=90;l.connect(lg);lg.connect(s.frequency);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.09,t+.02);g.gain.setValueAtTime(.09,t+.35);g.gain.exponentialRampToValueAtTime(.001,t+.42);s.connect(g);g.connect(o);s.start(t);l.start(t);s.stop(t+.45);l.stop(t+.45);});},
+ thunder(){noise({dur:2.2,type:'lowpass',f:260,f2:60,vol:.35,att:.08});noise({dur:.4,type:'lowpass',f:900,vol:.18});}
+};
+const sfx=n=>{if(MUTE)return;try{SFX[n]&&SFX[n]();}catch(e){}};
+
+/* Regen und leiser Barjazz */
+let AMB=null;
+function ambient(on){const a=ac(),o=out();if(!a||!o)return;
+  if(on&&!AMB){const bus=a.createGain();bus.gain.value=1;bus.connect(o);
+    const s=a.createBufferSource();s.buffer=noiseBuf(a);s.loop=true;const hp=a.createBiquadFilter();hp.type='highpass';hp.frequency.value=900;const lp=a.createBiquadFilter();lp.type='lowpass';lp.frequency.value=5000;const g=a.createGain();g.gain.value=.045;s.connect(hp);hp.connect(lp);lp.connect(g);g.connect(bus);s.start();
+    const drops=setInterval(()=>{if(Math.random()<.6)noise({dur:.02,f:2500+Math.random()*3000,q:6,vol:.02+Math.random()*.04,dest:bus});},120);
+    const mus=a.createGain();mus.gain.value=1;mus.connect(bus);
+    const CH4=[[147,[294,349,440,523]],[196,[247,349,392,494]],[131,[262,330,392,494]],[220,[262,330,392,440]]];let bar=0;
+    const playBar=()=>{const [r,ch]=CH4[bar%4],b=.667;
+      [r,r*1.26,r*1.5,r*1.26].forEach((f,k)=>tone({f,dur:.5,type:'triangle',vol:.06,at:k*b,dest:mus}));
+      [1,3].forEach(k=>noise({dur:.09,type:'highpass',f:6000,vol:.025,at:k*b,dest:mus}));
+      if(bar%2===0)ch.forEach(f=>piano(f,.02,.018,mus));else ch.forEach(f=>piano(f,b*1.5,.015,mus));
+      bar++;};
+    playBar();const jz=setInterval(playBar,2667);
+    AMB={s,drops,jz,mus,bus};}
+  else if(!on&&AMB){try{AMB.s.stop();}catch(e){}clearInterval(AMB.drops);clearInterval(AMB.jz);try{AMB.bus.disconnect();}catch(e){}AMB=null;}}
+function duck(ms){if(!AMB||!AC)return;const g=AMB.mus.gain,t=AC.currentTime;g.cancelScheduledValues(t);g.setValueAtTime(g.value,t);g.linearRampToValueAtTime(0,t+.2);g.setValueAtTime(0,t+ms/1000);g.linearRampToValueAtTime(1,t+ms/1000+.8);}
+function setMute(m){MUTE=m;try{localStorage.setItem('krimi-sound',m?'off':'on');}catch(e){}if(MASTER)MASTER.gain.value=m?0:1;ambient(!m&&G.start&&G.ch>=0);sndBtn();}
+function sndBtn(){const b=$('#snd');b.textContent=MUTE?'🔇':'🔊';b.setAttribute('aria-label',MUTE?'Ton einschalten':'Ton ausschalten');b.setAttribute('aria-pressed',String(!MUTE));}
+$('#snd').addEventListener('click',()=>setMute(!MUTE));sndBtn();
+function camflash(){const c=$('#cam');c.classList.remove('go');void c.offsetWidth;c.classList.add('go');sfx('cam');}
+
+/* ---------- Bilder ---------- */
+const EDDIE=`<svg class="av" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#1a1d2a"/><path d="M14 22 C8 28 9 42 15 46 C19 42 20 32 20 26 Z" fill="#6b4523"/><path d="M50 22 C56 28 55 42 49 46 C45 42 44 32 44 26 Z" fill="#6b4523"/><ellipse cx="32" cy="35" rx="16" ry="17" fill="#b07a45"/><ellipse cx="32" cy="44" rx="9" ry="7" fill="#e8cfa8"/><circle cx="26" cy="32" r="2.6" fill="#1b130b"/><circle cx="38" cy="32" r="2.6" fill="#1b130b"/><circle cx="26.8" cy="31.2" r=".9" fill="#fff"/><circle cx="38.8" cy="31.2" r=".9" fill="#fff"/><ellipse cx="32" cy="40.5" rx="3.6" ry="2.6" fill="#1b130b"/><path d="M32 43 v3 M28.5 46.5 q3.5 2.5 7 0" stroke="#1b130b" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M17 19 Q32 5 47 19 L45 24 H19 Z" fill="#1d2a4a"/><rect x="16" y="22" width="32" height="5" rx="2" fill="#0f1830"/><circle cx="32" cy="15" r="3" fill="#d8b45a"/><path d="M22 27 h20" stroke="#d8b45a" stroke-width="1"/></svg>`;
+const STARS=Array.from({length:30},(_,i)=>`<circle cx="${(i*197)%800}" cy="${(i*53)%120}" r="${i%4?.8:1.3}" fill="#dfe6ff" opacity="${.2+(i%5)*.08}"/>`).join('');
+const DEF=`<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1022"/><stop offset="1" stop-color="#1c2340"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2dc9a"/><stop offset="1" stop-color="#9a7a2c"/></linearGradient><radialGradient id="cone" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#ffe6a0" stop-opacity=".45"/><stop offset="1" stop-color="#ffe6a0" stop-opacity="0"/></radialGradient><radialGradient id="spot" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff2c8" stop-opacity=".35"/><stop offset="1" stop-color="#fff2c8" stop-opacity="0"/></radialGradient></defs>`;
+const WIN=(x0,y0,cols,rows,w,h,gx,gy)=>{let s='';for(let c=0;c<cols;c++)for(let r=0;r<rows;r++){const lit=((c*7+r*3)%5)<3;s+=`<rect x="${x0+c*gx}" y="${y0+r*gy}" width="${w}" height="${h}" fill="${lit?'#f2c86a':'#1a1f33'}" opacity="${lit?.85:1}"/>`;}return s;};
+const SCENE={
+ hotel:`${DEF}<rect width="800" height="350" fill="url(#sky)"/>${STARS}<rect x="140" y="40" width="520" height="250" fill="#141826"/><path d="M140 40 L400 8 L660 40 Z" fill="#10131f"/>${WIN(170,70,10,4,26,30,48,46)}<rect x="300" y="236" width="200" height="54" fill="#0d0f18"/><path d="M280 236 H520 L500 214 H300 Z" fill="#6b1a1a"/><text x="400" y="230" text-anchor="middle" font-family="Limelight,serif" font-size="12" fill="#f2dc9a">GRANDHOTEL ADLERHOF</text><rect x="370" y="250" width="60" height="40" fill="#f2c86a" opacity=".7"/><rect y="290" width="800" height="60" fill="#0b0d14"/><path d="M0 300 H800" stroke="#2a3150" stroke-width="2"/><g opacity=".14" transform="translate(0 600) scale(1 -1)">${WIN(170,300,10,1,26,8,48,0)}</g><g><rect x="60" y="262" width="150" height="34" rx="10" fill="#1f2433"/><rect x="85" y="244" width="90" height="26" rx="8" fill="#252b3c"/><circle cx="90" cy="298" r="12" fill="#07080c"/><circle cx="182" cy="298" r="12" fill="#07080c"/><rect x="122" y="236" width="16" height="9" rx="3" fill="#4d7cff"/><circle cx="130" cy="240" r="30" fill="#4d7cff" opacity=".18"/></g><g><rect x="600" y="266" width="140" height="30" rx="10" fill="#1f2433"/><rect x="622" y="250" width="86" height="24" rx="8" fill="#252b3c"/><circle cx="628" cy="298" r="11" fill="#07080c"/><circle cx="712" cy="298" r="11" fill="#07080c"/></g><g fill="#0a0b10"><rect x="250" y="252" width="14" height="40" rx="5"/><circle cx="257" cy="246" r="7"/><path d="M240 246 a17 9 0 0 1 34 0 Z" fill="#20253a"/><rect x="530" y="254" width="12" height="38" rx="5"/><circle cx="536" cy="248" r="6"/><path d="M520 270 q8 -14 20 -2 l-2 22 h-12 Z"/></g>`,
+ watch:`${DEF}<rect width="800" height="350" fill="#1a120c"/><rect width="800" height="350" fill="url(#spot)"/><path d="M200 120 C120 60 80 140 150 170 C210 200 260 160 310 175" stroke="url(#gold)" stroke-width="5" fill="none" stroke-dasharray="7 4"/><circle cx="420" cy="180" r="120" fill="url(#gold)"/><circle cx="420" cy="180" r="104" fill="#f3ead6"/><rect x="408" y="44" width="24" height="22" rx="4" fill="url(#gold)"/><circle cx="420" cy="40" r="14" fill="none" stroke="url(#gold)" stroke-width="6"/>${Array.from({length:12},(_,k)=>{const a=k*Math.PI/6;return `<text x="${(420+Math.sin(a)*82).toFixed(1)}" y="${(186-Math.cos(a)*82).toFixed(1)}" text-anchor="middle" font-family="Limelight,serif" font-size="18" fill="#2a2016">${['XII','I','II','III','IIII','V','VI','VII','VIII','IX','X','XI'][k]}</text>`;}).join('')}<path d="M420 180 L${(420+Math.sin(11.783*Math.PI/6)*52).toFixed(1)} ${(180-Math.cos(11.783*Math.PI/6)*52).toFixed(1)}" stroke="#1a1410" stroke-width="6" stroke-linecap="round"/><path d="M420 180 L${(420+Math.sin(47*Math.PI/30)*80).toFixed(1)} ${(180-Math.cos(47*Math.PI/30)*80).toFixed(1)}" stroke="#1a1410" stroke-width="3.5" stroke-linecap="round"/><circle cx="420" cy="180" r="6" fill="#1a1410"/><path d="M370 100 L430 170 L400 230 M430 170 L500 150 M430 170 L470 250" stroke="#fff" stroke-width="1.5" opacity=".75" fill="none"/>`,
+ ballroom:`${DEF}<rect width="800" height="350" fill="#120f18"/>${[80,240,400,560,720].map(x=>`<path d="M${x-60} 300 V120 Q${x} 40 ${x+60} 120 V300" fill="#1c1824" stroke="#9a7a2c" stroke-width="2"/>`).join('')}<path d="M400 0 V40" stroke="#9a7a2c" stroke-width="3"/><path d="M340 60 Q400 110 460 60 M360 50 Q400 85 440 50" stroke="url(#gold)" stroke-width="3" fill="none"/>${[340,370,400,430,460].map((x,k)=>`<path d="M${x} ${60+Math.abs(k-2)*-4+8} v18" stroke="#f2dc9a" stroke-width="2"/><circle cx="${x}" cy="${86+(2-Math.abs(k-2))*4}" r="4" fill="#fff4cc"/>`).join('')}<circle cx="400" cy="80" r="90" fill="#ffe6a0" opacity=".1"/><rect y="300" width="800" height="50" fill="#0c0a10"/><path d="M0 300 L800 300" stroke="#9a7a2c"/><g><path d="M520 250 Q560 220 640 232 Q690 240 690 262 L520 262 Z" fill="#07070a"/><path d="M528 232 L610 160 L620 168 L560 236 Z" fill="#0d0d12"/><rect x="530" y="262" width="8" height="40" fill="#07070a"/><rect x="670" y="262" width="8" height="40" fill="#07070a"/></g><g fill="#132a1c"><rect x="474" y="230" width="12" height="70" fill="#3a2716"/><path d="M480 230 C440 200 430 160 470 150 C470 180 478 200 480 230 C482 190 500 160 520 170 C510 200 490 210 480 230 C470 180 450 140 480 120 C500 150 490 200 480 230"/></g><g fill="#05050a">${[120,170,250,300,360].map((x,k)=>`<rect x="${x}" y="${250-k%2*6}" width="16" height="${50+k%2*6}" rx="6"/><circle cx="${x+8}" cy="${242-k%2*6}" r="9"/>`).join('')}</g>`,
+ telegraph:`${DEF}<rect width="800" height="350" fill="#0e1210"/><path d="M400 70 L250 300 H550 Z" fill="url(#cone)"/><path d="M360 40 H440 L470 72 H330 Z" fill="#1f5a3a"/><path d="M400 10 V40" stroke="#333" stroke-width="3"/><circle cx="400" cy="74" r="8" fill="#fff4cc"/><rect y="280" width="800" height="70" fill="#2a1d12"/><rect x="330" y="248" width="140" height="18" rx="3" fill="#3a2716"/><path d="M350 248 L440 236" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/><circle cx="446" cy="234" r="11" fill="#141414" stroke="url(#gold)" stroke-width="3"/><rect x="380" y="226" width="12" height="22" fill="url(#gold)"/><path d="M500 270 C560 268 580 240 620 250 C660 260 640 290 700 286" stroke="#efe6cf" stroke-width="12" fill="none"/><g fill="#1f1b16">${Array.from({length:12},(_,k)=>`<circle cx="${510+k*16}" cy="${[270,268,262,252,248,250,256,262,272,280,286,286][k]}" r="${k%3?1.6:2.6}"/>`).join('')}</g><rect x="80" y="120" width="140" height="110" fill="#1d241f" stroke="#3a4a3f"/><text x="150" y="160" text-anchor="middle" font-family="Courier Prime,monospace" font-size="16" fill="#9fb3a5">A .-</text><text x="150" y="185" text-anchor="middle" font-family="Courier Prime,monospace" font-size="16" fill="#9fb3a5">B -...</text><text x="150" y="210" text-anchor="middle" font-family="Courier Prime,monospace" font-size="16" fill="#9fb3a5">C -.-.</text>`,
+ glass:`${DEF}<rect width="800" height="350" fill="#0c0c10"/><rect width="800" height="350" fill="url(#spot)"/><rect y="280" width="800" height="70" fill="#17171d"/><path d="M330 120 Q400 200 470 120 Z" fill="#cfd6e8" opacity=".35" stroke="#e8eefc" stroke-width="3"/><path d="M400 168 V270 M360 274 H440" stroke="#e8eefc" stroke-width="4" opacity=".8"/><g transform="translate(372 128)" opacity=".85">${Array.from({length:6},(_,k)=>`<ellipse cx="14" cy="14" rx="${3+k*2.2}" ry="${3.5+k*2.6}" fill="none" stroke="#fff" stroke-width=".9"/>`).join('')}</g><circle cx="560" cy="170" r="70" fill="none" stroke="url(#gold)" stroke-width="10"/><path d="M610 222 L680 300" stroke="#3a2716" stroke-width="18" stroke-linecap="round"/><circle cx="560" cy="170" r="62" fill="#9ab4ff" opacity=".08"/><g fill="#f4f1ea">${[0,1,2,3].map(k=>`<rect x="${120+k*42}" y="${230-k*6}" width="40" height="52" transform="rotate(${k*5-8} ${140+k*42} ${256})"/>`).join('')}</g>`,
+ gramophone:`${DEF}<rect width="800" height="350" fill="#141016"/><rect width="800" height="350" fill="url(#spot)"/><rect y="280" width="800" height="70" fill="#20160e"/><rect x="300" y="230" width="200" height="56" rx="4" fill="#4a2e18"/><ellipse cx="400" cy="230" rx="80" ry="14" fill="#0a0a0a"/><ellipse cx="400" cy="230" rx="22" ry="4" fill="#a8322a"/><path d="M460 226 L470 160 L520 110" stroke="url(#gold)" stroke-width="6" fill="none"/><path d="M520 110 C540 60 600 30 660 20 C680 70 640 120 600 140 C570 150 540 140 520 110 Z" fill="url(#gold)"/><path d="M528 112 C560 90 610 60 650 30" stroke="#5a3d10" stroke-width="2" fill="none"/>${[0,1,2,3].map(k=>`<g transform="translate(${110+k*30} ${250-k*4}) rotate(${k*8-12})"><circle r="34" fill="#0b0b0b" stroke="#222"/><circle r="11" fill="${['#a8322a','#2f4a7a','#d8b45a','#3f6b4a'][k]}"/></g>`).join('')}`,
+ piano:`${DEF}<rect width="800" height="350" fill="#0c0b10"/><path d="M400 0 L250 330 H550 Z" fill="url(#cone)" opacity=".7"/><rect y="290" width="800" height="60" fill="#120f0c"/><path d="M230 250 Q300 200 470 210 Q590 218 590 252 L230 252 Z" fill="#050507" stroke="#2a2a30"/><path d="M240 228 L420 80 L440 92 L300 236 Z" fill="#0d0d12" stroke="#2a2a30"/><path d="M420 80 L440 92 L452 252" stroke="#2a2a30" stroke-width="3"/><rect x="230" y="252" width="80" height="14" fill="#f4f1ea"/>${Array.from({length:10},(_,k)=>`<rect x="${233+k*8}" y="252" width="4" height="8" fill="#050507"/>`).join('')}<rect x="250" y="266" width="10" height="34" fill="#050507"/><rect x="560" y="252" width="10" height="44" fill="#050507"/><path d="M300 236 Q420 215 560 236" stroke="#9a7a2c" stroke-width="1.5" fill="none" opacity=".6"/>`
+};
+const scene=k=>`<div class="scene"><svg viewBox="0 0 800 350" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Szene">${SCENE[k]}</svg><canvas aria-hidden="true"></canvas><div class="flash"></div></div>`;
+function rain(root){const sc=root.querySelector('.scene');if(!sc)return ()=>{};const cv=sc.querySelector('canvas'),fl=sc.querySelector('.flash');const x=cv.getContext('2d');let W=0,H=0,raf=0,drops=[];
+  const rs=()=>{const d=DPR();W=sc.clientWidth;H=sc.clientHeight;cv.width=W*d;cv.height=H*d;x.setTransform(d,0,0,d,0,0);drops=Array.from({length:Math.round(W/5)},()=>({x:Math.random()*W,y:Math.random()*H,v:6+Math.random()*6,l:8+Math.random()*12}));};rs();
+  const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const step=()=>{x.clearRect(0,0,W,H);x.strokeStyle='rgba(200,215,255,.32)';x.lineWidth=1;x.beginPath();for(const d of drops){x.moveTo(d.x,d.y);x.lineTo(d.x-2,d.y+d.l);d.y+=d.v;d.x-=1;if(d.y>H){d.y=-20;d.x=Math.random()*(W+40);}}x.stroke();raf=requestAnimationFrame(step);};
+  if(!red)step();
+  const lt=()=>{fl.classList.remove('go');void fl.offsetWidth;fl.classList.add('go');setTimeout(()=>sfx('thunder'),500+Math.random()*900);};
+  let tm=setTimeout(function L(){if(!red)lt();tm=setTimeout(L,14000+Math.random()*14000);},3500+Math.random()*3000);
+  const ro=new ResizeObserver(rs);ro.observe(sc);
+  return ()=>{cancelAnimationFrame(raf);clearTimeout(tm);ro.disconnect();};}
+
+/* Porträts der Verdächtigen */
+const FACE={
+ vera:c=>`<circle cx="50" cy="52" r="20" fill="#e8cdb0"/><path d="M18 40 Q50 10 82 40 Q60 30 50 32 Q40 30 18 40 Z" fill="${c}"/><path d="M14 42 H86" stroke="${c}" stroke-width="5" stroke-linecap="round"/><path d="M28 84 Q50 66 72 84 L78 100 H22 Z" fill="#e9e1d3"/><path d="M26 82 Q50 96 74 82" stroke="#cfc6b6" stroke-width="10" fill="none"/><circle cx="43" cy="52" r="2" fill="#222"/><circle cx="57" cy="52" r="2" fill="#222"/><path d="M45 62 q5 3 10 0" stroke="#a8322a" stroke-width="2.5" fill="none"/>`,
+ leo:c=>`<circle cx="50" cy="50" r="19" fill="#e8cdb0"/><path d="M31 46 Q32 26 52 28 Q70 28 69 44 Q60 34 40 38 Z" fill="#141414"/><path d="M26 100 V86 Q50 70 74 86 V100 Z" fill="#111"/><path d="M44 78 L50 84 L56 78 L56 88 L50 84 L44 88 Z" fill="${c}"/><path d="M46 70 L50 78 L54 70" fill="#f4f1ea"/><circle cx="43" cy="50" r="2" fill="#222"/><circle cx="57" cy="50" r="2" fill="#222"/><path d="M44 60 q6 3 12 -1" stroke="#5a3a2a" stroke-width="2" fill="none"/>`,
+ ida:c=>`<path d="M28 58 Q26 28 50 28 Q74 28 72 58 L66 62 V44 H34 V62 Z" fill="#3a2a1e"/><circle cx="50" cy="52" r="18" fill="#e8cdb0"/><path d="M32 44 Q50 30 68 44 Q60 38 50 39 Q40 38 32 44 Z" fill="#3a2a1e"/><circle cx="43" cy="52" r="5" fill="none" stroke="#222" stroke-width="1.6"/><circle cx="57" cy="52" r="5" fill="none" stroke="#222" stroke-width="1.6"/><path d="M48 52 h4" stroke="#222" stroke-width="1.6"/><path d="M28 100 V88 Q50 72 72 88 V100 Z" fill="${c}"/><path d="M46 63 q4 2 8 0" stroke="#8a4a3a" stroke-width="2" fill="none"/>`,
+ kuehn:c=>`<ellipse cx="50" cy="50" rx="20" ry="21" fill="#e8cdb0"/><path d="M31 46 Q31 40 34 40 M69 46 Q69 40 66 40" stroke="#888" stroke-width="5" stroke-linecap="round"/><path d="M38 61 Q44 56 50 60 Q56 56 62 61 Q56 64 50 62 Q44 64 38 61 Z" fill="#555"/><circle cx="43" cy="49" r="2" fill="#222"/><circle cx="57" cy="49" r="2" fill="#222"/><path d="M24 100 V88 Q50 70 76 88 V100 Z" fill="${c}"/><path d="M47 72 L50 90 L53 72 Z" fill="#7a1c14"/>`
+};
+const portrait=(id,big)=>{const s=SUS.find(x=>x.id===id);return `<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#1a1a22"/><circle cx="50" cy="50" r="46" fill="#22222c"/>${FACE[id](s.c)}</svg>`;};
+
+/* Fingerabdrücke */
+function fp(type,scar,opt={}){const col=opt.col||'#222',sw=opt.sw||1.5;let p='';
+  if(type==='whorl')for(let r=3;r<46;r+=3.1)p+=`<ellipse cx="50" cy="52" rx="${r}" ry="${(r*1.18).toFixed(1)}" transform="rotate(${(r*.9).toFixed(1)} 50 52)"/>`;
+  if(type==='loop')for(let r=3;r<46;r+=3.1)p+=`<path d="M0 ${52-r} H50 A${r} ${r*1.05} 0 0 1 50 ${52+r} H0"/>`;
+  if(type==='arch')for(let k=0;k<26;k++){const y=8+k*4;p+=`<path d="M0 ${y+14} Q50 ${y-16+k*.9} 100 ${y+14}"/>`;}
+  const sc=scar==='\\'?'<path d="M26 26 L72 78" stroke="'+(opt.bg||'#fff')+'" stroke-width="3.4"/>':scar==='/'?'<path d="M74 26 L28 78" stroke="'+(opt.bg||'#fff')+'" stroke-width="3.4"/>':'';
+  const id='c'+Math.random().toString(36).slice(2,8);
+  return `<defs><clipPath id="${id}">${opt.partial?'<path d="M14 30 C30 8 70 6 86 30 C92 52 80 70 66 76 C50 82 40 70 30 74 C16 70 8 50 14 30 Z"/>':'<ellipse cx="50" cy="52" rx="40" ry="46"/>'}</clipPath></defs><g clip-path="url(#${id})"><g fill="none" stroke="${col}" stroke-width="${sw}">${p}</g>${sc}</g>`;}
+const PRINT={vera:['loop',''],leo:['whorl','\\'],ida:['whorl','/'],kuehn:['arch','']};
+
+/* ---------- Beweisstücke ---------- */
+const BG=`<rect width="400" height="280" fill="#1c1c22"/><rect width="400" height="280" fill="url(#spotf)"/>`;
+const FDEF=`<defs><radialGradient id="spotf" cx=".5" cy=".45" r=".6"><stop offset="0" stop-color="#fff2c8" stop-opacity=".22"/><stop offset="1" stop-color="#fff2c8" stop-opacity="0"/></radialGradient><linearGradient id="gold2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7e1a0"/><stop offset=".5" stop-color="#c9a14a"/><stop offset="1" stop-color="#7a5612"/></linearGradient></defs>`;
+const FIND={
+ 0:{post:[
+  {t:'Nr. 1 · Manschettenknopf',cap:'Gold, oval, mit einem verschnörkelten V. Teuer. Gefunden unter dem Sessel, als hätte ihn jemand dort verloren. Oder hingelegt.',svg:`${FDEF}${BG}<ellipse cx="200" cy="150" rx="90" ry="62" fill="url(#gold2)"/><ellipse cx="200" cy="150" rx="74" ry="48" fill="none" stroke="#7a5612" stroke-width="3"/><text x="200" y="176" text-anchor="middle" font-family="Limelight,serif" font-size="74" fill="#5a3d10">V</text><rect x="186" y="210" width="28" height="30" fill="#9a7a2c"/>`},
+  {t:'Nr. 2 · Streichholzheft',cap:'Vom »Club Kranich« in der Friedrichstraße. Drei Streichhölzer fehlen. Auf der Innenseite steht mit Bleistift: »Mi. 22 Uhr, wie immer«.',svg:`${FDEF}${BG}<g transform="rotate(-8 200 140)"><rect x="110" y="70" width="180" height="140" rx="6" fill="#121a2e"/><rect x="110" y="70" width="180" height="26" fill="#d8b45a"/><text x="200" y="140" text-anchor="middle" font-family="Limelight,serif" font-size="26" fill="#f2dc9a">CLUB</text><text x="200" y="172" text-anchor="middle" font-family="Limelight,serif" font-size="26" fill="#f2dc9a">KRANICH</text><path d="M170 190 l30 -14 l30 14" stroke="#d8b45a" stroke-width="2" fill="none"/><text x="200" y="88" text-anchor="middle" font-family="Courier Prime,monospace" font-size="12" fill="#121a2e">FRIEDRICHSTR. 112</text></g>`},
+  {t:'Nr. 3 · Taschenuhr',cap:'Gold, Monogramm K. F. Glas zersprungen, die Zeiger stehen auf 23:47. Gefunden am Kamin.',svg:`${FDEF}${BG}<circle cx="200" cy="146" r="96" fill="url(#gold2)"/><circle cx="200" cy="146" r="82" fill="#f3ead6"/><circle cx="200" cy="38" r="12" fill="none" stroke="url(#gold2)" stroke-width="6"/>${Array.from({length:12},(_,k)=>{const a=k*Math.PI/6;return `<path d="M${(200+Math.sin(a)*72).toFixed(1)} ${(146-Math.cos(a)*72).toFixed(1)} L${(200+Math.sin(a)*64).toFixed(1)} ${(146-Math.cos(a)*64).toFixed(1)}" stroke="#2a2016" stroke-width="3"/>`;}).join('')}<path d="M200 146 L${(200+Math.sin(11.783*Math.PI/6)*42).toFixed(1)} ${(146-Math.cos(11.783*Math.PI/6)*42).toFixed(1)}" stroke="#1a1410" stroke-width="6" stroke-linecap="round"/><path d="M200 146 L${(200+Math.sin(47*Math.PI/30)*64).toFixed(1)} ${(146-Math.cos(47*Math.PI/30)*64).toFixed(1)}" stroke="#1a1410" stroke-width="3.5" stroke-linecap="round"/><path d="M160 90 L210 140 L190 200 M210 140 L260 120" stroke="#fff" stroke-width="1.5" opacity=".8" fill="none"/><text x="200" y="196" text-anchor="middle" font-family="Limelight,serif" font-size="14" fill="#7a5612">K · F</text>`}]},
+ 2:{pre:[{t:'Die vier Verdächtigen',cap:'Baronin Vera von Stein, Leo Marek, Ida Brandt, August Kühn. Alle vier hatten an diesem Abend Zugang zur Suite.',svg:`${FDEF}${BG}${SUS.map((s,k)=>`<g transform="translate(${14+k*96} 50)"><rect width="84" height="120" fill="#f4f1ea"/><g transform="translate(4 4) scale(.76)">${portrait(s.id).replace('<svg viewBox="0 0 100 100" aria-hidden="true">','').replace('</svg>','')}</g><text x="42" y="98" text-anchor="middle" font-family="Courier Prime,monospace" font-size="10" fill="#1f1b16">${s.name.split(' ').slice(-1)[0].toUpperCase()}</text><text x="42" y="112" text-anchor="middle" font-family="Courier Prime,monospace" font-size="8" fill="#5f5240">${s.role.split(',')[0]}</text></g>`).join('')}<text x="200" y="210" text-anchor="middle" font-family="Special Elite,monospace" font-size="16" fill="#d8b45a">KRIPO BERLIN · FALL 1928/312</text>`}]},
+ 3:{post:[{t:'Telegrammformular',cap:'Aufgegeben 23:40 im Grandhotel Adlerhof. Empfänger: Herr Brenner, postlagernd Hamburg. Text: ein Wort.',svg:`${FDEF}${BG}<g transform="rotate(3 200 140)"><rect x="60" y="40" width="280" height="200" fill="#efe3c2"/><rect x="60" y="40" width="280" height="34" fill="#c9b48a"/><text x="200" y="63" text-anchor="middle" font-family="Special Elite,monospace" font-size="18" fill="#1f1b16">DEUTSCHE REICHSTELEGRAPHIE</text><text x="80" y="100" font-family="Courier Prime,monospace" font-size="13" fill="#5f5240">AN: BRENNER, POSTLAGERND HAMBURG</text><text x="80" y="122" font-family="Courier Prime,monospace" font-size="13" fill="#5f5240">AUFGEGEBEN: 31.12.28  23:40</text><text x="200" y="182" text-anchor="middle" font-family="Special Elite,monospace" font-size="44" fill="#1f1b16">HAFEN</text><circle cx="300" cy="210" r="22" fill="none" stroke="#b0261c" stroke-width="3" opacity=".7"/></g>`}]},
+ 5:{pre:[{t:'Programm des Silvesterballs',cap:'»23 bis 24 Uhr: Leo Marek am Flügel. Um Mitternacht: Präsentation des Sterns von Lissabon.« Der Flügel steht hinter der großen Palme.',svg:`${FDEF}${BG}<g transform="rotate(-3 200 140)"><rect x="100" y="24" width="200" height="236" fill="#f4ecd8"/><rect x="110" y="34" width="180" height="216" fill="none" stroke="#9a7a2c" stroke-width="2"/><text x="200" y="74" text-anchor="middle" font-family="Limelight,serif" font-size="20" fill="#1f1b16">SILVESTERBALL</text><text x="200" y="96" text-anchor="middle" font-family="Courier Prime,monospace" font-size="12" fill="#5f5240">GRANDHOTEL ADLERHOF · 1928</text><path d="M140 108 H260" stroke="#9a7a2c"/>${[['21:00','Diner'],['22:00','Tanzorchester'],['23:00','Leo Marek am Flügel'],['24:00','Der Stern von Lissabon']].map(([a,b],k)=>`<text x="128" y="${138+k*28}" font-family="Courier Prime,monospace" font-size="12" font-weight="700" fill="#1f1b16">${a}</text><text x="176" y="${138+k*28}" font-family="Courier Prime,monospace" font-size="12" fill="#1f1b16">${b}</text>`).join('')}<path d="M170 220 l30 -16 l30 16 M180 212 v14 M220 212 v14" stroke="#9a7a2c" stroke-width="2" fill="none"/></g>`}]},
+ 6:{pre:[{t:'Frachtbrief',cap:'Spedition Hansa & Söhne. Ein Bechstein-Konzertflügel, Abholung am 2. Januar 1929 im Grandhotel Adlerhof, Ziel: Hamburger Hafen, Schuppen 7.',svg:`${FDEF}${BG}<g transform="rotate(2 200 140)"><rect x="50" y="40" width="300" height="200" fill="#f4f1ea"/><text x="70" y="72" font-family="Special Elite,monospace" font-size="18" fill="#1f1b16">FRACHTBRIEF Nr. 4471</text><path d="M70 82 H330" stroke="#1f1b16"/>${[['Ware','1 Konzertflügel, Bechstein'],['Abholung','2. Januar 1929'],['Von','Grandhotel Adlerhof, Berlin'],['Nach','Hamburg, Hafen, Schuppen 7']].map(([a,b],k)=>`<text x="70" y="${110+k*26}" font-family="Courier Prime,monospace" font-size="12" font-weight="700" fill="#5f5240">${a}:</text><text x="150" y="${110+k*26}" font-family="Courier Prime,monospace" font-size="12" fill="#1f1b16">${b}</text>`).join('')}<g transform="rotate(-12 290 210)"><rect x="240" y="192" width="100" height="32" fill="none" stroke="#b0261c" stroke-width="3"/><text x="290" y="214" text-anchor="middle" font-family="Special Elite,monospace" font-size="14" fill="#b0261c">EILGUT</text></g></g>`}]}
+};
+const findSvg=(f,l)=>`<svg viewBox="0 0 400 280" role="img" aria-label="${l}">${f.svg}</svg>`;
+const lb=$('#lb');
+function openFind(f){$('#lbImg').innerHTML=findSvg(f,f.t);$('#lbT').textContent=f.t;$('#lbP').textContent=f.cap;sfx('open');try{lb.showModal();}catch(e){lb.setAttribute('open','');}}
+$('#lbX').addEventListener('click',()=>lb.close());lb.addEventListener('click',e=>{if(e.target===lb)lb.close();});lb.addEventListener('close',()=>sfx('close'));
+const findsHtml=(arr,tag)=>arr&&arr.length?`<div class="finds">${arr.map((f,k)=>`<button class="find" type="button" data-f="${tag}${k}" aria-label="${f.t}, vergrößern">${findSvg(f,f.t)}<em>Beweis</em><small>Antippen</small><span>${f.t}</span></button>`).join('')}</div>`:'';
+function bindFinds(root,map){root.querySelectorAll('.find').forEach(b=>b.addEventListener('click',()=>openFind(map[b.dataset.f])));}
+
+/* ---------- Kopfzeile ---------- */
+const nEv=()=>CH.filter((c,i)=>!c.finale&&G.who[i]).length;
+function top(){
+  $('#prog').innerHTML=CH.map((c,i)=>`<i class="${G.who[i]||(c.finale&&G.solved[i])?'done':i===G.ch?'now':''}"></i>`).join('');
+  $('#evc').innerHTML=`<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 3 V1.5 H11 V3" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>${nEv()}/6`;
+}
+let tInt=null;
+function timer(){clearInterval(tInt);const t=$('#timer');const f=()=>{if(!G.start){t.textContent='00:00';return;}const ms=(G.end||Date.now())-G.start,m=Math.floor(ms/60000),s=Math.floor(ms/1000)%60;t.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');};f();tInt=setInterval(f,1000);}
+const bubble=(t,h)=>`<div class="eddie">${EDDIE}<div class="bubble"><b>${h||'Eddie denkt'}</b>${t}</div></div>`;
+const SUN=`<svg class="sun" viewBox="0 0 120 60" aria-hidden="true">${Array.from({length:11},(_,k)=>{const a=Math.PI+k*Math.PI/10;return `<path d="M60 58 L${(60+Math.cos(a)*58).toFixed(1)} ${(58+Math.sin(a)*58).toFixed(1)}" stroke="#d8b45a" stroke-width="1.5" opacity=".7"/>`;}).join('')}<circle cx="60" cy="58" r="20" fill="#0d0d12" stroke="#d8b45a" stroke-width="2"/><path d="M60 44 l3 9 h9 l-7 6 l3 9 l-8 -5 l-8 5 l3 -9 l-7 -6 h9 Z" fill="#8eacff"/></svg>`;
+
+/* ---------- Start ---------- */
+function renderStart(){
+  cleanup();top();timer();window.scrollTo({top:0,behavior:'instant'});
+  const resume=G.start&&G.ch>=0;
+  app.innerHTML=`<section class="cover">${SUN}<small>Kriminalpolizei Berlin · Fall 1928/312</small><h1>Der Stern von Lissabon</h1><p>Silvesternacht im Grandhotel Adlerhof. Ein Juwelier am Boden, ein Diamant verschwunden, vier Verdächtige und eine Stunde, um den Fall zu lösen.</p>
+   <div class="cast"><span>Kommissarin Kathleen</span><span>Inspektor Stefan</span><span>Polizeihund Eddie</span></div></section>
+  <section class="file"><div class="clip"></div><div class="fhead"><span>DIENSTANWEISUNG</span><span class="stampr">VERTRAULICH</span></div>
+    <ul>
+      <li>Ein Handy reicht. Setzt euch zusammen hin, Licht etwas dimmen hilft.</li>
+      <li><b>Ton an!</b> Regen, Barjazz und ein paar Rätsel brauchen die Ohren. Oben rechts lässt er sich abschalten.</li>
+      <li>Lest die Akte abwechselnd vor oder lasst sie euch vorlesen.</li>
+      <li>Beweisstücke könnt ihr antippen und groß ansehen.</li>
+      <li>Bei manchen Rätseln hat jeder eigene Notizen. Nicht spicken.</li>
+      <li>Tipps gibt es jederzeit, jeder kostet einen Stern. Etwa eine Stunde, sieben Rätsel, der Fortschritt bleibt gespeichert.</li>
+    </ul>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:18px"><button class="btn primary" id="go" type="button">${resume?'Ermittlung fortsetzen':'Den Fall übernehmen'}</button>${resume?'<button class="readbtn" id="restart" type="button">Fall neu beginnen</button>':''}</div>
+  </section>`;
+  $('#go').addEventListener('click',()=>{ac();if(!G.start){G.start=Date.now();G.ch=0;save();}renderCh(G.ch<0?0:G.ch);});
+  const r=$('#restart');if(r){let arm=false;r.addEventListener('click',()=>{if(!arm){arm=true;r.textContent='Wirklich? Noch einmal tippen';setTimeout(()=>{arm=false;r.textContent='Fall neu beginnen';},3000);return;}G=fresh();save();renderStart();});}
+}
+
+/* ---------- Kapitel ---------- */
+const para=p=>typeof p==='string'?`<p>${p}</p>`:`<div class="note">${p.note}</div>`;
+const plain=arr=>arr.map(p=>typeof p==='string'?p:p.note.replace(/<br>/g,' ')).join(' ');
+function renderCh(i){
+  cleanup();G.ch=i;save();top();timer();window.scrollTo({top:0,behavior:'instant'});sfx('type');if(!MUTE)ambient(true);
+  const c=CH[i],prevWho=i>0?G.who[i-1]:null,F=FIND[i]||{};
+  app.innerHTML=`${scene(c.illu)}
+  <article class="file"><div class="clip"></div><div class="fhead"><span>AKTE 1928/312 · ${c.finale?'ABSCHLUSS':'BLATT '+ROM[i]}</span><span class="stampr">${c.finale?'DRINGEND':'VERTRAULICH'}</span></div>
+    <h2>${c.title}</h2>
+    ${prevWho?`<p class="callback">${CH[i-1].cb[prevWho]}</p>`:''}
+    <div class="story">${c.story.map(para).join('')}<button class="readbtn" id="read" type="button">Vorlesen lassen</button></div>
+    ${findsHtml(F.pre,'p')}
+  </article>
+  ${bubble(c.eddie,'Eddie schnüffelt')}
+  <section class="board" id="rcard"></section>
+  <section id="after" style="display:flex;flex-direction:column;gap:18px"></section>`;
+  const map={};(F.pre||[]).forEach((f,k)=>map['p'+k]=f);(F.post||[]).forEach((f,k)=>map['q'+k]=f);
+  bindFinds(app,map);
+  cleanups.push(rain(app));
+  const rb=$('#read');
+  if(!('speechSynthesis' in window))rb.hidden=true;
+  else rb.addEventListener('click',()=>{if(speechSynthesis.speaking){speechSynthesis.cancel();rb.textContent='Vorlesen lassen';return;}
+    const u=new SpeechSynthesisUtterance((prevWho?CH[i-1].cb[prevWho]+' ':'')+plain(c.story));u.lang='de-DE';u.rate=.97;const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.startsWith('de'));if(v)u.voice=v;u.onend=()=>{rb.textContent='Vorlesen lassen';};speechSynthesis.speak(u);rb.textContent='Vorlesen stoppen';});
+  riddle(i,map);
+}
+
+function riddle(i,map){
+  const c=CH[i],R=c.riddle,card=$('#rcard');
+  const tips=()=>G.tips[i]||0;
+  const stars=()=>{const s=Math.max(1,3-tips());return '★'.repeat(s)+'☆'.repeat(3-s);};
+  if(G.solved[i]){card.innerHTML=`<div class="rhead"><h3>${R.title}</h3><span class="stamp done">gelöst</span></div><div class="foot"><span class="stars">${stars()}</span><span class="how">${tips()?tips()+(tips()===1?' Tipp':' Tipps')+' genutzt':'ohne Tipp gelöst'}</span></div>`;after(i,map);return;}
+  card.innerHTML=`<div class="rhead"><h3>${R.title}</h3><span class="stamp open">offen</span></div><p class="how">${R.how}</p><div class="field" id="field"></div><form class="answer" id="af" hidden><input id="ans" autocomplete="off" autocapitalize="characters" aria-label="Antwort" placeholder="Eure Antwort"><button class="btn primary" type="submit">Prüfen</button></form><p class="msg" id="rm" hidden aria-live="polite"></p><div class="foot"><span class="stars" id="stars">${stars()}</span><button class="btn tip" type="button" id="tipB"></button></div>`;
+  const field=$('#field'),rm=$('#rm'),tipB=$('#tipB');
+  const say=(t,k)=>{rm.textContent=t;rm.className='msg '+(k||'tip');rm.hidden=false;};
+  let answers=null;
+  const api={field,say,wrong:t=>{sfx('wrong');say(t||'Das passt nicht. Versucht es noch einmal oder holt euch einen Tipp.','no');},
+    input(list,ph){answers=list.map(norm);$('#af').hidden=false;if(ph)$('#ans').placeholder=ph;},
+    solved(){if(G.solved[i])return;G.solved[i]=true;if(c.finale){G.who[i]='B';G.end=Date.now();sfx('gavel');setTimeout(()=>sfx('whistle'),600);}else sfx('solve');save();top();riddle(i,map);setTimeout(()=>{const w=$('#after');if(w)w.scrollIntoView({behavior:'smooth',block:'start'});},60);}};
+  let tipFns=[];
+  const updTip=()=>{const n=tipFns.length;tipB.textContent=`Tipp (${Math.min(tips(),n)}/${n})`;tipB.disabled=tips()>=n;$('#stars').textContent=stars();};
+  tipB.addEventListener('click',()=>{const f=tipFns[tips()];G.tips[i]=tips()+1;save();updTip();sfx('tip');const r=typeof f==='function'?f():f;if(r)say(r,'tip');});
+  $('#af').addEventListener('submit',e=>{e.preventDefault();const v=norm($('#ans').value);if(!v){say('Gebt zuerst eine Antwort ein.','no');return;}if(answers.includes(v))api.solved();else api.wrong();});
+  $('#ans').addEventListener('input',()=>{if(rm.classList.contains('no'))rm.hidden=true;sfx('click');});
+  const extra=PUZ[R.type](field,api,R,i)||{};
+  tipFns=extra.tips||R.tips||[];if(extra.cleanup)cleanups.push(extra.cleanup);updTip();
+}
+
+function after(i,map){
+  const c=CH[i],w=$('#after');
+  if(c.finale){renderEnd(w);return;}
+  if(!G.who[i]){
+    w.innerHTML=`<div class="board"><div class="who"><strong>Wer hat's gelöst?</strong><span class="how">Kommt in die Akte. Im nächsten Kapitel wird darauf Bezug genommen.</span><div class="row"><button class="btn" data-w="K" type="button">${K}</button><button class="btn" data-w="S" type="button">${S}</button><button class="btn" data-w="B" type="button">Beide zusammen</button></div></div></div>`;
+    w.querySelectorAll('[data-w]').forEach(b=>b.addEventListener('click',()=>{sfx('click');G.who[i]=b.dataset.w;save();top();after(i,map);camflash();setTimeout(()=>sfx('evidence'),300);}));return;}
+  const F=FIND[i]||{};
+  w.innerHTML=`<article class="file"><div class="fhead"><span>NACHTRAG ZU BLATT ${ROM[i]}</span><span class="stampr">GESICHERT</span></div><div class="story"><p>${c.reward}</p></div>${findsHtml(F.post,'q')}<div class="evline"><span class="tag">Beweisstück ${nEv()}</span><p>${c.ev}. Kommt in die Akte und an die Pinnwand.</p></div></article>${bubble(c.after,'Eddie schnüffelt')}<button class="btn primary next" id="next" type="button">${CH[i+1].finale?'Zur Anklage':'Weiter zu Blatt '+ROM[i+1]}</button>`;
+  bindFinds(w,map);
+  $('#next').addEventListener('click',()=>renderCh(i+1));
+}
+
+function cork(){const ev=['Taschenuhr','Alibi-Tabelle','Telegramm','Abdruck','Schallplatte','Manschettenknopf'];
+  const pts=[[70,60],[200,40],[330,64],[80,190],[330,196],[200,215]];
+  return `<div class="cork"><svg viewBox="0 0 400 270" role="img" aria-label="Pinnwand mit allen Beweisen, verbunden mit Leo Marek">${pts.map(([x,y])=>`<path d="M${x} ${y} L200 130" stroke="#b0261c" stroke-width="2"/>`).join('')}<g transform="translate(166 92)"><rect width="68" height="80" fill="#f4f1ea"/><g transform="translate(4 4) scale(.6)">${portrait('leo').replace('<svg viewBox="0 0 100 100" aria-hidden="true">','').replace('</svg>','')}</g><text x="34" y="74" text-anchor="middle" font-family="Special Elite,monospace" font-size="10" fill="#b0261c">TÄTER</text></g>${pts.map(([x,y],k)=>`<g transform="translate(${x-36} ${y-16}) rotate(${k%2?4:-4} 36 16)"><rect width="72" height="32" fill="#f2e2a0"/><text x="36" y="20" text-anchor="middle" font-family="Courier Prime,monospace" font-size="10" fill="#1f1b16">${ev[k]}</text></g><circle cx="${x}" cy="${y-16}" r="4" fill="#b0261c"/>`).join('')}<circle cx="200" cy="92" r="4" fill="#b0261c"/></svg></div>`;}
+function renderEnd(w){
+  const counts={K:0,S:0,B:0};for(let k=0;k<6;k++){if(G.who[k])counts[G.who[k]]++;}
+  let total=0,tipsAll=0;for(let k=0;k<CH.length;k++){const t=G.tips[k]||0;tipsAll+=t;total+=Math.max(1,3-t);}
+  const min=Math.round(((G.end||Date.now())-G.start)/60000);
+  const honor=counts.K>counts.S?'Kommissarin Kathleen wird zur Oberkommissarin befördert.':counts.S>counts.K?'Inspektor Stefan wird zum Oberinspektor befördert.':'Gleichstand. Befördert werden beide, und Eddie bekommt eine Medaille.';
+  w.innerHTML=`<article class="file"><div class="clip"></div><div class="fhead"><span>ABSCHLUSSBERICHT</span><span class="stampr">FALL GELÖST</span></div><div class="story">${FINALE.map(para).join('')}</div></article>
+  ${cork()}
+  <section class="file"><div class="fhead"><span>DIENSTLICHE BEURTEILUNG</span><span class="stampr">AUSGEZEICHNET</span></div><h2 style="font-size:28px">${honor}</h2>
+   <div class="stats"><div class="stat"><b>${min} Min.</b><span>Ermittlungszeit</span></div><div class="stat"><b>${total} / 21</b><span>Sterne</span></div><div class="stat"><b>${tipsAll}</b><span>Tipps genutzt</span></div><div class="stat"><b>${counts.K} · ${counts.S} · ${counts.B}</b><span>gelöst von Kathleen · Stefan · beiden</span></div></div>
+   <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px"><button class="btn primary" id="again" type="button">Fall noch einmal lösen</button><a class="btn" href="../">Zu Nextwing Quest</a></div></section>
+  ${bubble('Ein ganzes Würstchen. Für mich allein. Ich kündige nie wieder. Also, ich hatte es auch nie vor.','Eddie schnüffelt')}`;
+  $('#again').addEventListener('click',()=>{G=fresh();save();ambient(false);renderStart();});
+}
+
+/* ---------- Rätsel ---------- */
+const MORSE={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..'};
+const sym=s=>s.replace(/\./g,'•').replace(/-/g,'–');
+const ROOM=`<svg class="room" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="wp" width="24" height="24" patternUnits="userSpaceOnUse"><rect width="24" height="24" fill="#2b2333"/><path d="M12 2 L22 12 L12 22 L2 12 Z" fill="none" stroke="#5a4a2a" stroke-width="1"/></pattern></defs>
+<rect width="400" height="200" fill="url(#wp)"/><rect y="200" width="400" height="100" fill="#3a1e22"/><path d="M0 200 H400" stroke="#9a7a2c" stroke-width="3"/>
+<rect x="250" y="30" width="80" height="110" fill="#26324f"/><path d="M290 30 V140 M250 85 H330" stroke="#111" stroke-width="4"/><path d="M240 24 Q250 90 236 150 L256 150 Q262 90 256 24 Z M340 24 Q330 90 344 150 L324 150 Q318 90 324 24 Z" fill="#6b1a24"/>
+<path d="M24 170 Q20 130 60 128 Q100 130 96 170 L110 172 Q118 220 110 250 L16 250 Q8 220 14 172 Z" fill="#5a3a4a"/><rect x="20" y="250" width="8" height="16" fill="#2a1a10"/><rect x="100" y="250" width="8" height="16" fill="#2a1a10"/>
+<ellipse cx="208" cy="200" rx="64" ry="16" fill="#4a2e18"/><rect x="200" y="200" width="16" height="66" fill="#3a2414"/><ellipse cx="208" cy="268" rx="34" ry="6" fill="#2a1a10"/><path d="M178 194 l10 -40 h6 l4 40 Z" fill="#c9a14a" transform="rotate(70 188 190)"/><path d="M226 186 q6 -16 14 0 Z" fill="#cfd6e8" opacity=".7"/>
+<rect x="300" y="160" width="96" height="104" fill="#5a5048"/><rect x="292" y="152" width="108" height="12" fill="#7a6a5a"/><rect x="318" y="196" width="60" height="68" fill="#100c0a"/><path d="M330 264 q8 -20 18 -6 q6 -14 16 6 Z" fill="#7a2a10" opacity=".5"/>
+<path d="M140 252 q-8 -24 10 -32 q10 -18 26 -4 q20 -2 18 18 q14 10 2 22 q-10 10 -26 4 q-20 8 -30 -8 Z" fill="none" stroke="#e8e0d0" stroke-width="2" stroke-dasharray="5 4" opacity=".6"/>
+<rect x="150" y="110" width="40" height="50" fill="#1b1520" stroke="#9a7a2c"/><path d="M160 120 h20 v30 h-20 Z" fill="#3a2e3a"/></svg>`;
+const CLUE={
+ cuff:`<svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="12" ry="9" fill="#d8b45a" stroke="#7a5612" stroke-width="1.5"/><text x="20" y="25" text-anchor="middle" font-family="Limelight,serif" font-size="12" fill="#5a3d10">V</text></svg>`,
+ match:`<svg viewBox="0 0 40 40"><g transform="rotate(-14 20 20)"><rect x="8" y="10" width="24" height="18" rx="2" fill="#121a2e" stroke="#d8b45a"/><rect x="8" y="10" width="24" height="5" fill="#d8b45a"/><text x="20" y="25" text-anchor="middle" font-family="Limelight,serif" font-size="5.5" fill="#f2dc9a">KRANICH</text></g></svg>`,
+ watch:`<svg viewBox="0 0 40 40"><circle cx="20" cy="22" r="11" fill="#d8b45a"/><circle cx="20" cy="22" r="8.5" fill="#f3ead6"/><circle cx="20" cy="9" r="3" fill="none" stroke="#d8b45a" stroke-width="1.6"/><path d="M20 22 L18 16 M20 22 L13 19" stroke="#1a1410" stroke-width="1.4"/><path d="M15 17 L22 24 L19 29" stroke="#fff" stroke-width=".7"/></svg>`
+};
+const PUZ={
+torch(f,api){
+  const spots=[{k:'cuff',x:17,y:88,n:'Manschettenknopf'},{k:'match',x:57,y:63,n:'Streichholzheft'},{k:'watch',x:88,y:91,n:'Taschenuhr'}];
+  f.innerHTML=`<div class="dark" id="dark">${ROOM}${spots.map((s,k)=>`<button class="clue" type="button" data-k="${k}" data-n="${k+1}" style="left:${s.x}%;top:${s.y}%" aria-label="Spur">${CLUE[s.k]}</button>`).join('')}<div class="mask"></div></div><div class="found" id="found">${spots.map(()=>'<span>?</span>').join('')}</div>`;
+  const d=f.querySelector('#dark'),m=d.querySelector('.mask');let lx=50,ly=40,got=new Set();const lit=spots.map(()=>0);
+  const R=()=>d.clientWidth*.2;
+  const setL=(x,y)=>{lx=x;ly=y;m.style.setProperty('--x',x+'%');m.style.setProperty('--y',y+'%');m.style.setProperty('--r',R()+'px');
+    const w=d.clientWidth,h=d.clientHeight;spots.forEach((s,k)=>{const dx=(s.x-x)/100*w,dy=(s.y-y)/100*h;if(Math.hypot(dx,dy)<R()*.8)lit[k]=performance.now();});};
+  setL(50,40);let on=false;
+  const pos=e=>{const r=d.getBoundingClientRect();const off=e.pointerType==='touch'?70:0;return [(e.clientX-r.left)/r.width*100,(e.clientY-r.top-off)/r.height*100];};
+  d.addEventListener('pointerdown',e=>{if(!on){on=true;sfx('torch');}setL(...pos(e));});
+  d.addEventListener('pointermove',e=>{if(e.pointerType==='touch'&&!e.buttons&&!on)return;setL(...pos(e));});
+  d.querySelectorAll('.clue').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const k=+b.dataset.k;if(got.has(k))return;
+    if(performance.now()-lit[k]>1600){sfx('click');return;}
+    got.add(k);b.classList.add('got');b.setAttribute('aria-label','Spur '+(k+1)+': '+spots[k].n);camflash();const sp=f.querySelectorAll('#found span')[k];sp.textContent=spots[k].n;sp.classList.add('got');
+    if(got.size===3)setTimeout(()=>api.solved(),700);else api.say(`Spur ${got.size} von 3 gesichert. Weiter suchen.`,'ok');}));
+  const ro=new ResizeObserver(()=>setL(lx,ly));ro.observe(d);
+  return {cleanup:()=>ro.disconnect()};
+},
+clock(f,api,R){
+  let m=R.start;
+  f.innerHTML=`<svg class="watch" viewBox="0 0 200 200" role="img" aria-label="Taschenuhr zum Stellen"><defs><linearGradient id="wg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7e1a0"/><stop offset=".5" stop-color="#c9a14a"/><stop offset="1" stop-color="#7a5612"/></linearGradient></defs><circle cx="100" cy="104" r="92" fill="url(#wg)"/><circle cx="100" cy="104" r="80" fill="#f6eedb"/><circle cx="100" cy="10" r="9" fill="none" stroke="url(#wg)" stroke-width="5"/>${Array.from({length:60},(_,k)=>{const a=k*Math.PI/30,r1=k%5?74:68;return `<path d="M${(100+Math.sin(a)*r1).toFixed(1)} ${(104-Math.cos(a)*r1).toFixed(1)} L${(100+Math.sin(a)*77).toFixed(1)} ${(104-Math.cos(a)*77).toFixed(1)}" stroke="#2a2016" stroke-width="${k%5?1:2.4}"/>`;}).join('')}${Array.from({length:12},(_,k)=>{const a=k*Math.PI/6;return `<text x="${(100+Math.sin(a)*56).toFixed(1)}" y="${(109-Math.cos(a)*56).toFixed(1)}" text-anchor="middle" font-family="Limelight,serif" font-size="14" fill="#2a2016">${k||12}</text>`;}).join('')}<text x="100" y="140" text-anchor="middle" font-family="Limelight,serif" font-size="9" fill="#7a5612">K · F</text><path id="hh" d="M100 104 L100 62" stroke="#1a1410" stroke-width="6" stroke-linecap="round"/><path id="mh" d="M100 104 L100 36" stroke="#1a1410" stroke-width="3.5" stroke-linecap="round"/><circle cx="100" cy="104" r="5" fill="#1a1410"/><path d="M70 50 L110 100 L95 150 M110 100 L150 90" stroke="#9ab" stroke-width="1" opacity=".6" fill="none"/></svg>
+  <div class="ctrl"><button class="btn" type="button" data-d="-5">−5</button><button class="btn" type="button" data-d="-1">−1</button><span class="digital" id="dg"></span><button class="btn" type="button" data-d="1">+1</button><button class="btn" type="button" data-d="5">+5</button></div><button class="btn primary" id="chk" type="button">Uhrzeit prüfen</button>`;
+  const sv=f.querySelector('.watch'),hh=f.querySelector('#hh'),mh=f.querySelector('#mh'),dg=f.querySelector('#dg');
+  const draw=()=>{m=((m%720)+720)%720;mh.setAttribute('transform',`rotate(${(m%60)*6} 100 104)`);hh.setAttribute('transform',`rotate(${(m/60)*30} 100 104)`);const h=Math.floor(m/60)%12+12;dg.textContent=`${h===24?0:h}:${String(m%60).padStart(2,'0')}`;};draw();
+  f.querySelectorAll('[data-d]').forEach(b=>b.addEventListener('click',()=>{m+=+b.dataset.d;sfx('tick');draw();}));
+  let dr=false;const ang=e=>{const r=sv.getBoundingClientRect();return (Math.atan2(e.clientX-r.left-r.width/2,-(e.clientY-r.top-r.height*.52))*180/Math.PI+360)%360;};
+  sv.addEventListener('pointerdown',e=>{dr=true;sv.setPointerCapture(e.pointerId);});
+  sv.addEventListener('pointermove',e=>{if(!dr)return;const mm=Math.round(ang(e)/6)%60;let dd=mm-(m%60);if(dd>30)dd-=60;if(dd<-30)dd+=60;if(dd){m+=dd;sfx('tick');draw();}});
+  const up=()=>{dr=false;};sv.addEventListener('pointerup',up);sv.addEventListener('pointercancel',up);
+  f.querySelector('#chk').addEventListener('click',()=>{if(m===R.target%720)api.solved();else if(m===(R.start+15)%720)api.wrong('Andersherum: Die Uhr ging vor. Die wirkliche Zeit war früher.');else api.wrong('Das passt nicht zu Ida Brandts Aussage. Lest sie noch einmal.');});
+},
+grid(f,api,R){
+  const st={};SUS.forEach(s=>st[s.id]=[0,0,0,0]);
+  f.innerHTML=`<div class="secret"><div class="sc"><strong>Notizen von Kathleen</strong><span class="how" style="color:#5f5240">Stefan schaut weg.</span><ul id="nk" hidden>${R.notesK.map(n=>`<li>${n}</li>`).join('')}</ul><button class="btn" type="button" data-t="nk">Aufdecken</button></div><div class="sc"><strong>Notizen von Stefan</strong><span class="how" style="color:#5f5240">Kathleen schaut weg.</span><ul id="ns" hidden>${R.notesS.map(n=>`<li>${n}</li>`).join('')}</ul><button class="btn" type="button" data-t="ns">Aufdecken</button></div></div>
+  <div class="grid" role="grid" aria-label="Wer war wo"><span></span>${R.places.map(p=>`<span class="h">${p}</span>`).join('')}${SUS.map(s=>`<span class="rowh"><i style="background:${s.c}"></i>${s.name.replace('Baronin ','Baronin<br>')}</span>${R.places.map((p,k)=>`<button class="gcell" type="button" data-s="${s.id}" data-k="${k}" aria-label="${s.name} – ${p.replace(/&shy;/g,"")}: offen"></button>`).join('')}`).join('')}</div>
+  <button class="btn primary" id="chk" type="button">Tabelle prüfen</button>`;
+  f.querySelectorAll('[data-t]').forEach(b=>b.addEventListener('click',()=>{const u=f.querySelector('#'+b.dataset.t);u.hidden=!u.hidden;b.textContent=u.hidden?'Aufdecken':'Wieder verdecken';sfx('paper');}));
+  f.querySelectorAll('.gcell').forEach(b=>b.addEventListener('click',()=>{const a=st[b.dataset.s],k=+b.dataset.k;a[k]=(a[k]+1)%3;b.textContent=['','✗','✓'][a[k]];b.className='gcell'+['',' x',' y'][a[k]];b.setAttribute('aria-label',b.getAttribute('aria-label').replace(/: .*$/,': '+['offen','nein','ja'][a[k]]));sfx('pencil');}));
+  f.querySelector('#chk').addEventListener('click',()=>{const rows=SUS.map(s=>st[s.id].filter(v=>v===2).length);if(rows.some(n=>n!==1)){api.wrong('Noch nicht fertig: In jeder Zeile muss genau ein Ja stehen.');return;}
+    if(SUS.every(s=>st[s.id][R.sol[s.id]]===2))api.solved();else{const bad=SUS.filter(s=>st[s.id][R.sol[s.id]]!==2).length;api.wrong(`${bad} von 4 Personen stehen noch am falschen Ort. Prüft die Notizen noch einmal.`);}});
+},
+morse(f,api,R){
+  f.innerHTML=`<div class="telegraph"><div class="lamp" id="lamp" aria-hidden="true"></div><div style="display:flex;flex-direction:column;gap:8px"><button class="btn brass" id="play" type="button">▶ Telegramm abspielen</button><label class="how" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="slow"> langsam</label></div></div><div class="tape" id="tape" aria-live="polite">&nbsp;</div><div class="mtable">${Object.entries(MORSE).map(([k,v])=>`<span><b>${k}</b>${sym(v)}</span>`).join('')}</div>`;
+  const lamp=f.querySelector('#lamp'),tape=f.querySelector('#tape'),pb=f.querySelector('#play');let tms=[],busy=false;
+  const beep=(at,dur)=>{const a=ac(),o=out();if(!a||!o)return;const t=a.currentTime+at,s=a.createOscillator(),g=a.createGain();s.type='sine';s.frequency.value=640;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.008);g.gain.setValueAtTime(.18,t+dur-.01);g.gain.linearRampToValueAtTime(0,t+dur);s.connect(g);g.connect(o);s.start(t);s.stop(t+dur+.02);};
+  pb.addEventListener('click',()=>{if(busy)return;busy=true;pb.disabled=true;ac();tape.textContent='';if(MUTE)api.say('Der Ton ist aus. Lampe und Streifen zeigen das Telegramm trotzdem.','tip');
+    const u=f.querySelector('#slow').checked?.24:.15;let t=.3;
+    [...R.word].forEach((ch,ci)=>{[...MORSE[ch]].forEach(s=>{const d=s==='.'?u:u*3;beep(t,d);const t0=t;tms.push(setTimeout(()=>{lamp.classList.add('on');tape.textContent+=sym(s);},t0*1000));tms.push(setTimeout(()=>lamp.classList.remove('on'),(t0+d)*1000));t+=d+u;});
+      t+=u*4;tms.push(setTimeout(()=>{tape.textContent+='   ';},(t-u*2)*1000));});
+    duck(t*1000+300);tms.push(setTimeout(()=>{busy=false;pb.disabled=false;pb.textContent='▶ Noch einmal abspielen';},t*1000));});
+  api.input(R.answers,'Das entschlüsselte Wort');
+  return {cleanup:()=>tms.forEach(clearTimeout)};
+},
+prints(f,api,R){
+  const glassSvg=`<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#0a0a0c"/><circle cx="50" cy="50" r="49" fill="#121218"/><g transform="rotate(6 50 50)" opacity=".9">${fp('whorl','\\',{col:'#d9d9e0',sw:1.4,bg:'#121218',partial:true})}</g>${Array.from({length:40},(_,k)=>`<circle cx="${(k*37)%100}" cy="${(k*61)%100}" r="${.3+(k%3)*.3}" fill="#bbb" opacity=".35"/>`).join('')}</svg>`;
+  f.innerHTML=`<div class="glass" id="gl" aria-label="Abdruck auf dem Glas, mit der Lupe absuchen">${glassSvg}<div class="lens" id="lens">${glassSvg}</div></div>
+   <div class="pcards">${SUS.map(s=>`<button class="pcard" type="button" data-id="${s.id}" aria-label="Fingerabdruck ${s.name}"><svg viewBox="0 0 100 100" aria-hidden="true">${fp(PRINT[s.id][0],PRINT[s.id][1])}</svg><span>${s.name}</span></button>`).join('')}</div>
+   <button class="btn primary" id="chk" type="button" disabled>Abdrücke vergleichen</button>`;
+  const gl=f.querySelector('#gl'),lens=f.querySelector('#lens'),inner=lens.querySelector('svg');let sel=null;
+  const place=(px,py)=>{const G=gl.clientWidth,L=lens.offsetWidth||G*.44,z=2.4;lens.style.left=px+'px';lens.style.top=py+'px';inner.style.width=inner.style.height=(G*z)+'px';inner.style.left=(L/2-px*z-6)+'px';inner.style.top=(L/2-py*z-6)+'px';};
+  const mv=e=>{const r=gl.getBoundingClientRect();const off=e.pointerType==='touch'?60:0;place(Math.max(0,Math.min(r.width,e.clientX-r.left)),Math.max(0,Math.min(r.height,e.clientY-r.top-off)));};
+  gl.addEventListener('pointerdown',e=>{gl.setPointerCapture(e.pointerId);sfx('ting');mv(e);});gl.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'||e.buttons)mv(e);});
+  const init=()=>place(gl.clientWidth*.5,gl.clientHeight*.45);init();const ro=new ResizeObserver(init);ro.observe(gl);
+  const chk=f.querySelector('#chk');
+  f.querySelectorAll('.pcard').forEach(b=>b.addEventListener('click',()=>{sel=b.dataset.id;f.querySelectorAll('.pcard').forEach(x=>x.classList.toggle('sel',x===b));chk.disabled=false;sfx('paper');}));
+  chk.addEventListener('click',()=>{if(sel===R.sol)api.solved();else{const t=PRINT[sel][0];api.wrong(t!=='whorl'?'Das Grundmuster passt schon nicht. Auf dem Glas laufen die Linien im Kreis.':'Das Muster passt, aber achtet auf die Narbe. In welche Richtung läuft sie?');}});
+  return {cleanup:()=>ro.disconnect()};
+},
+record(f,api,R){
+  const marks=new Set();let playing=-1,tms=[];
+  f.innerHTML=`<div class="recs">${R.times.map((t,k)=>`<div class="rec" data-k="${k}"><button class="btn brass" type="button" data-p="${k}" style="padding:0;min-height:0;background:none;border:0;box-shadow:none;width:100%;display:flex;justify-content:center" aria-label="Aufnahme ${t} abspielen"><span class="disc" style="--lbl:${['#a8322a','#2f4a7a','#3f6b4a','#d8b45a'][k]}"></span></button><b>${t} Uhr</b><small>Funkstunde, Platte ${k+1}</small><button class="btn" type="button" data-m="${k}" style="min-height:38px;padding:4px 10px;font-size:14px">Schallplatte?</button></div>`).join('')}</div><button class="btn primary" id="chk" type="button">Auswahl prüfen</button>`;
+  const play=k=>{const a=ac(),o=out();if(!a||!o)return;tms.forEach(clearTimeout);tms=[];
+    f.querySelectorAll('.rec').forEach(r=>r.classList.toggle('play',+r.dataset.k===k));playing=k;
+    const isRec=R.sol.includes(k);let dest=o;
+    if(isRec){const lp=a.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2400;const hp=a.createBiquadFilter();hp.type='highpass';hp.frequency.value=220;lp.connect(hp);hp.connect(o);dest=lp;
+      noise({dur:3.8,type:'highpass',f:3000,vol:.035,att:.05});for(let c=0;c<26;c++)noise({dur:.012,f:1500+Math.random()*3000,q:2,vol:.08+Math.random()*.12,at:Math.random()*3.6});}
+    const mel=[[392,0],[440,.24],[523,.48],[587,.72],[523,1.08],[440,1.32],[392,1.56],[330,1.92],[349,2.28],[392,2.52],[440,2.76],[392,3.12]];
+    const sw=k===0?0:k===3?.02:0;
+    let seq=mel.map(([f,t])=>[f,t+(isRec?0:(Math.random()-.5)*.04)+sw]);
+    if(k===R.sol[1])seq=seq.slice(0,6).concat([[523,1.6],[440,1.84]],seq.slice(6).map(([f,t])=>[f,t+.5]));
+    seq.forEach(([fq,t])=>piano(fq,t+.1,isRec?.13:.11,dest));
+    [[131,0],[175,1.08],[147,1.92],[196,2.76]].forEach(([fq,t])=>{piano(fq,t+.1,.08,dest);piano(fq*1.5,t+.1,.04,dest);});
+    duck(4300);tms.push(setTimeout(()=>{f.querySelectorAll('.rec').forEach(r=>r.classList.remove('play'));playing=-1;},4000));
+    if(MUTE)api.say('Der Ton ist aus. Für dieses Rätsel braucht ihr ihn: Lautsprecher oben rechts antippen.','tip');};
+  f.querySelectorAll('[data-p]').forEach(b=>b.addEventListener('click',()=>play(+b.dataset.p)));
+  f.querySelectorAll('[data-m]').forEach(b=>b.addEventListener('click',()=>{const k=+b.dataset.m;if(marks.has(k))marks.delete(k);else marks.add(k);const on=marks.has(k);b.closest('.rec').classList.toggle('mark',on);b.textContent=on?'✓ Schallplatte':'Schallplatte?';sfx('pencil');}));
+  f.querySelector('#chk').addEventListener('click',()=>{const ok=marks.size===R.sol.length&&R.sol.every(k=>marks.has(k));if(ok)api.solved();else if(!marks.size)api.wrong('Markiert zuerst die Aufnahmen, auf denen die Schallplatte läuft.');else api.wrong('Nicht ganz. Hört noch einmal genau auf das Knistern im Hintergrund.');});
+  return {cleanup:()=>tms.forEach(clearTimeout)};
+},
+accuse(f,api,R){
+  const pick=R.cols.map(()=>-1);
+  f.innerHTML=`<div class="acols">${R.cols.map((c,ci)=>`<div class="acol"><h4>${c.q}</h4><div class="aopts">${c.o.map((o,oi)=>`<button class="acard" type="button" data-c="${ci}" data-o="${oi}">${o}</button>`).join('')}</div></div>`).join('')}</div><button class="btn primary" id="chk" type="button" disabled>Anklage erheben</button>`;
+  const chk=f.querySelector('#chk');
+  f.querySelectorAll('.acard').forEach(b=>b.addEventListener('click',()=>{const ci=+b.dataset.c;pick[ci]=+b.dataset.o;f.querySelectorAll(`.acard[data-c="${ci}"]`).forEach(x=>x.classList.toggle('sel',x===b));chk.disabled=pick.some(p=>p<0);sfx('paper');}));
+  chk.addEventListener('click',()=>{const right=R.cols.filter((c,ci)=>pick[ci]===c.a).length;if(right===3)api.solved();else{sfx('gavel');api.wrong(`Der Staatsanwalt schüttelt den Kopf. ${right} von 3 Punkten halten vor Gericht.`);}});
+}
+};
+
+if(G.ch<0||!G.start)renderStart();else renderCh(G.ch);
+})();
+</script>
+</body>
+</html>
