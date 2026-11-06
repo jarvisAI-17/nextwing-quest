@@ -93,6 +93,7 @@ function adventLogin(game, code) {
 function reduceAdvent(st, ev, isLead) {
   if (!st || (ev.k === 'reset' && isLead)) st = { v: 1, p: {}, d: {}, feed: [], fin: null };
   if (ev.k === 'reset') return st;
+  st.p = st.p || {}; st.d = st.d || {}; st.feed = st.feed || [];
   var t = ev.t || Date.now();
   if (!ev.p || ev.p === 'lead') return st;
   var p = st.p[ev.p] = st.p[ev.p] || { join: 0, seen: 0 };
