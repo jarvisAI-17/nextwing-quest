@@ -1,0 +1,1 @@
+window.QUEST_API='';
