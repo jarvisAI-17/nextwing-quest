@@ -6,6 +6,13 @@
 <title>Ferdinands Wintervorrat</title>
 <meta name="description" content="Ein Herbst-Rätselspiel für fünf am großen Fernseher. Etwa 20 Minuten.">
 <meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ferdinand">
+<meta name="theme-color" content="#1d120c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap">
 <style>
@@ -163,7 +170,10 @@ function ambient(on){const a=ac(),o=out();if(!a||!o)return;
   else if(!on&&AMB){try{AMB.s.stop();}catch(e){}clearInterval(AMB.gust);clearInterval(AMB.mel);clearTimeout(AMB.t0);try{AMB.bus.disconnect();}catch(e){}AMB=null;}}
 function setMute(m){MUTE=m;try{localStorage.setItem('herbst-mute',m?'1':'0');}catch(e){}if(MASTER)MASTER.gain.value=m?0:1;$('#snd').textContent=m?'🔇':'🔊';$('#snd').setAttribute('aria-label',m?'Ton einschalten':'Ton ausschalten');}
 $('#snd').onclick=()=>{setMute(!MUTE);if(!MUTE)ambient(true);};setMute(MUTE);
-$('#fs').onclick=()=>{try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen();}catch(e){}};
+const fsHint=()=>{let h=document.getElementById('fsh');if(h){h.remove();return;}h=document.createElement('div');h.id='fsh';h.setAttribute('role','dialog');h.style.cssText='position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:#000b;padding:1.4rem';h.innerHTML='<div style="max-width:34rem;background:#fff3dc;color:#2a1a10;border-radius:1.2rem;padding:1.4rem 1.6rem;font-size:1.15rem;line-height:1.45"><b style="font-size:1.4rem">Vollbild auf dem iPhone</b><p style="margin:.6rem 0">Apple erlaubt Webseiten auf dem iPhone kein echtes Vollbild, in keinem Browser. So geht es trotzdem:</p><ol style="margin:0 0 .8rem;padding-left:1.3rem"><li>Die Seite in <b>Safari</b> öffnen.</li><li>Unten auf <b>Teilen</b> (Quadrat mit Pfeil) tippen.</li><li><b>Zum Home-Bildschirm</b> wählen.</li><li>Das Spiel über das neue Symbol starten: dann ohne Adressleiste.</li></ol><p style="margin:0 0 1rem">Oder einfach das Handy quer halten, dann blendet der Browser fast alles aus.</p><button class="btn" type="button" id="fshx">Verstanden</button></div>';document.body.appendChild(h);h.querySelector('#fshx').onclick=()=>h.remove();h.onclick=e=>{if(e.target===h)h.remove();};};
+const standalone=matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches||navigator.standalone;
+if(standalone)$('#fs').hidden=true;
+$('#fs').onclick=()=>{const d=document.documentElement,rq=d.requestFullscreen||d.webkitRequestFullscreen;if(document.fullscreenElement||document.webkitFullscreenElement){(document.exitFullscreen||document.webkitExitFullscreen).call(document);return;}if(!rq){fsHint();return;}try{const r=rq.call(d);if(r&&r.catch)r.catch(fsHint);}catch(e){fsHint();}};
 
 /* ---------- Hintergrund: Wald und fallendes Laub ---------- */
 (function(){const cv=$('#bg'),x=cv.getContext('2d');let W,H,L=[];const red=matchMedia('(prefers-reduced-motion: reduce)').matches;const C=['#e85d2a','#f2b23a','#c2410c','#8a2a2a','#d9822b','#b7791f'];
