@@ -139,6 +139,14 @@ const DPR=()=>Math.min(2,devicePixelRatio||1);
 /* ---------- Ton ---------- */
 let AC=null,MUTE=false;try{MUTE=localStorage.getItem('herbst-mute')==='1';}catch(e){}
 const ac=()=>{if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}}if(AC.state==='suspended')AC.resume();return AC;};
+/* iPhone: Web Audio folgt sonst dem Stumm-Schalter. Wiedergabe-Modus anfordern und mit einem stummen Audio-Element entsperren. */
+let UNLOCKED=false;const SILENT='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=';
+function unlock(){try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch(e){}const a=ac();if(a&&a.state!=='running')a.resume();
+  if(!UNLOCKED){UNLOCKED=true;try{const el=document.createElement('audio');el.src=SILENT;el.loop=true;el.setAttribute('playsinline','');el.setAttribute('x-webkit-airplay','allow');const pr=el.play();if(pr&&pr.catch)pr.catch(()=>{UNLOCKED=false;});}catch(e){UNLOCKED=false;}
+    try{const b=a.createBuffer(1,1,22050),src=a.createBufferSource();src.buffer=b;src.connect(a.destination);src.start(0);}catch(e){}}
+  if(!MUTE&&G.step!=='title')ambient(true);}
+['pointerdown','touchend','keydown'].forEach(ev=>document.addEventListener(ev,unlock,{passive:true}));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&AC&&AC.state!=='running')AC.resume();});
 let MASTER=null;const out=()=>{const a=ac();if(!a)return null;if(!MASTER){MASTER=a.createGain();MASTER.gain.value=MUTE?0:1;MASTER.connect(a.destination);}return MASTER;};
 let NB=null;const nb=a=>{if(!NB){NB=a.createBuffer(1,a.sampleRate*2,a.sampleRate);const d=NB.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}return NB;};
 function noise({dur=.2,type='bandpass',f=1000,f2=null,q=1,vol=.3,at=0,att=.005,dest=null}){const a=ac(),o=dest||out();if(!a||!o)return;const t=a.currentTime+at,s=a.createBufferSource();s.buffer=nb(a);const fl=a.createBiquadFilter();fl.type=type;fl.frequency.setValueAtTime(f,t);if(f2)fl.frequency.exponentialRampToValueAtTime(f2,t+dur);fl.Q.value=q;const g=a.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+att);g.gain.exponentialRampToValueAtTime(.001,t+dur);s.connect(fl);fl.connect(g);g.connect(o);s.start(t,Math.random()*1.5);s.stop(t+dur+.05);}
