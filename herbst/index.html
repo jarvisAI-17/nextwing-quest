@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ferdinands Wintervorrat</title>
+<meta name="description" content="Ein Herbst-Rätselspiel für fünf am großen Fernseher. Etwa 20 Minuten.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap">
+<style>
+/* Layout für den Fernseher: jede Szene füllt genau einen Bildschirm, nichts scrollt. Große Schrift in rem, skaliert mit der Bildschirmbreite. Herbstwald im Abendlicht mit fallendem Laub im Hintergrund; vorne eine Holztafel für Geschichte und Rätsel. Nur dunkel-warm: Herbstabend. */
+:root{--bg:#1d120c;--ink:#fff3e0;--muted:#e7c9a6;--orange:#ff8a1e;--rust:#c2410c;--ochre:#f2b23a;--wine:#8a2a2a;--olive:#6b7a2a;--leaf:#e85d2a;--wood:#5a3a22;--wood2:#3a2416;--cream:#fff3dc;--p-ink:#2a1a10;--action:#ff6a1f;--on-action:#1d120c;--info:#8eacff;
+--fun:"Fredoka",ui-rounded,system-ui,sans-serif;--hand:"Caveat","Segoe Print",cursive;color-scheme:dark}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html{font-size:clamp(15px,1.25vw,30px);background:var(--bg)}
+body{margin:0;height:100vh;height:100dvh;overflow:hidden;color:var(--ink);font-family:var(--fun);font-size:1.1rem;line-height:1.4;
+ background:radial-gradient(120vw 70vh at 50% 110%,#6b2a10 0%,transparent 60%),radial-gradient(60vw 40vh at 80% 0%,#f2b23a33,transparent 70%),linear-gradient(180deg,#2a160c,#1d120c 60%,#120a06)}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.top{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:.6rem 1.2rem;pointer-events:none}
+.top > *{pointer-events:auto}
+.brand{display:flex;align-items:center;gap:.4rem;color:var(--ink);text-decoration:none;font-size:.8rem;opacity:.75}
+.brand svg{width:1.4rem;height:1.4rem}
+.tools{display:flex;gap:.5rem}
+.tb{font:inherit;font-size:.9rem;min-width:2.4rem;height:2.4rem;border-radius:.6rem;border:2px solid #ffffff33;background:#00000055;color:var(--ink);cursor:pointer}
+.nuts{display:flex;gap:.35rem;position:fixed;top:.7rem;left:50%;transform:translateX(-50%);z-index:5}
+.nut{width:2.2rem;height:2.6rem;display:grid;place-items:center;font-weight:700;font-size:1.1rem;color:var(--p-ink);border-radius:50% 50% 45% 45%/40% 40% 60% 60%;background:#ffffff18;border:2px dashed #ffffff40}
+.nut.got{background:radial-gradient(circle at 35% 30%,#e8a45a,#9a5a22 70%);border:0;box-shadow:inset 0 -.25rem 0 #00000040;color:#fff3dc;text-shadow:0 2px 0 #0006}
+main{position:relative;z-index:2;height:100%;display:grid;place-items:center;padding:3.6rem 1.6rem 1.4rem;overflow:hidden}
+.scene{width:min(100%,62rem);display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;animation:in .6s cubic-bezier(.2,.8,.2,1)}
+@keyframes in{from{opacity:0;transform:translateY(1.5rem) scale(.98)}to{opacity:1;transform:none}}
+h1{margin:0;font-weight:700;font-size:4.2rem;line-height:1;color:var(--ochre);text-shadow:0 .25rem 0 var(--wine),0 .6rem 1.4rem #000a}
+h2{margin:0;font-weight:700;font-size:2.6rem;line-height:1.05;color:var(--ochre);text-shadow:0 .18rem 0 var(--wine)}
+.sub{margin:0;font-size:1.3rem;color:var(--muted)}
+.board{position:relative;width:100%;border-radius:1.2rem;padding:1.4rem 1.8rem;background:repeating-linear-gradient(92deg,#ffffff00 0 1.4rem,#ffffff08 1.4rem 1.5rem,#00000010 1.5rem 2.8rem),linear-gradient(180deg,var(--wood),var(--wood2));box-shadow:inset 0 0 0 .3rem #00000030,0 1.2rem 2.4rem #0009;text-align:left}
+.board p{margin:0 0 .6rem;font-size:1.35rem;line-height:1.45}
+.board p:last-child{margin-bottom:0}
+.btn{font:inherit;font-weight:700;font-size:1.3rem;border-radius:1rem;padding:.7rem 1.6rem;min-height:3.2rem;cursor:pointer;border:0;background:var(--action);color:var(--on-action);box-shadow:0 .3rem 0 #a33c08;display:inline-flex;align-items:center;gap:.5rem}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:#ffffff1a;color:var(--ink);box-shadow:none;border:2px solid #ffffff40}
+.btn:disabled{opacity:.45;cursor:default}
+.btn:focus-visible,.tb:focus-visible,.opt:focus-visible,.pump:focus-visible,.leafc:focus-visible,.tree:focus-visible,.tile:focus-visible,.dial button:focus-visible{outline:none;box-shadow:0 0 0 .2rem var(--bg),0 0 0 .4rem var(--info)}
+.row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;align-items:center}
+.kbd{font-size:.85rem;color:var(--muted);opacity:.8}
+.cast{display:flex;gap:1.2rem;flex-wrap:wrap;justify-content:center}
+.pl{display:flex;flex-direction:column;align-items:center;gap:.3rem;font-weight:600;font-size:1.2rem}
+.pl svg{width:5rem;height:5rem;filter:drop-shadow(0 .3rem .4rem #0008)}
+.pl.done{opacity:.55}
+.pl.now svg{animation:bob 1s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-.4rem) rotate(-4deg)}}
+.turn{font-size:6rem;font-weight:700;line-height:1;color:var(--cream);text-shadow:0 .3rem 0 var(--rust),0 0 2rem #ff8a1e88}
+.turn small{display:block;font-size:1.6rem;color:var(--muted);text-shadow:none;margin-bottom:.4rem}
+.say{font-family:var(--hand);font-size:2rem;line-height:1.15;color:var(--ochre);margin:0}
+.hud{display:flex;gap:2rem;justify-content:center;font-size:1.5rem;font-weight:700}
+.msg{margin:0;font-size:1.3rem;font-weight:600;border-radius:.8rem;padding:.5rem 1.2rem}
+.msg.ok{background:#d9f5e6;color:#0f4d2e}.msg.no{background:#ffe0e4;color:#8e1426}.msg.tip{background:var(--cream);color:var(--p-ink)}
+/* Quiz */
+.q{font-size:2rem;font-weight:600;margin:0}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%}
+.opt{font:inherit;font-size:1.5rem;font-weight:600;text-align:left;border-radius:1rem;border:3px solid #ffffff30;background:#ffffff14;color:var(--ink);padding:1rem 1.2rem;cursor:pointer;display:flex;gap:.8rem;align-items:center;min-height:5rem}
+.opt b{display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:50%;background:var(--ochre);color:var(--p-ink);flex:none}
+.opt.no{background:#8a2a2a;border-color:#ff8080;animation:shake .4s}
+.opt.ok{background:#2f6b45;border-color:#8fe0b4}
+@keyframes shake{25%{transform:translateX(-.6rem)}75%{transform:translateX(.6rem)}}
+/* Hütchenspiel */
+.shell{position:relative;width:100%;max-width:50rem;height:20rem}
+.pump{position:absolute;bottom:2rem;width:12rem;height:11rem;margin-left:-6rem;border:0;background:transparent;cursor:pointer;padding:0;transition:left .45s cubic-bezier(.5,0,.5,1),transform .35s}
+.pump svg{width:100%;height:100%}
+.pump.lift{transform:translateY(-6rem)}
+.nutb{position:absolute;bottom:2.4rem;width:3rem;height:3.4rem;margin-left:-1.5rem;transition:left .2s}
+/* Apfel und Zählbild */
+canvas.play{width:min(100%,56rem,calc((100vh - 18rem)*2));aspect-ratio:16/8;border-radius:1rem;background:#2a1a10;touch-action:none;cursor:none;box-shadow:0 1rem 2rem #0008}
+.count{width:min(100%,52rem,calc((100vh - 22rem)*2.1));border-radius:1rem;box-shadow:0 1rem 2rem #0008}
+.count svg{display:block;width:100%;height:auto;border-radius:1rem}
+.dials{display:flex;gap:1.4rem;justify-content:center}
+.dial{display:flex;flex-direction:column;align-items:center;gap:.3rem}
+.dial span{font-size:3.4rem;font-weight:700;width:5rem;height:5.6rem;display:grid;place-items:center;border-radius:.8rem;background:var(--cream);color:var(--p-ink);box-shadow:inset 0 -.3rem 0 #0003}
+.dial i{font-style:normal;font-size:1rem;color:var(--muted)}
+.dial button{font:inherit;font-size:1.4rem;width:4rem;height:2.6rem;border-radius:.6rem;border:0;background:var(--ochre);color:var(--p-ink);cursor:pointer;font-weight:700}
+/* Blätter */
+.leaves{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;width:100%}
+.leafc{border:3px solid transparent;border-radius:1rem;background:#ffffff12;padding:.6rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.3rem;color:var(--ink);font:inherit;font-size:1.1rem}
+.leafc svg{width:7rem;height:7rem}
+.leafc.sel{border-color:var(--ochre);background:#f2b23a26}
+.leafc.ok{border-color:#8fe0b4;background:#2f6b4566}
+.trees{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;width:100%}
+.tree{font:inherit;font-size:1.5rem;font-weight:700;border-radius:1rem;border:3px dashed #ffffff50;background:transparent;color:var(--ink);padding:.9rem;cursor:pointer;min-height:4.4rem}
+.tree.ok{border-style:solid;border-color:#8fe0b4;background:#2f6b4566}
+/* Finale */
+.tiles,.slots{display:flex;gap:.8rem;justify-content:center}
+.tile,.slot{width:5.6rem;height:6.6rem;border-radius:50% 50% 45% 45%/40% 40% 60% 60%;display:grid;place-items:center;font-size:3.2rem;font-weight:700;border:0}
+.tile{background:radial-gradient(circle at 35% 30%,#e8a45a,#9a5a22 70%);color:#fff3dc;text-shadow:0 3px 0 #0006;cursor:pointer;box-shadow:inset 0 -.35rem 0 #00000040,0 .4rem .8rem #0007}
+.tile.used{opacity:.2}
+.slot{background:#ffffff14;border:3px dashed #ffffff50;color:#fff3dc}
+.slot.f{background:radial-gradient(circle at 35% 30%,#e8a45a,#9a5a22 70%);border:0}
+.big-nut{width:12rem;height:14rem}
+.stats{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.stats .pl small{font-size:1rem;color:var(--muted);font-weight:500}
+.crown{font-size:2.4rem}
+@media(max-width:700px){html{font-size:13px}h1{font-size:3rem}.turn{font-size:4rem}.opts,.leaves,.trees{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){.scene,.pl.now svg{animation:none}.pump{transition:none}}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<header class="top"><a class="brand" href="../" aria-label="Nextwing Quest"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0b1220"/><path d="M12 22 C24 14 40 13 52 17 C42 19 30 22 20 28 Z" fill="#4d7cff"/><path d="M12 33 C24 25 40 24 52 28 C42 30 30 33 20 39 Z" fill="#ff6a1f"/><path d="M12 44 C24 36 40 35 52 39 C42 41 30 44 20 50 Z" fill="#8eacff"/></svg>nextwing quest</a>
+<div class="tools"><button class="tb" id="fs" type="button" aria-label="Vollbild">⛶</button><button class="tb" id="snd" type="button" aria-label="Ton ausschalten">🔊</button></div></header>
+<div class="nuts" id="nuts" aria-label="Gesammelte Nüsse"></div>
+<main id="app"></main>
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const PL=[{n:'Hannelore',c:'#e85d2a',l:'H'},{n:'Mary',c:'#c2185b',l:'E'},{n:'Marcus',c:'#6b7a2a',l:'R'},{n:'Stefan',c:'#2b6cb0',l:'B'},{n:'Kathleen',c:'#b7791f',l:'S'}];
+const WORD='HERBST';
+const STORY={
+ intro:['Im Wald hinterm Haus wohnt Ferdinand, das vergesslichste Eichhörnchen von ganz Westfalen. Jeden Herbst versteckt er seinen Wintervorrat, und jeden Herbst schreibt er sich auf, wo.','Letzte Nacht hat der Herbststurm seine Zettel verweht. Fünf Verstecke, fünf Nüsse mit je einem Buchstaben, und ohne das Codewort bleibt seine Vorratskammer zu. Ferdinand hat Hilfe geholt: euch fünf.'],
+ turns:['Ferdinand flitzt auf Hannelores Schulter. »Du kennst dich aus mit dem Herbst. Mein erster Zettel ist ein Quiz, das hab ich mir selbst geschrieben. Wahrscheinlich.«','»Mary, du hast scharfe Augen«, sagt Ferdinand. »Ich hab eine Nuss unter einem Kürbis versteckt und dann vor lauter Aufregung die Kürbisse durcheinandergeschoben. Mehrmals.«','»Marcus! Der alte Apfelbaum schüttelt gleich seine Äpfel ab, und unter den guten liegt meine dritte Nuss. Fang die guten, lass die wurmigen fallen.«','»Stefan, mein Schuppen hat ein Zahlenschloss. Der Code ist ganz einfach: wie viele Kürbisse, Äpfel und Pilze auf meinem Herbstbild sind. Zählen war nie meine Stärke.«','»Kathleen, der Wind hat meine Blättersammlung durcheinandergewirbelt. Ordne jedes Blatt seinem Baum zu, dann rückt der Wind die letzte Nuss heraus.«'],
+ rewards:['Vier von vier! Unter dem letzten Quizzettel klebt eine Nuss.','Gefunden! Ferdinand macht vor Freude einen Salto und fällt vom Kürbis.','Volle Kiste! Zwischen den Äpfeln kullert eine Nuss hervor.','Klick! Das Schloss springt auf. Im Schuppen liegt eine Nuss auf einem Rechen.','Alle Blätter sitzen. Der Wind seufzt und lässt eine Nuss fallen.'],
+ final:'Fünf Nüsse, fünf Buchstaben. »Den letzten Buchstaben kenne ich selbst«, sagt Ferdinand stolz und legt ein T dazu. »Den vergesse ich nie. Glaube ich.« Jetzt setzt das Codewort zusammen.',
+ end:['Die Tür der Vorratskammer knarrt auf: 312 Haselnüsse, 48 Bucheckern, 17 Walnüsse und ein Gummibärchen, von dem Ferdinand nicht weiß, wie es dahin kam.','»Ihr habt meinen Winter gerettet«, sagt er und verteilt an jeden von euch eine Nuss. »Die schönste behaltet ihr. Und wenn ihr nächsten Herbst wieder Zeit habt: Ich werde garantiert wieder etwas vergessen.«']
+};
+const KEY='herbst-ferdinand-v1';
+let G;try{G=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){G=null;}
+const fresh=()=>({step:'title',i:0,start:0,t:{},tips:{}});if(!G)G=fresh();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(G));}catch(e){}};
+const app=$('#app');let cleanups=[];const cleanup=()=>{cleanups.forEach(f=>{try{f();}catch(e){}});cleanups=[];try{speechSynthesis.cancel();}catch(e){}};
+const DPR=()=>Math.min(2,devicePixelRatio||1);
+
+/* ---------- Ton ---------- */
+let AC=null,MUTE=false;try{MUTE=localStorage.getItem('herbst-mute')==='1';}catch(e){}
+const ac=()=>{if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}}if(AC.state==='suspended')AC.resume();return AC;};
+let MASTER=null;const out=()=>{const a=ac();if(!a)return null;if(!MASTER){MASTER=a.createGain();MASTER.gain.value=MUTE?0:1;MASTER.connect(a.destination);}return MASTER;};
+let NB=null;const nb=a=>{if(!NB){NB=a.createBuffer(1,a.sampleRate*2,a.sampleRate);const d=NB.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}return NB;};
+function noise({dur=.2,type='bandpass',f=1000,f2=null,q=1,vol=.3,at=0,att=.005,dest=null}){const a=ac(),o=dest||out();if(!a||!o)return;const t=a.currentTime+at,s=a.createBufferSource();s.buffer=nb(a);const fl=a.createBiquadFilter();fl.type=type;fl.frequency.setValueAtTime(f,t);if(f2)fl.frequency.exponentialRampToValueAtTime(f2,t+dur);fl.Q.value=q;const g=a.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+att);g.gain.exponentialRampToValueAtTime(.001,t+dur);s.connect(fl);fl.connect(g);g.connect(o);s.start(t,Math.random()*1.5);s.stop(t+dur+.05);}
+function tone({f=440,f2=null,dur=.3,type='sine',vol=.2,at=0,att=.005,dest=null}){const a=ac(),o=dest||out();if(!a||!o)return;const t=a.currentTime+at,s=a.createOscillator();s.type=type;s.frequency.setValueAtTime(f,t);if(f2)s.frequency.exponentialRampToValueAtTime(f2,t+dur);const g=a.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+att);g.gain.exponentialRampToValueAtTime(.001,t+dur);s.connect(g);g.connect(o);s.start(t);s.stop(t+dur+.05);}
+const mf=m=>440*Math.pow(2,(m-69)/12);
+const pluck=(f,at,v=.1,dest)=>{tone({f,dur:1.2,type:'triangle',vol:v,at,dest});tone({f:f*2,dur:.35,vol:v*.35,at,dest});};
+const SFX={
+ rustle(){noise({dur:.5,f:3200,f2:1400,q:.5,vol:.18,att:.08});noise({dur:.3,f:5000,q:.6,vol:.08,at:.15});},
+ thud(){tone({f:150,f2:70,dur:.18,vol:.4});noise({dur:.08,type:'lowpass',f:800,vol:.25});},
+ knock(){tone({f:220,f2:140,dur:.15,type:'triangle',vol:.35});tone({f:180,f2:110,dur:.15,type:'triangle',vol:.3,at:.12});},
+ swoosh(){noise({dur:.3,f:700,f2:2200,q:1,vol:.12,att:.05});},
+ chirp(){[0,.12,.24].forEach(at=>tone({f:2600,f2:3800,dur:.08,vol:.08,at}));},
+ good(){[659,880,1047].forEach((f,k)=>pluck(f,k*.09,.1));},
+ bad(){tone({f:300,f2:180,dur:.35,type:'triangle',vol:.18});},
+ click(){noise({dur:.03,f:3000,q:5,vol:.22});},
+ tick(){noise({dur:.02,f:4000,q:8,vol:.2});},
+ win(){[[57,0],[60,.15],[64,.3],[69,.45],[64,.7],[69,.85],[72,1.1]].forEach(([m,t])=>pluck(mf(m+12),t,.12));SFX.chirp();},
+ fanfare(){[[60,0],[64,.2],[67,.4],[72,.6],[67,.95],[72,1.15],[76,1.5]].forEach(([m,t])=>{pluck(mf(m+12),t,.14);pluck(mf(m),t,.08);});noise({dur:1.6,f:3000,f2:1200,q:.4,vol:.12,at:.3,att:.4});},
+ turn(){noise({dur:.7,f:2400,f2:800,q:.5,vol:.18,att:.15});pluck(mf(69),.2,.1);pluck(mf(76),.35,.1);}
+};
+const sfx=n=>{if(MUTE)return;try{SFX[n]&&SFX[n]();}catch(e){}};
+const TUNE=[[69,1],[72,.5],[76,1],[74,.5],[72,1],[71,.5],[69,1.5],[64,1],[67,.5],[69,1],[71,.5],[72,1],[71,.5],[69,1.5]];
+let AMB=null;
+function ambient(on){const a=ac(),o=out();if(!a||!o)return;
+  if(on&&!AMB){const bus=a.createGain();bus.connect(o);const s=a.createBufferSource();s.buffer=nb(a);s.loop=true;const bp=a.createBiquadFilter();bp.type='bandpass';bp.frequency.value=500;bp.Q.value=.4;const g=a.createGain();g.gain.value=.03;s.connect(bp);bp.connect(g);g.connect(bus);s.start();
+    const gust=setInterval(()=>{const v=.015+Math.random()*.06;g.gain.setTargetAtTime(v,a.currentTime,1.6);bp.frequency.setTargetAtTime(300+Math.random()*700,a.currentTime,2);if(Math.random()<.35)noise({dur:.6,f:3000+Math.random()*2000,q:.5,vol:.04,att:.2,dest:bus});},2500);
+    const play=()=>{let t=0;TUNE.forEach(([m,d])=>{pluck(mf(m),t,.045,bus);if(d>=1)pluck(mf(m-12),t,.025,bus);t+=d*.5;});};const t0=setTimeout(play,1500);const mel=setInterval(play,24000);
+    AMB={s,gust,mel,t0,bus};}
+  else if(!on&&AMB){try{AMB.s.stop();}catch(e){}clearInterval(AMB.gust);clearInterval(AMB.mel);clearTimeout(AMB.t0);try{AMB.bus.disconnect();}catch(e){}AMB=null;}}
+function setMute(m){MUTE=m;try{localStorage.setItem('herbst-mute',m?'1':'0');}catch(e){}if(MASTER)MASTER.gain.value=m?0:1;$('#snd').textContent=m?'🔇':'🔊';$('#snd').setAttribute('aria-label',m?'Ton einschalten':'Ton ausschalten');}
+$('#snd').onclick=()=>{setMute(!MUTE);if(!MUTE)ambient(true);};setMute(MUTE);
+$('#fs').onclick=()=>{try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen();}catch(e){}};
+
+/* ---------- Hintergrund: Wald und fallendes Laub ---------- */
+(function(){const cv=$('#bg'),x=cv.getContext('2d');let W,H,L=[];const red=matchMedia('(prefers-reduced-motion: reduce)').matches;const C=['#e85d2a','#f2b23a','#c2410c','#8a2a2a','#d9822b','#b7791f'];
+  const rs=()=>{const d=DPR();W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;x.setTransform(d,0,0,d,0,0);L=Array.from({length:Math.round(W/38)},()=>({x:Math.random()*W,y:Math.random()*H,s:6+Math.random()*12,v:.4+Math.random()*1,r:Math.random()*6,vr:(Math.random()-.5)*.04,c:C[Math.floor(Math.random()*C.length)],p:Math.random()*6}));};rs();addEventListener('resize',rs);
+  const trees=Array.from({length:14},(_,i)=>({x:i/13,h:.35+((i*37)%10)/40,w:.05+((i*13)%5)/100}));
+  const leaf=(l)=>{x.save();x.translate(l.x,l.y);x.rotate(l.r);x.fillStyle=l.c;x.beginPath();x.moveTo(0,-l.s);x.quadraticCurveTo(l.s*.8,-l.s*.2,0,l.s);x.quadraticCurveTo(-l.s*.8,-l.s*.2,0,-l.s);x.fill();x.strokeStyle='#0003';x.lineWidth=1;x.beginPath();x.moveTo(0,-l.s);x.lineTo(0,l.s);x.stroke();x.restore();};
+  const draw=t=>{x.clearRect(0,0,W,H);x.fillStyle='#ffd27a';x.globalAlpha=.25;x.beginPath();x.arc(W*.8,H*.18,H*.09,0,7);x.fill();x.globalAlpha=1;
+    trees.forEach(tr=>{const tx=tr.x*W,th=tr.h*H,tw=tr.w*W;x.fillStyle='#160c06';x.fillRect(tx-tw*.08,H-th*.5,tw*.16,th*.5);x.beginPath();x.ellipse(tx,H-th*.6,tw,th*.35,0,0,7);x.fill();});
+    L.forEach(l=>{if(!red){l.y+=l.v;l.x+=Math.sin(t/1400+l.p)*.7+.25;l.r+=l.vr;}if(l.y>H+20){l.y=-20;l.x=Math.random()*W;}if(l.x>W+20)l.x=-20;x.globalAlpha=.75;leaf(l);});x.globalAlpha=1;
+    if(!red)requestAnimationFrame(draw);};requestAnimationFrame(draw);})();
+
+/* Avatar: Blatt mit Initiale */
+const av=(p,big)=>`<svg viewBox="0 0 80 80" aria-hidden="true"><path d="M40 4 C58 14 74 30 70 50 C66 68 52 76 40 76 C28 76 14 68 10 50 C6 30 22 14 40 4 Z" fill="${p.c}"/><path d="M40 8 V74" stroke="#0003" stroke-width="2"/><path d="M40 30 L58 20 M40 44 L62 36 M40 30 L22 20 M40 44 L18 36" stroke="#0002" stroke-width="2"/><circle cx="40" cy="44" r="17" fill="#fff3dc"/><text x="40" y="52" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="22" fill="${p.c}">${p.n[0]}</text></svg>`;
+const SQ=`<svg viewBox="0 0 120 120" aria-hidden="true" style="width:7rem;height:7rem"><path d="M80 100 C120 90 120 40 96 22 C84 12 70 20 78 34 C88 52 96 70 76 84 Z" fill="#b5651d"/><path d="M84 30 C92 40 98 60 86 78" stroke="#d9944a" stroke-width="5" fill="none"/><ellipse cx="54" cy="80" rx="26" ry="24" fill="#c97a2e"/><ellipse cx="54" cy="86" rx="15" ry="15" fill="#f1d3a8"/><circle cx="52" cy="46" r="20" fill="#c97a2e"/><path d="M38 32 L36 16 L46 28 Z M60 30 L66 14 L68 32 Z" fill="#b5651d"/><circle cx="45" cy="44" r="4" fill="#1d120c"/><circle cx="46" cy="43" r="1.4" fill="#fff"/><circle cx="60" cy="44" r="4" fill="#1d120c"/><circle cx="61" cy="43" r="1.4" fill="#fff"/><ellipse cx="53" cy="54" rx="4" ry="3" fill="#3a2414"/><path d="M48 58 Q53 62 58 58" stroke="#3a2414" stroke-width="2" fill="none"/><ellipse cx="54" cy="92" rx="9" ry="10" fill="#8a5a22"/><path d="M47 88 Q54 82 61 88" stroke="#5a3a12" stroke-width="2" fill="none"/></svg>`;
+const NUT=l=>`<svg class="big-nut" viewBox="0 0 120 140" aria-hidden="true"><defs><radialGradient id="ng" cx=".35" cy=".3"><stop offset="0" stop-color="#f0b46a"/><stop offset="1" stop-color="#8a4a18"/></radialGradient></defs><path d="M60 20 C92 20 108 52 104 84 C100 116 82 134 60 134 C38 134 20 116 16 84 C12 52 28 20 60 20 Z" fill="url(#ng)"/><path d="M24 46 Q60 24 96 46 L92 34 Q60 4 28 34 Z" fill="#5a3a12"/><path d="M60 8 V22" stroke="#5a3a12" stroke-width="6" stroke-linecap="round"/><text x="60" y="102" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="52" fill="#fff3dc" stroke="#5a2a08" stroke-width="2">${l}</text></svg>`;
+function nuts(){const n=$('#nuts');const got=G.step==='end'||G.step==='final'?5:G.i+(G.step==='reward'?1:0);n.innerHTML=WORD.split('').map((c,k)=>k<5&&k<got||(k===5&&G.step==='end')?`<span class="nut got">${c}</span>`:'<span class="nut"></span>').join('');n.hidden=G.step==='title';}
+function speak(text){if(!('speechSynthesis' in window))return null;const b=document.createElement('button');b.className='btn ghost';b.type='button';b.textContent='Vorlesen';b.onclick=()=>{if(speechSynthesis.speaking){speechSynthesis.cancel();b.textContent='Vorlesen';return;}const u=new SpeechSynthesisUtterance(text);u.lang='de-DE';u.rate=.95;const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.startsWith('de'));if(v)u.voice=v;u.onend=()=>b.textContent='Vorlesen';speechSynthesis.speak(u);b.textContent='Stopp';};return b;}
+function fit(){const sc=app.firstElementChild;if(!sc)return;sc.style.zoom='';const cs=getComputedStyle(app);const avail=app.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);const h=sc.getBoundingClientRect().height;if(h>avail)sc.style.zoom=String(Math.max(.5,avail/h*.98));}
+addEventListener('resize',fit);
+function scene(html){cleanup();app.innerHTML=`<section class="scene">${html}</section>`;nuts();requestAnimationFrame(fit);setTimeout(fit,400);const p=app.querySelector('[data-primary]');if(p)setTimeout(()=>p.focus({preventScroll:true}),50);return app.firstElementChild;}
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&document.activeElement===document.body){const p=app.querySelector('[data-primary]');if(p){e.preventDefault();p.click();}}});
+const go=(step,i)=>{G.step=step;if(i!=null)G.i=i;save();render();};
+
+/* ---------- Szenen ---------- */
+function render(){const s=G.step;
+  if(s==='title'){const el=scene(`${SQ}<h1>Ferdinands Wintervorrat</h1><p class="sub">Ein Herbsträtsel für fünf · etwa 20 Minuten</p><div class="cast">${PL.map(p=>`<div class="pl">${av(p)}${p.n}</div>`).join('')}</div><div class="row"><button class="btn" data-primary id="b">Los geht's</button>${G.start?'<button class="btn ghost" id="r">Neu starten</button>':''}</div><p class="kbd">Tipp: Vollbild oben rechts. Weiter geht's auch mit der Eingabetaste.</p>`);
+    el.querySelector('#b').onclick=()=>{ac();if(!MUTE)ambient(true);sfx('rustle');if(!G.start){G.start=Date.now();go('intro');}else render2resume();};const r=el.querySelector('#r');if(r)r.onclick=()=>{G=fresh();save();render();};return;}
+  if(s==='intro'){const el=scene(`${SQ}<h2>Der Herbststurm war da</h2><div class="board">${STORY.intro.map(p=>`<p>${p}</p>`).join('')}</div><div class="row" id="rw"><button class="btn" data-primary id="b">Wer fängt an?</button></div>`);const sp=speak(STORY.intro.join(' '));if(sp)el.querySelector('#rw').prepend(sp);el.querySelector('#b').onclick=()=>go('turn',0);return;}
+  if(s==='turn'){const p=PL[G.i];sfx('turn');const el=scene(`<div class="cast">${PL.map((q,k)=>`<div class="pl${k<G.i?' done':k===G.i?' now':''}">${av(q)}${q.n}</div>`).join('')}</div><div class="turn"><small>Nuss ${G.i+1} von 5 · jetzt ist dran</small>${p.n}</div><p class="say">${STORY.turns[G.i]}</p><div class="row" id="rw"><button class="btn" data-primary id="b">Rätsel starten</button></div>`);const sp=speak(STORY.turns[G.i]);if(sp)el.querySelector('#rw').prepend(sp);el.querySelector('#b').onclick=()=>{G.t['s'+G.i]=Date.now();go('riddle');};return;}
+  if(s==='riddle'){riddle(G.i);return;}
+  if(s==='reward'){const p=PL[G.i];sfx('win');const el=scene(`${NUT(p.l)}<h2>${p.n} hat die Nuss!</h2><p class="say">${STORY.rewards[G.i]}</p><div class="row"><button class="btn" data-primary id="b">${G.i<4?'Weiter: '+PL[G.i+1].n:'Zur Vorratskammer'}</button></div>`);el.querySelector('#b').onclick=()=>{if(G.i<4)go('turn',G.i+1);else go('final');};return;}
+  if(s==='final'){finale();return;}
+  if(s==='end'){ending();return;}}
+function render2resume(){render();}
+function shell(i,title,how,body){const p=PL[i];return scene(`<div class="row" style="gap:.8rem">${av(p).replace('<svg','<svg style="width:3.4rem;height:3.4rem"')}<h2>${title}</h2></div><p class="sub">${how}</p>${body}<p class="msg" id="rm" hidden></p><div class="row"><button class="btn ghost" id="tip">Tipp von Ferdinand</button></div>`);}
+function done(i){G.t['e'+i]=Date.now();go('reward');}
+function tipper(el,i,tips){let n=0;const b=el.querySelector('#tip');b.onclick=()=>{const m=el.querySelector('#rm');m.textContent=tips[Math.min(n,tips.length-1)];m.className='msg tip';m.hidden=false;sfx('chirp');G.tips[i]=(G.tips[i]||0)+1;save();n++;};}
+const say=(el,t,k)=>{const m=el.querySelector('#rm');m.textContent=t;m.className='msg '+k;m.hidden=false;};
+
+/* ---------- Die fünf Rätsel ---------- */
+function riddle(i){if(/[?&]test=1/.test(location.search))window.__done=()=>done(i);[quiz,shellgame,apples,counting,leaves][i](i);}
+function quiz(i){const Q=[['Woraus wird Federweißer gemacht?',['Aus Traubenmost','Aus Apfelsaft','Aus Birnen','Aus Holunder'],0],['Was passiert Ende Oktober mit der Uhr?',['Eine Stunde vor','Eine Stunde zurück','Zwei Stunden zurück','Gar nichts'],1],['An welchem Baum wachsen Eicheln?',['Buche','Kastanie','Eiche','Ahorn'],2],['Warum werden Blätter im Herbst bunt?',['Die Kälte färbt sie','Sie rosten','Das grüne Chlorophyll wird abgebaut','Die Sonne bleicht sie'],2]];let k=0;
+  const show=()=>{const [q,o,a]=Q[k];const el=shell(i,'Ferdinands Herbst-Quiz',`Frage ${k+1} von 4 · Klicken oder Taste 1–4`,`<p class="q">${q}</p><div class="opts">${o.map((t,j)=>`<button class="opt" data-j="${j}"><b>${j+1}</b>${t}</button>`).join('')}</div>`);
+    tipper(el,i,['Bei den Fragen hilft gern die ganze Runde mit!','Federweißer gibt es im Herbst zum Zwiebelkuchen. Er ist der Vorgänger von Wein.']);
+    const pick=j=>{const b=el.querySelector(`.opt[data-j="${j}"]`);if(j===a){b.classList.add('ok');sfx('good');setTimeout(()=>{k++;if(k>=4)done(i);else show();},700);}else{b.classList.remove('no');void b.offsetWidth;b.classList.add('no');sfx('bad');}};
+    el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(+b.dataset.j));
+    const kd=e=>{if(/^[1-4]$/.test(e.key))pick(+e.key-1);};document.addEventListener('keydown',kd);cleanups.push(()=>document.removeEventListener('keydown',kd));};show();}
+function shellgame(i){const PUMP=`<svg viewBox="0 0 120 110"><path d="M60 22 C30 18 6 40 8 66 C10 92 34 104 60 104 C86 104 110 92 112 66 C114 40 90 18 60 22 Z" fill="#e8741e"/><path d="M60 22 C44 22 38 60 44 104 M60 22 C76 22 82 60 76 104 M60 22 C26 30 22 80 30 100 M60 22 C94 30 98 80 90 100" stroke="#b5501a" stroke-width="3" fill="none"/><path d="M58 24 C56 12 60 6 68 2" stroke="#4a6b1f" stroke-width="7" stroke-linecap="round" fill="none"/></svg>`;
+  let round=0,nutAt=0,pos=[20,50,80],busy=true,tms=[];
+  const el=shell(i,'Das Kürbis-Hütchenspiel','Folge der Nuss mit den Augen. Zwei Runden, die zweite ist schneller. Danach den richtigen Kürbis anklicken.',`<div class="shell" id="sh"><svg class="nutb" id="nb" viewBox="0 0 60 70" style="left:20%"><path d="M30 10 C46 10 54 26 52 42 C50 58 41 67 30 67 C19 67 10 58 8 42 C6 26 14 10 30 10 Z" fill="#a8622a"/><path d="M12 24 Q30 12 48 24 L46 18 Q30 2 14 18 Z" fill="#5a3a12"/></svg>${[0,1,2].map(k=>`<button class="pump" data-k="${k}" style="left:${pos[k]}%" aria-label="Kürbis ${k+1}">${PUMP}</button>`).join('')}</div><div class="hud"><span id="rd">Runde 1 von 2</span></div>`);
+  tipper(el,i,['Alle dürfen mitgucken! Vier Augen sehen mehr als zwei.','Nicht auf die Kürbisse schauen, sondern nur auf den einen, unter dem die Nuss lag.']);
+  const P=[...el.querySelectorAll('.pump')],nb=el.querySelector('#nb');
+  const start=()=>{busy=true;nutAt=Math.floor(Math.random()*3);pos=[20,50,80];P.forEach((p,k)=>{p.style.transition='none';p.style.left=pos[k]+'%';p.classList.remove('lift');});void P[0].offsetWidth;P.forEach(p=>p.style.transition='');nb.style.left=pos[nutAt]+'%';nb.style.opacity=1;
+    P[nutAt].classList.add('lift');sfx('knock');tms.push(setTimeout(()=>{P[nutAt].classList.remove('lift');tms.push(setTimeout(()=>{nb.style.opacity=0;swaps(round?10:6,round?380:560);},500));},1400));};
+  const swaps=(n,ms)=>{let c=0;const step=()=>{if(c>=n){busy=false;say(el,'Wo ist die Nuss?','tip');return;}let a=Math.floor(Math.random()*3),b=(a+1+Math.floor(Math.random()*2))%3;[pos[a],pos[b]]=[pos[b],pos[a]];P[a].style.left=pos[a]+'%';P[b].style.left=pos[b]+'%';P.forEach(p=>p.style.transitionDuration=ms*.9+'ms');sfx('swoosh');c++;tms.push(setTimeout(step,ms));};step();};
+  P.forEach((p,k)=>p.onclick=()=>{if(busy)return;busy=true;nb.style.left=pos[nutAt]+'%';nb.style.opacity=1;p.classList.add('lift');sfx('knock');
+    if(k===nutAt){sfx('good');say(el,round?'Wieder richtig! Die Nuss gehört euch.':'Richtig! Jetzt wird es schneller.','ok');round++;if(round>=2)tms.push(setTimeout(()=>done(i),1300));else{el.querySelector('#rd').textContent='Runde 2 von 2';tms.push(setTimeout(start,1600));}}
+    else{P[nutAt].classList.add('lift');sfx('bad');say(el,'Leer! Ferdinand kichert. Nochmal von vorn in dieser Runde.','no');tms.push(setTimeout(start,1900));}});
+  tms.push(setTimeout(start,800));cleanups.push(()=>tms.forEach(clearTimeout));}
+function apples(i){const el=shell(i,'Apfelernte','Bewege den Korb mit Maus, Finger oder Pfeiltasten. 12 rote Äpfel fangen, die braunen wurmigen meiden. 45 Sekunden.',`<canvas class="play" id="cv" aria-label="Apfelernte"></canvas><div class="hud"><span id="sc">🍎 0 / 12</span><span id="tm">⏱ 45</span></div><div class="row"><button class="btn" data-primary id="go">Baum schütteln!</button></div>`);
+  tipper(el,i,['Nicht hinterherjagen: lieber dort warten, wo die Äpfel landen.','Wurmige Äpfel kosten einen Punkt. Lieber einen guten verpassen als einen wurmigen fangen.']);
+  const cv=el.querySelector('#cv'),x=cv.getContext('2d');let W,H,bx=.5,keys={},A=[],score=0,time=45,run=false,raf=0,last=0,spawn=0;
+  const rs=()=>{const d=DPR();W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;x.setTransform(d,0,0,d,0,0);};rs();
+  cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();bx=Math.max(.06,Math.min(.94,(e.clientX-r.left)/r.width));});
+  const kd=e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){keys[e.key]=e.type==='keydown';e.preventDefault();}};document.addEventListener('keydown',kd);document.addEventListener('keyup',kd);
+  const draw=now=>{const dt=last?Math.min(.05,(now-last)/1000):0;last=now;
+    x.fillStyle='#3a2a1a';x.fillRect(0,0,W,H);const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#5a7ab5');g.addColorStop(1,'#f2b26a');x.fillStyle=g;x.fillRect(0,0,W,H);
+    x.fillStyle='#4a3020';x.fillRect(W*.47,H*.2,W*.06,H*.8);x.fillStyle='#3f6b1f';x.beginPath();x.ellipse(W*.5,H*.16,W*.48,H*.2,0,0,7);x.fill();x.fillStyle='#5a8a2a';x.beginPath();x.ellipse(W*.42,H*.12,W*.25,H*.12,0,0,7);x.fill();
+    x.fillStyle='#6b8a2a';x.fillRect(0,H*.9,W,H*.1);
+    if(run){if(keys.ArrowLeft)bx-=dt*.9;if(keys.ArrowRight)bx+=dt*.9;bx=Math.max(.06,Math.min(.94,bx));time-=dt;spawn-=dt;if(spawn<=0){spawn=.55+Math.random()*.45;A.push({x:.06+Math.random()*.88,y:.22,v:.25+Math.random()*.2,bad:Math.random()<.28});}}
+    const r=H*.04,bw=W*.13;
+    A.forEach(a=>{if(run)a.v+=dt*.35,a.y+=a.v*dt;x.fillStyle=a.bad?'#7a5a2a':'#d62828';x.beginPath();x.arc(a.x*W,a.y*H,r,0,7);x.fill();x.strokeStyle='#4a3020';x.lineWidth=3;x.beginPath();x.moveTo(a.x*W,a.y*H-r);x.lineTo(a.x*W+3,a.y*H-r*1.5);x.stroke();if(a.bad){x.fillStyle='#3a2414';x.beginPath();x.arc(a.x*W+r*.3,a.y*H,r*.25,0,7);x.fill();}else{x.fillStyle='#fff6';x.beginPath();x.arc(a.x*W-r*.35,a.y*H-r*.3,r*.25,0,7);x.fill();}});
+    const by=H*.86;A=A.filter(a=>{if(a.y*H+r>=by&&a.y*H<by+r*1.2&&Math.abs(a.x*W-bx*W)<bw/2){if(a.bad){score=Math.max(0,score-1);sfx('bad');}else{score++;sfx('thud');}return false;}if(a.y>1.05)return false;return true;});
+    x.fillStyle='#8a5a2a';x.beginPath();x.moveTo(bx*W-bw/2,by);x.lineTo(bx*W+bw/2,by);x.lineTo(bx*W+bw*.4,by+H*.09);x.lineTo(bx*W-bw*.4,by+H*.09);x.fill();x.strokeStyle='#5a3a1a';x.lineWidth=3;for(let k=1;k<4;k++){x.beginPath();x.moveTo(bx*W-bw/2+k*bw/4,by);x.lineTo(bx*W-bw*.4+k*bw*.2,by+H*.09);x.stroke();}
+    el.querySelector('#sc').textContent=`🍎 ${score} / 12`;el.querySelector('#tm').textContent=`⏱ ${Math.max(0,Math.ceil(time))}`;
+    if(run&&score>=12){run=false;sfx('good');setTimeout(()=>done(i),700);}
+    if(run&&time<=0){run=false;A=[];say(el,`Zeit um, ${score} Äpfel. Ferdinand schüttelt den Baum noch einmal.`,'no');const b=el.querySelector('#go');b.hidden=false;b.textContent='Nochmal schütteln';}
+    raf=requestAnimationFrame(draw);};raf=requestAnimationFrame(draw);
+  el.querySelector('#go').onclick=()=>{score=0;time=45;A=[];run=true;el.querySelector('#go').hidden=true;el.querySelector('#rm').hidden=true;sfx('rustle');};
+  const ro=new ResizeObserver(rs);ro.observe(cv);cleanups.push(()=>{cancelAnimationFrame(raf);ro.disconnect();document.removeEventListener('keydown',kd);document.removeEventListener('keyup',kd);});}
+function counting(i){const CODE=[7,9,4];
+  const pumpkin=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="0" rx="22" ry="17" fill="#e8741e"/><path d="M0 -17 C-8 -17 -10 0 -7 17 M0 -17 C8 -17 10 0 7 17" stroke="#b5501a" stroke-width="2" fill="none"/><path d="M0 -16 C-1 -22 2 -26 6 -27" stroke="#4a6b1f" stroke-width="4" stroke-linecap="round" fill="none"/></g>`;
+  const apple=(x,y)=>`<g transform="translate(${x} ${y})"><circle r="9" fill="#d62828"/><path d="M0 -9 L2 -14" stroke="#4a3020" stroke-width="2"/><ellipse cx="5" cy="-12" rx="4" ry="2" fill="#4a8a2a"/><circle cx="-3" cy="-3" r="2" fill="#fff6"/></g>`;
+  const shroom=(x,y)=>`<g transform="translate(${x} ${y})"><rect x="-4" y="-2" width="8" height="14" rx="3" fill="#f6efe0"/><path d="M-16 0 Q0 -22 16 0 Z" fill="#c62828"/><circle cx="-6" cy="-6" r="2.2" fill="#fff"/><circle cx="4" cy="-9" r="2" fill="#fff"/><circle cx="8" cy="-3" r="1.8" fill="#fff"/></g>`;
+  const leafD=(x,y,r,c)=>`<path transform="translate(${x} ${y}) rotate(${r})" d="M0 -12 Q10 -2 0 12 Q-10 -2 0 -12 Z" fill="${c}"/>`;
+  const chest=(x,y)=>`<g transform="translate(${x} ${y})"><circle r="6" fill="#6b3a1a"/><circle cx="-2" cy="-2" r="1.6" fill="#fff4"/></g>`;
+  const P=[[90,300,1.2],[160,320,1],[640,310,1.3],[700,330,.9],[420,330,1.1],[300,250,.8],[560,240,.85]];
+  const Ap=[[230,170],[250,185],[268,168],[520,150],[540,170],[505,172],[370,320],[390,300],[740,250]];
+  const S=[[60,240],[480,300],[620,250],[350,215]];
+  const svg=`<svg viewBox="0 0 800 380"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a7ab5"/><stop offset="1" stop-color="#f2b26a"/></linearGradient></defs><rect width="800" height="380" fill="url(#sk)"/><circle cx="680" cy="70" r="40" fill="#ffd27a" opacity=".8"/>
+   <path d="M0 220 Q200 180 400 210 T800 200 V380 H0 Z" fill="#7a8a2a"/><path d="M0 270 Q200 250 400 270 T800 260 V380 H0 Z" fill="#8a6a2a"/>
+   <rect x="200" y="190" width="100" height="10" fill="#6b4a2a"/><rect x="200" y="200" width="10" height="60" fill="#5a3a1a"/><rect x="290" y="200" width="10" height="60" fill="#5a3a1a"/>
+   <rect x="480" y="182" width="90" height="10" fill="#6b4a2a"/><rect x="480" y="192" width="10" height="60" fill="#5a3a1a"/><rect x="560" y="192" width="10" height="60" fill="#5a3a1a"/>
+   ${Array.from({length:22},(_,k)=>leafD(30+((k*137)%740),200+((k*61)%170),(k*47)%360,['#e85d2a','#f2b23a','#c2410c','#8a2a2a'][k%4])).join('')}
+   ${Array.from({length:6},(_,k)=>chest(120+k*110,355-(k%2)*12)).join('')}
+   ${P.map(([x,y,s])=>pumpkin(x,y,s)).join('')}${Ap.map(([x,y])=>apple(x,y)).join('')}${S.map(([x,y])=>shroom(x,y)).join('')}</svg>`;
+  const v=[0,0,0];
+  const el=shell(i,'Ferdinands Schuppenschloss','Zählt zusammen: Wie viele Kürbisse, Äpfel und Pilze sind auf dem Bild? Stellt die drei Zahlen ein.',`<div class="count">${svg}</div><div class="dials">${['Kürbisse','Äpfel','Pilze'].map((n,k)=>`<div class="dial"><button data-k="${k}" data-d="1" aria-label="${n} plus">▲</button><span id="d${k}">0</span><button data-k="${k}" data-d="-1" aria-label="${n} minus">▼</button><i>${n}</i></div>`).join('')}</div><div class="row"><button class="btn" id="ck">Schloss öffnen</button></div>`);
+  tipper(el,i,['Die Kastanien und Blätter zählen nicht mit, nur Kürbisse, Äpfel und Pilze.','Auf den beiden Tischen liegen auch Äpfel. Und hinten auf der Wiese versteckt sich ein Kürbis.']);
+  el.querySelectorAll('.dial button').forEach(b=>b.onclick=()=>{const k=+b.dataset.k;v[k]=(v[k]+ +b.dataset.d+10)%10;el.querySelector('#d'+k).textContent=v[k];sfx('tick');});
+  el.querySelector('#ck').onclick=()=>{if(v.every((n,k)=>n===CODE[k])){sfx('good');setTimeout(()=>done(i),500);}else{const ok=v.filter((n,k)=>n===CODE[k]).length;sfx('bad');say(el,`Das Schloss klemmt. ${ok} von 3 Zahlen stimmen.`,'no');}};}
+function leaves(i){const L=[['Ahorn','M50 96 L50 74 M50 74 L36 79 L39 68 L20 72 L25 61 L8 54 L19 48 L10 33 L27 37 L29 24 L40 33 L42 13 L50 22 L58 13 L60 33 L71 24 L73 37 L90 33 L81 48 L92 54 L75 61 L80 72 L61 68 L64 79 Z','#e85d2a'],
+   ['Eiche','M50 6 C60 8 56 20 64 22 C74 24 70 36 66 40 C76 44 74 56 66 58 C72 66 64 76 56 74 C56 82 52 88 50 94 C48 88 44 82 44 74 C36 76 28 66 34 58 C26 56 24 44 34 40 C30 36 26 24 36 22 C44 20 40 8 50 6 Z','#b7791f'],
+   ['Kastanie','M50 90 L50 56 M50 56 C44 40 40 16 50 4 C60 16 56 40 50 56 M50 56 C36 46 16 34 12 18 C30 18 44 38 50 56 M50 56 C64 46 84 34 88 18 C70 18 56 38 50 56 M50 56 C40 58 20 62 10 54 C22 46 40 50 50 56 M50 56 C60 58 80 62 90 54 C78 46 60 50 50 56','#c2410c'],
+   ['Birke','M50 90 L50 70 M50 70 C30 62 26 40 34 26 C40 16 46 10 50 6 C54 10 60 16 66 26 C74 40 70 62 50 70 Z','#f2b23a']];
+  const order=[2,0,3,1];let sel=-1,got=new Set();
+  const el=shell(i,'Blättersalat','Klickt ein Blatt an und dann den passenden Baum. Vier Blätter, vier Bäume.',`<div class="leaves">${order.map(k=>`<button class="leafc" data-k="${k}" aria-label="Blatt ${k+1}"><svg viewBox="0 0 100 100"><path d="${L[k][1]}" fill="${L[k][2]}" stroke="#5a2a08" stroke-width="2" stroke-linejoin="round"/></svg><span>?</span></button>`).join('')}</div><div class="trees">${L.map((t,k)=>`<button class="tree" data-t="${k}">${t[0]}</button>`).join('')}</div>`);
+  tipper(el,i,['Das Ahornblatt kennt ihr von der kanadischen Flagge.','Das Kastanienblatt besteht aus mehreren Fingern, das Birkenblatt ist klein und spitz.']);
+  el.querySelectorAll('.leafc').forEach(b=>b.onclick=()=>{if(got.has(+b.dataset.k))return;sel=+b.dataset.k;el.querySelectorAll('.leafc').forEach(x=>x.classList.toggle('sel',x===b));sfx('rustle');});
+  el.querySelectorAll('.tree').forEach(b=>b.onclick=()=>{if(sel<0){say(el,'Erst ein Blatt anklicken.','tip');return;}const t=+b.dataset.t;if(t===sel){got.add(sel);const lf=el.querySelector(`.leafc[data-k="${sel}"]`);lf.classList.remove('sel');lf.classList.add('ok');lf.querySelector('span').textContent=L[sel][0];b.classList.add('ok');sfx('good');sel=-1;if(got.size===4)setTimeout(()=>done(i),700);}else{sfx('bad');say(el,'Der Baum schüttelt den Kopf. Versucht einen anderen.','no');}});}
+
+/* ---------- Finale und Ende ---------- */
+function finale(){const tiles=WORD.split('').map((c,k)=>({c,k})).sort(()=>Math.random()-.5);let seq=[];
+  const el=scene(`${SQ}<h2>Die Vorratskammer</h2><p class="say">${STORY.final}</p><div class="slots" id="sl">${WORD.split('').map(()=>'<span class="slot"></span>').join('')}</div><div class="tiles" id="tl">${tiles.map((t,k)=>`<button class="tile" data-k="${k}">${t.c}</button>`).join('')}</div><p class="msg" id="rm" hidden></p><div class="row"><button class="btn ghost" id="cl">Zurücksetzen</button></div>`);
+  const sl=[...el.querySelectorAll('.slot')];const paint=()=>{sl.forEach((s,k)=>{s.textContent=seq[k]!=null?tiles[seq[k]].c:'';s.classList.toggle('f',seq[k]!=null);});el.querySelectorAll('.tile').forEach(b=>b.classList.toggle('used',seq.includes(+b.dataset.k)));};
+  el.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{const k=+b.dataset.k;if(seq.includes(k))return;seq.push(k);sfx('knock');paint();if(seq.length===6){if(seq.map(j=>tiles[j].c).join('')===WORD){G.t.end=Date.now();setTimeout(()=>go('end'),500);}else{sfx('bad');say(el,'Die Tür bleibt zu. Welche Jahreszeit ist gerade?','no');setTimeout(()=>{seq=[];paint();},1100);}}});
+  el.querySelector('#cl').onclick=()=>{seq=[];paint();};}
+function ending(){sfx('fanfare');const secs=PL.map((p,k)=>Math.max(1,Math.round(((G.t['e'+k]||0)-(G.t['s'+k]||0))/1000)));const best=secs.indexOf(Math.min(...secs));const total=Math.round(((G.t.end||Date.now())-G.start)/60000);
+  const fmt=s=>s>=60?Math.floor(s/60)+':'+String(s%60).padStart(2,'0')+' Min.':s+' Sek.';
+  const el=scene(`${SQ}<h1 style="font-size:3.4rem">Der Winter ist gerettet!</h1><div class="board">${STORY.end.map(p=>`<p>${p}</p>`).join('')}</div><div class="stats">${PL.map((p,k)=>`<div class="pl">${k===best?'<span class="crown">👑</span>':''}${av(p)}${p.n}<small>${fmt(secs[k])}${G.tips[k]?' · '+G.tips[k]+' Tipp'+(G.tips[k]>1?'s':''):''}</small></div>`).join('')}</div><p class="say">${PL[best].n} war am schnellsten und trägt die Herbstkrone ${new Date().getFullYear()}. Gesamtzeit: ${total} Minuten.</p><div class="row"><button class="btn ghost" id="r">Nochmal spielen</button></div>`);
+  el.querySelector('#r').onclick=()=>{G=fresh();save();render();};}
+render();
+})();
+</script>
+</body>
+</html>
