@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Das Geheimnis der Dicken Gertrud</title>
-<meta name="description" content="Ein Kirmes-Rätselspiel für Mama, Marcus und Stefan. Allerheiligenkirmes Soest. Jeder spielt am eigenen Handy.">
+<meta name="description" content="Ein Kirmes-Rätselspiel für Mama, Kathleen und Stefan. Allerheiligenkirmes Soest. Jeder spielt am eigenen Handy.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&family=Shrikhand&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@500&display=swap">
@@ -215,7 +215,7 @@ window.KIRMES={
 GAME:'soest-2026',WORD:'PUMPERNICKEL',
 P:{
  H:{name:'Mama',code:'MAMAPETRI',col:'#ff5d8f',title:'die Chefin'},
- M:{name:'Marcus',code:'MARKUSLUKAS',col:'#2ec4b6',title:'der Kraftprotz'},
+ M:{name:'Kathleen',code:'KATHLEENLUKAS',col:'#2ec4b6',title:'die Starke'},
  S:{name:'Stefan',code:'STEFANWILDEMAUS',col:'#8eacff',title:'der Tüftler'}},
 ORDER:['H','M','S'],
 PROLOG:{
@@ -225,7 +225,7 @@ PROLOG:{
   '»Es ist eine Katastrophe«, krächzt er. »Die Dicke Gertrud spielt nicht.« Die Dicke Gertrud ist die alte Dampforgel auf dem Petrikirchhof, 1898 gebaut, drei Tonnen schwer und das Herz der Kirmes. Ohne Gertrud kein Abschlussfeuerwerk am Sonntag. Ohne Feuerwerk keine Kirmes, sagt Bullerjahn. So war es immer.',
   '»Ihr Erbauer, der Orgelbauer Anton Haverkamp, hat sie mit einem Codewort gesichert. Zwölf Buchstaben. Er hat sie auf der ganzen Kirmes versteckt, in den Buden, in den Fahrgeschäften, überall. Ich brauche Leute, die Soest kennen. Ich brauche euch drei.«'],
  H:'Mama, er hat dich zuerst angerufen. Natürlich. Wer in Soest etwas wissen will, fragt dich, und zwar meistens, bevor er die Zeitung fragt.',
- M:'Marcus, er hat dich angerufen, weil er gehört hat, dass du beim Hau den Lukas schon einmal die Glocke zum Klingen gebracht hast. Ob das stimmt, weiß nur deine Familie. Und die schweigt.',
+ M:'Kathleen, er hat dich angerufen, weil er gehört hat, dass du beim Hau den Lukas schon einmal die Glocke zum Klingen gebracht hast. Ob das stimmt, weiß nur deine Familie. Und die schweigt.',
  S:'Stefan, er hat dich angerufen, weil du »was mit Computern« machst. Bullerjahn glaubt, Codewörter seien so etwas wie Computer. Du hast nicht widersprochen.',
  rules:['Jeder spielt am eigenen Handy.','Es gibt vier Runden. In jeder Runde löst jeder ein eigenes Rätsel.','Jedes Rätsel bringt einen Buchstaben. Alle Buchstaben landen auf der gemeinsamen Anzeigetafel.','Eine neue Runde beginnt, wenn alle drei fertig sind. Wer schneller ist, darf die anderen anfeuern.','Am Ende setzt ihr gemeinsam das Codewort aus zwölf Buchstaben zusammen.']},
 ROUNDS:[
@@ -244,7 +244,7 @@ ROUNDS:[
 ],
 FAST:{
  H:r=>`Mama war in Runde ${r} als Erste fertig. Wer zwei Söhne großgezogen hat, lässt sich von ein paar Kirmesrätseln nicht aufhalten.`,
- M:r=>`Marcus war in Runde ${r} am schnellsten und hat das vermutlich schon zweimal erwähnt, bevor die anderen fertig waren.`,
+ M:r=>`Kathleen war in Runde ${r} am schnellsten und hat das vermutlich schon zweimal erwähnt, bevor die anderen fertig waren.`,
  S:r=>`Stefan war in Runde ${r} vorn. Er schwört, er habe die Rätsel vorher nicht gekannt. Die Familie bleibt skeptisch.`},
 R:[
  {H:{type:'quiz',title:'Das große Soest-Quiz',letter:'P',how:'Bullerjahn will wissen, ob du deine Stadt kennst. Fünf Fragen. Jede falsche Antwort ist nicht schlimm, du darfst es noch einmal versuchen.',
@@ -295,7 +295,7 @@ FINALE:[
  'Zwölf Buchstaben. Bullerjahn steht zitternd vor der Dicken Gertrud. Er tippt das Wort in die alte Messingtastatur, Buchstabe für Buchstabe. P. U. M. P. E. R. N. I. C. K. E. L.',
  'Einen Moment lang passiert nichts. Dann zischt es. Dampf steigt auf, die kleine Holzfigur lüftet ihren Hut, die Trommeln wirbeln, und die Dicke Gertrud spielt. Laut, schief und wunderschön. Auf dem ganzen Petrikirchhof bleiben die Leute stehen.',
  '»Pumpernickel«, flüstert Bullerjahn. »Natürlich. Haverkamp war Bäckerssohn. In Soest gibt es eine der ältesten Pumpernickelbäckereien der Welt. Er hat immer gesagt: Das Beste braucht am längsten.« Er schnäuzt sich. »So wie ihr drei.«',
- 'Am Sonntagabend steigt über den Türmen von Patrokli und der Wiesenkirche das große Feuerwerk. Die Dicke Gertrud spielt dazu, und auf der Ehrentribüne sitzen drei Menschen mit drei Bullenaugen. Mama, Marcus und Stefan. Die Familie, die die Kirmes gerettet hat.']
+ 'Am Sonntagabend steigt über den Türmen von Patrokli und der Wiesenkirche das große Feuerwerk. Die Dicke Gertrud spielt dazu, und auf der Ehrentribüne sitzen drei Menschen mit drei Bullenaugen. Mama, Kathleen und Stefan. Die Familie, die die Kirmes gerettet hat.']
 };
 </script>
 <script>
@@ -452,7 +452,7 @@ function fireworks(sec=3){const x=FX.getContext('2d');const d=DPR();FX.width=inn
 /* Avatare */
 const AV={
  H:`<svg class="av" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#3a1d5c"/><path d="M14 34 Q12 14 32 13 Q52 14 50 34 Q46 26 32 25 Q18 26 14 34 Z" fill="#c9c3d9"/><circle cx="32" cy="35" r="14" fill="#f1d3b8"/><path d="M18 30 Q20 18 32 18 Q44 18 46 30 Q40 24 32 24 Q24 24 18 30 Z" fill="#dcd6e8"/><circle cx="26.5" cy="35" r="4.5" fill="none" stroke="#5a2d8a" stroke-width="1.6"/><circle cx="37.5" cy="35" r="4.5" fill="none" stroke="#5a2d8a" stroke-width="1.6"/><path d="M31 35 h2" stroke="#5a2d8a" stroke-width="1.6"/><circle cx="26.5" cy="35" r="1.4" fill="#2b1a12"/><circle cx="37.5" cy="35" r="1.4" fill="#2b1a12"/><path d="M27 42 q5 4 10 0" stroke="#b5361d" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M16 64 Q18 50 32 50 Q46 50 48 64 Z" fill="#ff5d8f"/><circle cx="32" cy="54" r="2" fill="#ffd36b"/></svg>`,
- M:`<svg class="av" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#123a3a"/><circle cx="32" cy="34" r="14" fill="#efc9a8"/><path d="M18 30 Q18 17 32 17 Q46 17 46 30 L44 27 Q32 20 20 27 Z" fill="#4a3424"/><circle cx="26.5" cy="33" r="1.6" fill="#2b1a12"/><circle cx="37.5" cy="33" r="1.6" fill="#2b1a12"/><path d="M24 29 h5 M35 29 h5" stroke="#4a3424" stroke-width="2" stroke-linecap="round"/><path d="M26 41 q6 4 12 0" stroke="#7a3a2a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M12 64 Q14 48 32 48 Q50 48 52 64 Z" fill="#2ec4b6"/><path d="M50 26 l8 -8 M54 22 l4 4" stroke="#c9a14a" stroke-width="3" stroke-linecap="round"/><rect x="52" y="12" width="9" height="6" rx="1" transform="rotate(45 56 15)" fill="#8a5a2a"/></svg>`,
+ M:`<svg class="av" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#123a3a"/><path d="M15 50 Q12 22 32 16 Q52 22 49 50 Q44 40 44 32 L20 32 Q20 40 15 50 Z" fill="#6b4226"/><circle cx="32" cy="34" r="13.5" fill="#efc9a8"/><path d="M18 31 Q20 17 32 17 Q44 17 46 31 Q40 24 32 25 Q24 24 18 31 Z" fill="#6b4226"/><circle cx="26.5" cy="34" r="1.7" fill="#2b1a12"/><circle cx="37.5" cy="34" r="1.7" fill="#2b1a12"/><path d="M26 41 q6 4 12 0" stroke="#b5361d" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M12 64 Q14 48 32 48 Q50 48 52 64 Z" fill="#2ec4b6"/><path d="M50 26 l8 -8 M54 22 l4 4" stroke="#c9a14a" stroke-width="3" stroke-linecap="round"/><rect x="52" y="12" width="9" height="6" rx="1" transform="rotate(45 56 15)" fill="#8a5a2a"/></svg>`,,
  S:`<svg class="av" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#1d2a5a"/><circle cx="32" cy="34" r="14" fill="#efc9a8"/><path d="M18 31 Q17 17 32 16 Q47 17 46 31 Q42 22 34 23 Q26 21 18 31 Z" fill="#6b4a2a"/><rect x="22" y="30" width="9" height="7" rx="2" fill="none" stroke="#1a1a2a" stroke-width="1.6"/><rect x="33" y="30" width="9" height="7" rx="2" fill="none" stroke="#1a1a2a" stroke-width="1.6"/><path d="M31 33 h2" stroke="#1a1a2a" stroke-width="1.6"/><circle cx="26.5" cy="33.5" r="1.3" fill="#2b1a12"/><circle cx="37.5" cy="33.5" r="1.3" fill="#2b1a12"/><path d="M27 42 q5 3 10 0" stroke="#7a3a2a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M12 64 Q14 48 32 48 Q50 48 52 64 Z" fill="#8eacff"/><path d="M28 48 L32 56 L36 48" fill="#f4f1ea"/></svg>`,
  B:`<svg class="av" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#4a1d2a"/><circle cx="32" cy="36" r="15" fill="#f1d3b8"/><path d="M14 30 Q32 14 50 30 Z" fill="#2f4a9a"/><rect x="12" y="28" width="40" height="5" rx="2" fill="#1d2a5a"/><circle cx="26" cy="36" r="1.8" fill="#2b1a12"/><circle cx="38" cy="36" r="1.8" fill="#2b1a12"/><path d="M22 44 Q32 40 42 44 Q38 47 32 46 Q26 47 22 44 Z" fill="#8a8a8a"/><circle cx="32" cy="40" r="2.6" fill="#e08a8a"/><path d="M14 64 Q16 52 32 52 Q48 52 50 64 Z" fill="#d62839"/></svg>`
 };
@@ -555,7 +555,7 @@ function renderFinal(fresh){cleanup();window.scrollTo({top:0,behavior:'instant'}
   const champ=ORDER.slice().sort((a,b)=>firsts[b]-firsts[a]||st[a].tp-st[b].tp)[0];
   const s=el('article','poster',`<span class="kick">Finale</span><h2>Pumpernickel!</h2><div class="story">${D.FINALE.map(p=>`<p>${p}</p>`).join('')}</div>`);app.appendChild(s);
   speakBtn(s.querySelector('.story'),D.FINALE.join(' '));
-  const t=el('section','bulbs board',`<div class="inner"><h2>Ehrentribüne</h2><div class="players">${ORDER.map(p=>`<div class="pl${p===champ?' self':''}">${AV[p]}<b>${P[p].name}</b><small>${firsts[p]}× als Erste${p==='H'?'':'r'} fertig<br>${st[p].tp} ${st[p].tp===1?'Tipp':'Tipps'}</small>${p===champ?'<span class="state done">Kirmeskönig'+(p==='H'?'in':'')+'</span>':''}</div>`).join('')}</div><div class="cta"><button class="btn gold" id="fw" type="button">Noch ein Feuerwerk</button></div></div>`);app.appendChild(t);
+  const t=el('section','bulbs board',`<div class="inner"><h2>Ehrentribüne</h2><div class="players">${ORDER.map(p=>`<div class="pl${p===champ?' self':''}">${AV[p]}<b>${P[p].name}</b><small>${firsts[p]}× als Erste${p==='S'?'r':''} fertig<br>${st[p].tp} ${st[p].tp===1?'Tipp':'Tipps'}</small>${p===champ?'<span class="state done">Kirmeskönig'+(p==='H'?'in':'')+'</span>':''}</div>`).join('')}</div><div class="cta"><button class="btn gold" id="fw" type="button">Noch ein Feuerwerk</button></div></div>`);app.appendChild(t);
   app.appendChild(el('div','',bubble('Ihr habt die Kirmes gerettet. Nächstes Jahr bekommt ihr Freifahrten. Lebenslang. Also, auf dem Kinderkarussell.')));
   $('#fw').onclick=()=>{fireworks(4);sfx('tusch');};
   if(fresh!==false){setTimeout(()=>{fireworks(6);sfx('tusch');},400);}}
