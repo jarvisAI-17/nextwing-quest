@@ -34,7 +34,7 @@ async function poll(){if(!sid){out.innerHTML='<div class="err">Keine Bestellnumm
    out.innerHTML=(d.test?'<span class="badge">Testbestellung</span>':'')+'<p style="margin:0">Spiel <b>'+esc(d.gameId)+'</b> · '+esc(d.genre||'')+(d.anlass?' · '+esc(d.anlass):'')+'</p>'
     +'<p class="muted" style="margin:0">Schick jedem Mitspieler seinen eigenen Link. Den Link der Spielleitung behältst du.</p>'
     +linkRow('Spielleitung (für dich)',base+d.lead.code)+d.players.map(p=>linkRow(p.name,base+p.code)).join('')
-    +'<p class="muted" style="margin:0">Die Rechnung kommt per E-Mail'+(d.email?' an '+esc(d.email):'')+'.</p>';
+    +'<p class="muted" style="margin:0">'+(d.test?'Testbestellung: Es wird keine Rechnung verschickt.':'Die Rechnung kommt per E-Mail'+(d.email?' an '+esc(d.email):'')+'.')+'</p>';
    out.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);b.textContent='Kopiert';}catch(e){b.textContent='Bitte manuell kopieren';}});return;}
   if(d.error){out.innerHTML='<div class="err">'+esc(d.error)+'</div>';return;}
  }catch(e){}
