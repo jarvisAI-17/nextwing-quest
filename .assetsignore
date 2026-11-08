@@ -11,3 +11,4 @@ src
 package.json
 package-lock.json
 .dev.vars
+docs
