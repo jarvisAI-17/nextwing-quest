@@ -70,6 +70,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ppl span .av{width:22px;height:22px}
 .ppl span.on{border-color:#5fd3a0}
 .ppl span em{font-style:normal;color:var(--gold);font-weight:800}
+.pcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px;margin-top:8px}
+.pc{position:relative;border-radius:12px;padding:10px 6px 12px;background:#16295a;border:1px solid #2c4278;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
+.pc .av{width:50px;height:50px}
+.pc b{font-size:15px;line-height:18px}
+.pc small{font-size:12px;line-height:16px;color:var(--muted)}
+.pc.self{border-color:var(--gold);box-shadow:0 0 0 2px rgba(240,200,105,.25)}
+.pc.now{border-color:#ff8fb0;box-shadow:0 0 16px rgba(255,93,143,.45)}
+.pc.now .av{animation:wob 1.2s ease-in-out infinite}
+@keyframes wob{50%{transform:rotate(-8deg) translateY(-3px)}}
+.pst{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:1px 8px}
+.pst.play{background:#ff5d8f;color:#1a0a14;animation:pblink 1.2s infinite}.pst.done{background:#5fd3a0;color:#062421}.pst.on{background:#2c4278;color:#cfe4ff}
+@keyframes pblink{50%{opacity:.55}}
 .phrase{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin-top:8px}
 .phrase span{aspect-ratio:3/4;border-radius:4px;display:grid;place-items:center;font-family:var(--xmas);font-size:clamp(13px,3.8vw,20px);background:#0a142b;border:1px dashed #2c4278;color:#2c4278}
 .phrase span.got{background:linear-gradient(180deg,#e9f6ff,#9fd2ff);color:#0b2a4a;border:0;box-shadow:0 0 10px rgba(191,230,255,.6)}
@@ -186,7 +198,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .bubble{position:relative;background:#fffdf6;color:#2a1c14;border:2.5px solid #2a1c14;border-radius:20px;padding:10px 16px 12px;font-family:var(--hand);font-size:22px;line-height:26px;box-shadow:3px 4px 0 var(--red)}
 .bubble b{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--green-2);font-weight:800;line-height:14px;margin-bottom:2px}
 #fx{position:fixed;inset:0;pointer-events:none;z-index:25}
-@media(prefers-reduced-motion:reduce){.door .lid{transition:none}.door.today{animation:none}.lose .card{animation:none}}
+@media(prefers-reduced-motion:reduce){.pc.now .av,.pst.play{animation:none}.door .lid{transition:none}.door.today{animation:none}.lose .card{animation:none}}
 </style>
 </head>
 <body>
@@ -434,7 +446,7 @@ function renderLogin(){cleanup();window.scrollTo({top:0,behavior:'instant'});app
 /* ---------- Startseite: Kalenderhaus und Anzeigetafel ---------- */
 const hm=t=>{const d=new Date(t);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');};
 const feedText=f=>{const n=nameOf(f.p);if(f.k==='join')return `${n} ist als Aushilfswichtel angekommen.`;if(f.k==='solve')return f.help?`Wichtelhilfe! ${n} hat Splitter ${f.day} für die Gruppe gefunden.`:`${n} hat Splitter ${f.day} gefunden: »${A.DAYS[f.day-1].t}«.`;if(f.k==='cheer')return `${n} feuert ${nameOf(f.to)} an ${f.e}`;if(f.k==='final')return `${n} hat den Polarstern wieder zum Leuchten gebracht!`;return '';};
-let lastFeed=-1;
+let lastFeed=-1;const CHEERED=new Set();
 function renderHome(){cleanup();window.scrollTo({top:0,behavior:'instant'});app.innerHTML='';const td=dayNow();
   pano(app,{sub:td<1?'Ab 1. Dezember geht es los':td>24?'Frohe Weihnachten':'Heute ist der '+td+'. Dezember'});
   const house=el('section','house');app.appendChild(house);
@@ -444,7 +456,9 @@ function renderHome(){cleanup();window.scrollTo({top:0,behavior:'instant'});app.
     house.innerHTML=`<h2>Der Adventskalender</h2><div class="doors">${Array.from({length:24},(_,i)=>{const d=i+1,s=solvedDay(d),open=d<=td,cls=s?'open':!open?'locked':d===td?'today':'wait';return `<button class="door ${cls}" type="button" data-d="${d}" aria-label="Türchen ${d}${s?', gefunden: '+s.l:open?', offen':', noch verschlossen'}"><span class="in">${s?s.l:''}</span><span class="lid"><b>${d}</b>${!s&&open&&d<td?'<i>Hilfe</i>':''}</span></button>`;}).join('')}</div><div class="legend"><span>✨ heute</span><span>Hilfe: alle dürfen mitraten</span><span>❄ noch zu</span></div>`;
     house.querySelectorAll('.door').forEach(b=>b.onclick=()=>{const d=+b.dataset.d;if(d>dayNow()&&!ME_LEAD){sfx('wrong');b.animate([{transform:'rotate(0)'},{transform:'rotate(-4deg)'},{transform:'rotate(4deg)'},{transform:'rotate(0)'}],{duration:350});return;}sfx('open');b.classList.add('open');setTimeout(()=>renderDay(d),solvedDay(d)?150:650);});
     const as=td>=1&&td<=24?ASSIGN[td]:null;const s=td>=1&&td<=24?solvedDay(td):null;
-    const ppl=PLAYERS.map(p=>{const n=Object.values(ST.d||{}).filter(x=>x.by===p.id).length;return `<span class="${online(p.id)?'on':''}">${avatar(p.id)}${p.name} <em>${n}</em></span>`;}).join('');
+    const nextTurn=id=>{for(let d=Math.max(1,td+1);d<=23;d++)if(ASSIGN[d]===id)return d;return null;};
+    const ppl=PLAYERS.map(p=>{const n=Object.values(ST.d||{}).filter(x=>x.by===p.id).length;const isToday=td>=1&&td<=23&&as===p.id;const st=isToday?(s?['done','heute gelöst']:['play','heute dran']):(online(p.id)?['on','online']:['wait','']);const nt=nextTurn(p.id);
+      return `<div class="pc${p.id===ME?' self':''}${isToday?' now':''}">${avatar(p.id)}<b>${p.name}</b>${st[1]?`<span class="pst ${st[0]}">${st[1]}</span>`:''}<small>${n} ${n===1?'Splitter':'Splitter'}${nt&&!isToday?` · dran am ${nt}.`:''}</small>${p.id!==ME&&!ME_LEAD?`<button class="lnk" type="button" data-cheer="${p.id}" ${CHEERED.has(p.id)?'disabled':''}>${CHEERED.has(p.id)?'Angefeuert!':'Anfeuern 📣'}</button>`:''}</div>`;}).join('');
     const ph=A.PHRASE.split('').map((c,i)=>solvedDay(i+1)?`<span class="got">${solvedDay(i+1).l}</span>`:'<span></span>').join('');
     let todayHtml='';
     if(td<1)todayHtml=`<div class="todaybox">${NPC.frau}<div><b>Noch ${1-rawDay()} ${1-rawDay()===1?'Tag':'Tage'} bis zum ersten Türchen</b><small>Am 1. Dezember geht es los. Die Wichtel polieren schon die Lupen.</small></div></div>`;
@@ -454,12 +468,13 @@ function renderHome(){cleanup();window.scrollTo({top:0,behavior:'instant'});app.
      <div class="rlabel" style="margin-top:12px">Der Polarstern: ${found} von 24 Splittern</div><div class="meter"><i style="width:${found/24*100}%"></i></div>
      ${todayHtml}<div class="cta" id="cta"></div>
      <div class="rlabel" style="margin-top:14px">Buchstaben auf den Splittern</div><div class="phrase">${ph}</div>
-     <div class="rlabel" style="margin-top:14px">Aushilfswichtel</div><div class="ppl">${ppl}</div>
+     <div class="rlabel" style="margin-top:14px">Aushilfswichtel</div><div class="pcs">${ppl}</div>
      <ul class="feed" aria-live="polite">${(ST.feed||[]).slice().reverse().slice(0,14).map(f=>`<li><time>${hm(f.t)}</time><span>${feedText(f)}</span></li>`).join('')}</ul>
      <p class="mode">${Sync.remote?(Sync.err?'Verbindung wackelt, ich versuche es weiter.':'Live verbunden.'):'Testmodus: Der Spielstand liegt nur in diesem Browser. Mit <b>?tag=5</b> und <b>&stunde=21</b> in der Adresse lässt sich jeder Tag ausprobieren.'} <button class="lnk" id="lo" type="button">Abmelden</button>${ME_LEAD?' <button class="lnk" id="rs" type="button">Spiel zurücksetzen</button>':''}</p>`;
     const cta=$('#cta');
     if(td>=1&&td<=24){if(ST.fin)cta.innerHTML=`<button class="btn gold" id="go" type="button">Zum großen Finale</button>`;else if(!s&&(td===24||as===ME||helpOpen(td)||ME_LEAD))cta.innerHTML=`<button class="btn primary" id="go" type="button">${td===24?'Den Stern zusammensetzen':as===ME?'Mein Türchen öffnen':ME_LEAD?'Türchen ansehen':'Wichtelhilfe: mitraten'}</button>`;else if(!s&&as)cta.innerHTML=`<button class="btn" id="go" type="button">Geschichte lesen</button><button class="lnk" id="ch" type="button">${nameOf(as)} anfeuern 📣</button>`;else cta.innerHTML=`<button class="btn" id="go" type="button">Geschichte lesen</button>`;
       const go=$('#go');if(go)go.onclick=()=>{sfx('open');ST.fin?renderFinal():renderDay(td);};const ch=$('#ch');if(ch)ch.onclick=()=>{Sync.send({k:'cheer',p:ME,to:as,e:['📣','👏','⭐','🎄','🦌'][Math.floor(Math.random()*5)]});sfx('cheer');ch.disabled=true;ch.textContent='Angefeuert!';};}
+    board.querySelectorAll('[data-cheer]').forEach(b=>b.onclick=()=>{CHEERED.add(b.dataset.cheer);Sync.send({k:'cheer',p:ME,to:b.dataset.cheer,e:['📣','👏','⭐','🎄','🦌'][Math.floor(Math.random()*5)]});sfx('cheer');b.disabled=true;b.textContent='Angefeuert!';});
     $('#lo').onclick=logout;const rs=$('#rs');if(rs){let arm=false;rs.onclick=()=>{if(!arm){arm=true;rs.textContent='Wirklich alles löschen? Noch mal tippen';setTimeout(()=>{arm=false;rs.textContent='Spiel zurücksetzen';},3000);return;}Sync.send({k:'reset',p:'lead'});};}
     const fl=(ST.feed||[]).length;if(lastFeed>=0&&fl>lastFeed){const f=ST.feed[fl-1];if(f.p!==ME){if(f.k==='solve')sfx('bells');if(f.k==='cheer'&&f.to===ME){sfx('cheer');sparkle(1.4);}}}lastFeed=fl;
     letter.innerHTML=`${HOLLY}${HOLLY.replace('holly l','holly r')}<span class="kick">Wichtelpost</span><h2>Was bisher geschah</h2><div class="story">${A.PROLOG.map(p=>`<p>${p}</p>`).join('')}</div><div class="cast">${A.CAST.map(([n,d])=>`<div><b>${n}</b>: ${d}</div>`).join('')}</div>`;
