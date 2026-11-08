@@ -58,7 +58,7 @@ Die kurzen, frechen Kommentare von Eddie und dem Kirmes-Direktor kamen am besten
 | Modul | Herkunft | Stand |
 | --- | --- | --- |
 | Zielen und Werfen | Kirmes, Dosenwerfen | Prototyp mit Prüfer und 12 Kulissen |
-| Pfad, jedes Feld einmal | Kirmes, Weg zum Riesenrad | in Arbeit |
+| Pfad, jedes Feld einmal | Kirmes, Weg zum Riesenrad | Prototyp mit Eindeutigkeits-Prüfer, 5 Kulissen, Tipps in 3 Stufen |
 | Chiffrierscheibe | Eddie | umzubauen |
 | Schiebepuzzle | Kirmes, Herbst | umzubauen |
 | Hütchenspiel | Herbst | umzubauen |
