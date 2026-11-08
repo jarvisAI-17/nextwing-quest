@@ -1,0 +1,34 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><title>Dein Spiel · Nextwing Quest</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Manrope:wght@400;600;700&display=swap">
+<style>
+:root{--s:#0b1220;--r:#131c2e;--k:#070c18;--l:#25304a;--L:#5b6a8a;--i:#eef2fb;--m:#98a3bd;--a:#ff6a1f;--ah:#ff8a4c;--as:#3a1c0e;--b:#8eacff;--bs:#15224a;--g:#5fd3a0;--gs:#0e2e20;--d:#ff8a8a;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--s);color:var(--i);font:16px/1.55 Manrope,system-ui,sans-serif;padding:24px max(16px,env(safe-area-inset-right)) 48px max(16px,env(safe-area-inset-left))}
+main{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.brand{font:20px Outfit,sans-serif}.brand b{font-weight:700}.brand span{color:var(--m)}
+h1{font:600 clamp(28px,5vw,38px)/1.1 Outfit,sans-serif;margin:0}
+.badge{align-self:flex-start;background:var(--bs);color:var(--b);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.card{background:var(--r);border:1px solid var(--l);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px}
+label{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:14px}
+input,select,textarea{font:inherit;background:var(--k);color:var(--i);border:1px solid var(--L);border-radius:10px;padding:10px 12px;min-height:44px}
+textarea{min-height:120px;resize:vertical}
+.chk{flex-direction:row;align-items:flex-start;gap:10px;font-weight:500;color:#c8d0e2}.chk input{min-height:auto;width:20px;height:20px;margin-top:2px;accent-color:var(--a)}
+button,.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:14px 22px;min-height:48px;background:var(--a);color:var(--s);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+button:hover{background:var(--ah)}button:disabled{opacity:.6;cursor:wait}.sec{background:transparent;border:1px solid var(--L);color:var(--i);padding:8px 14px;min-height:38px;font-size:14px}
+:focus-visible{outline:2px solid var(--b);outline-offset:2px}
+.err{background:#3a1418;color:#ffd0d0;border-radius:10px;padding:10px 12px}.ok{background:var(--gs);color:#c9f2de;border-radius:10px;padding:10px 12px}
+.muted{color:var(--m);font-size:14px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.link{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--k);border:1px solid var(--l);border-radius:10px;padding:10px 12px}
+.link code{font-size:13px;color:var(--b);word-break:break-all;min-width:0;flex:1}
+</style></head><body><main>
+<div class="brand">next<b>wing</b> <span>quest</span></div>
+<div id="out" class="card"><p style="margin:0">Spiel wird geladen …</p></div>
+</main>
+<script>
+const q=new URLSearchParams(location.search),out=document.getElementById('out');const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+fetch('/api/game?g='+encodeURIComponent(q.get('g')||'')+'&c='+encodeURIComponent(q.get('c')||'')).then(r=>r.json()).then(d=>{
+ if(d.error){out.innerHTML='<div class="err">'+esc(d.error)+'</div>';return;}
+ out.innerHTML='<h1>Hallo '+esc(d.me.name)+'!</h1><p style="margin:0">Euer Spiel <b>'+esc(d.genre||'')+'</b>'+(d.anlass?' für „'+esc(d.anlass)+'“':'')+' ist gebucht.</p>'
+  +'<p class="muted" style="margin:0">Mit dabei: '+d.players.map(esc).join(', ')+'</p><div class="ok">Status: '+esc(d.status)+'. Hier startet später euer Abenteuer.</div>'
+  +(d.me.role==='leitung'?'<p class="muted" style="margin:0">Du bist die Spielleitung und siehst später hier die Vorschau und die Anzeigetafel.</p>':'');
+}).catch(()=>out.innerHTML='<div class="err">Keine Verbindung.</div>');
+</script></body></html>

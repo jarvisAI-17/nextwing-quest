@@ -1,10 +1,18 @@
 {
-  // Cloudflare Worker mit statischen Dateien: liefert die Spiele aus diesem Repo aus
+  // Cloudflare Worker: liefert die Spiele aus diesem Repo aus und stellt unter /api/ den Shop bereit
   "name": "nextwing-quest",
+  "main": "src/index.js",
   "compatibility_date": "2025-09-01",
   "assets": {
     "directory": ".",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
-  }
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "ORDERS", "class_name": "OrderStore" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["OrderStore"] }],
+  "observability": { "enabled": true }
 }

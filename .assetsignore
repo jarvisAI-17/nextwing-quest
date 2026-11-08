@@ -7,3 +7,7 @@ wrangler.jsonc
 CNAME
 README.md
 node_modules
+src
+package.json
+package-lock.json
+.dev.vars
