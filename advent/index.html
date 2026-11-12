@@ -256,7 +256,7 @@ FINALE:[
  'Der Schlitten ist voll bis obenhin: vierundzwanzig Geschenke, eins für jeden Splitter. Die Rentiere scharren mit den Hufen, Klaus zieht die Mütze tief ins Gesicht, und Frau Weihnachtsmann reicht ihm eine Thermoskanne und einen letzten Lebkuchen. »Nicht alle auf einmal essen.«',
  'Kurz bevor der Schlitten abhebt, dreht sich der Weihnachtsmann noch einmal um. »Ohne euch säße ich jetzt auf dem Fahrrad«, sagt er. »Ganz unten auf dem Schlitten liegt für jeden von euch etwas. Von uns. Und von jemandem, der euch sehr gern hat.«',
  'Dann knallt die Peitsche, die Glocken klingen, und der Schlitten zieht eine goldene Spur über den Himmel, dem Polarstern nach. Frohe Weihnachten allesamt.'],
-/* Rätsel: Typ und Inhalte. Tag 9 bis 23 folgen. */
+/* Rätsel: Typ und Inhalte, Tag 1 bis 23. Tag 24 ist das Finale. */
 R:[
  {type:'diff',title:'Vorher und nachher',how:'Oben die Werkstatt von gestern, unten von heute früh. Fünf Dinge haben sich verändert. Tipp sie im unteren Bild an.',tips:['Achte auf Farben: das Schaukelpferd, die Mütze, die Kugeln am Baum.','Zähle nach: die Geschenke unter dem Baum und die Sterne an der Wand.']},
  {type:'sort',title:'Das Kipferl-Rezept',how:'Bring die Schritte für Vanillekipferl in die richtige Reihenfolge.',items:['Mehl, gemahlene Mandeln, Zucker und kalte Butter verkneten','Den Teig in Folie gewickelt kalt stellen','Kleine Hörnchen formen und aufs Blech legen','Goldgelb backen','Noch warm in Vanillezucker wälzen'],tips:['Der Teig muss ruhen, bevor man ihn formt.','Der Vanillezucker kommt ganz zum Schluss, solange die Kipferl noch warm sind.']},
@@ -266,7 +266,22 @@ R:[
  {type:'boots',title:'Drei Stiefel',how:'Auf jedem Stiefel klebt ein Zettel. Der Nikolaus verrät: Genau einer der drei Zettel sagt die Wahrheit. In welchem Stiefel steckt der Splitter?',boots:[['Roter Stiefel','Der Splitter ist in diesem Stiefel.'],['Grüner Stiefel','Der Splitter ist nicht in diesem Stiefel.'],['Goldener Stiefel','Der Splitter ist nicht im roten Stiefel.']],sol:1,tips:['Probier es aus: Nimm an, der Splitter wäre im roten Stiefel. Wie viele Zettel wären dann wahr?','Es dürfen nicht zwei Zettel gleichzeitig stimmen. Prüf den grünen Stiefel genau.']},
  {type:'simon',title:'Das Glockenspiel',how:'Die Glocken spielen dir eine Melodie vor. Spiel sie nach. Jede Runde kommt ein Ton dazu. Schaffst du sechs Töne?',len:6,tips:['Sag die Farben leise mit, das hilft beim Merken.','Mit »Noch mal vorspielen« hörst du die Melodie so oft du willst.']},
  {type:'grid',title:'Der Dienstplan',how:'Vier Rentiere, vier Aufgaben. Jeder deckt seine Notizen auf und liest vor. Tipp in die Tabelle: einmal für Nein, zweimal für Ja. In jeder Zeile und Spalte gibt es genau ein Ja.',rows:['Rudolph','Komet','Blitz','Donner'],cols:['Schnee schippen','Geschenke tragen','Kufen polieren','Navigation'],sol:[3,1,0,2],
-   notes:[['Rudolph hat die Navigation, wegen der leuchtenden Nase.','Komet poliert keine Kufen, davon wird ihm schwindelig.'],['Blitz trägt keine Geschenke und poliert nichts.','Donner schippt keinen Schnee, er hat Rücken.']],tips:['Rudolph steht fest. Damit fällt die Navigation für alle anderen weg.','Blitz bleibt nur noch eine Aufgabe übrig, die nicht ausgeschlossen ist.']}
+   notes:[['Rudolph hat die Navigation, wegen der leuchtenden Nase.','Komet poliert keine Kufen, davon wird ihm schwindelig.'],['Blitz trägt keine Geschenke und poliert nichts.','Donner schippt keinen Schnee, er hat Rücken.']],tips:['Rudolph steht fest. Damit fällt die Navigation für alle anderen weg.','Blitz bleibt nur noch eine Aufgabe übrig, die nicht ausgeschlossen ist.']},
+ {type:'rush',title:'Das Geschenkelager',how:'Das rote Päckchen muss rechts zur Rampe. Die Kisten fahren nur vor und zurück, nie zur Seite. Kiste antippen, dann mit den Pfeilen schieben oder einfach ziehen.',crates:[[2,0,2,1],[0,2,3,0],[1,3,3,1],[5,2,2,1],[4,1,2,1],[2,3,2,0],[2,5,3,0],[0,1,2,0],[4,0,2,0]],tips:['Die lange Kiste ganz rechts muss nach unten. Dafür braucht sie unten Platz.','Arbeite von rechts nach links: erst die Kisten vor der Rampe, dann die direkt neben dem Päckchen.']},
+ {type:'morse',title:'Das Polarlicht funkt',how:'Lass das Polarlicht leuchten und hör zu. Kurz ist ein Punkt, lang ist ein Strich, nach jedem Buchstaben kommt eine kleine Pause. Die Tafel verrät dir die Buchstaben.',word:'OFEN',answers:['OFEN','IMOFEN','BACKOFEN','DEROFEN'],tips:['Es sind vier Buchstaben. Der erste besteht aus drei langen Zeichen.','Wo backt die Bäckerei ihre Lebkuchen?']},
+ {type:'ginger',title:'Die Lebkuchen-Rechnung',how:'Jedes Lebkuchenmotiv steht für eine Zahl. Rechne die ersten drei Zeilen aus, dann löse die letzte.',rows:[[['h','+','h','+','h'],15],[['h','+','s','+','s'],13],[['m','+','m','+','s'],10]],q:['h','+','s','×','m'],answers:['17'],tips:['Ein Herz ist 5 wert. Damit bekommst du den Stern aus der zweiten Zeile.','Stern 4, Mond 3. Und denk an die Schule: Punkt vor Strich.']},
+ {type:'torch',title:'Stromausfall',how:'Zieh den Lichtkegel mit dem Finger durch die dunkle Werkstatt. Vier Dinge sind hier versteckt. Tipp sie an, solange sie im Licht liegen.',spots:[{k:'sicherung',x:11,y:56,n:'Sicherung',q:'Die Sicherung! Jetzt fehlt noch der Übeltäter.'},{k:'stecker',x:86,y:72,n:'Glühweinkocher',q:'Der Glühweinkocher-Stecker. Pfefferkorn schreibt sich das auf.'},{k:'muetze',x:72,y:28,n:'Wichtelmütze',q:'Eine Mütze! Wichtel Krümel sucht die seit Oktober.'},{k:'splitter',x:38,y:86,n:'Splitter',q:'Da glitzert er! Aber such ruhig noch zu Ende.'}],tips:['Unter den Werkbänken ist es besonders dunkel. Leuchte auch dort hin.','Schau oben im Regal und ganz links an der Wand.']},
+ {type:'slide',title:'Die Christbaumkugel',how:'Die Scherben der Kugel sind falsch zusammengeklebt. Tipp eine Scherbe neben der Lücke an, dann rutscht sie hinein. Setz das Bild wieder zusammen.',tips:['Fang mit der obersten Reihe an und rühr sie danach nicht mehr an.','Die letzten beiden Reihen löst man am besten spaltenweise von links nach rechts.']},
+ {type:'ice',title:'Der vereiste Brief',how:'Kratz mit dem Finger das Eis vom Brief, bis du lesen kannst, wo der Splitter liegt.',letter:['Liebe Wichtel,','den Splitter habe ich','im SCHORNSTEIN versteckt.','Da sucht keiner.','R.'],answers:['SCHORNSTEIN','IMSCHORNSTEIN','KAMIN','IMKAMIN'],tips:['Das wichtige Wort steht in Großbuchstaben in der Mitte.','Der Weihnachtsmann kommt angeblich da herein.']},
+ {type:'snowball',title:'Die Schneeballschlacht',how:'Die Schneemänner tauchen hinter den Schneewällen auf. Tipp sie an, um sie abzuwerfen. Aber Vorsicht: Manchmal schaut ein Wichtel heraus, den nicht treffen.',time:40,need:10,tips:['Schau auf die Mützen: Grüne Zipfelmützen sind Wichtel, Eimer sind Schneemänner.','Tipp knapp unter den Eimer, dann triffst du sicherer.']},
+ {type:'cuckoo',title:'Die Kuckucksuhr',how:'Stell die Uhr auf die Abflugzeit, die auf Pfefferkorns Zettel steht. Dann stoß das Pendel an.',note:'Abflug ist zweieinhalb Stunden nach dem Abendessen. Abendessen gibt es, wenn der Kuckuck achtmal ruft. Aber Frau Weihnachtsmann deckt immer eine Viertelstunde früher auf.',start:460,target:615,tips:['Achtmal rufen heißt acht Uhr. Eine Viertelstunde früher ist das Abendessen.','Abendessen um Viertel vor acht. Plus zweieinhalb Stunden.']},
+ {type:'names',title:'Wichtelnamen-Salat',how:'Auf jedem Namensschild sind die Buchstaben durcheinander. Tipp sie in der richtigen Reihenfolge an. Ein paar Namen kommen dir bekannt vor.',elves:['KRINGEL','ZIMTI','MUSKAT','PUNSCHI'],tips:['Manche Schilder gehören gar keinen Wichteln, sondern euch.','Die Wichtel heißen nach Gewürzen und Gebäck: Zimt, Muskat, Kringel.']},
+ {type:'pattern',title:'Das Geschenkpapier',how:'Jede Rolle hat ein Muster, das immer weitergeht. Setz die nächsten drei Motive ein.',palette:['stern','flocke','baum','glocke','herz'],rolls:[{seq:['stern','flocke','stern','flocke','stern','flocke','stern'],ans:['flocke','stern','flocke']},{seq:['baum','glocke','glocke','baum','glocke','glocke','baum','glocke'],ans:['glocke','baum','glocke']},{seq:['herz','stern','herz','stern','stern','herz','stern','stern','stern','herz'],ans:['stern','stern','stern']}],tips:['Zähl, wie viele gleiche Motive nebeneinander stehen.','Bei der letzten Rolle kommt nach jedem Herz ein Stern mehr.']},
+ {type:'kettle',title:'Der Punschkessel',how:'Die Küche braucht genau 4 Liter Punsch im großen Kessel. Es gibt nur den 5-Liter-Kessel und einen 3-Liter-Topf, beide ohne Striche. Fülle, schütte um und leere aus.',big:5,small:3,target:4,tips:['Fang mit dem kleinen Topf an und schütte ihn in den Kessel.','Wenn der Kessel voll ist, passt aus dem Topf nur noch ein Liter hinein. Was bleibt dann im Topf?']},
+ {type:'hoof',title:'Spuren im Schnee',how:'Fahr mit der Lupe über den Abdruck im Schnee und vergleich ihn mit den vier Rentierhufen. Achte auf Breite, Risse und Kerben.',deer:[['rudolph','Rudolph'],['komet','Komet'],['blitz','Blitz'],['donner','Donner']],sol:'komet',why:{rudolph:'Rudolphs Huf hat unten links eine kleine Kerbe. In der Spur fehlt sie. Er postet schon ein Entlastungsvideo.',blitz:'Blitz hat breitere Hufe und drei Punkte an der Seite. Die Spur ist schmaler.',donner:'Fast! Aber bei Donner läuft der Riss auf der anderen Seite.'},tips:['Die Spur ist schmaler als die meisten Hufe.','Achte auf den Riss: Auf welcher Seite läuft er?']},
+ {type:'safe',title:'Der Tresor',how:'Stell die vier Räder auf die Kombination und dreh den Griff. Die Zahlen stecken in den Geschichten der letzten Wochen.',clues:['So viele Rentiere ziehen den Schlitten, wenn Rudolph nicht dabei ist.','Der wievielte Lebkuchen war es, den Klaus am Morgen nach dem Knall gegessen hat?','So viele Rentiere stritten sich um den Dienstplan.','So viele Liter Punsch brauchte die Wichtelfeier.'],code:[8,3,4,4],tips:['Zwei Antworten findest du am 3. und am 8. Dezember.','Tag 1: Klaus isst seinen dritten Lebkuchen. Tag 19: vier Liter Punsch.']},
+ {type:'catcher',title:'Sternschnuppen',how:'Schieb den Wichtelsack mit dem Finger hin und her und fang die eisblauen Splitter. Lass die Kohlestücke fallen, die kosten zwei Splitter.',time:45,need:15,tips:['Bleib eher in der Mitte, dann erreichst du beide Seiten schneller.','Kohle ist dunkel und rund. Lieber einen Splitter verpassen als Kohle fangen.']},
+ {type:'sled',title:'Der Schlitten klemmt',how:'Erst die festgefrorenen Kufen lösen, dann den Schlitten aus der Scheune schieben. Immer abwechselnd links und rechts schieben, wie beim Schlittschuhlaufen.',iceStep:.12,boost:.12,dist:1,tips:['Abwechseln ist alles: links, rechts, links, rechts.','Nicht zweimal dieselbe Seite, dann rutscht du ab.']}
 ]};
 </script>
 <script>
@@ -596,6 +611,340 @@ final(f,api){const words=['FROHE','WEIHNACHTEN','ALLESAMT'];let wi=0;
     f.querySelectorAll('#tl .cl').forEach(b=>b.onclick=()=>{const k=+b.dataset.k;if(seq.includes(k))return;seq.push(k);sfx('click');paint();if(seq.length===w.length){if(seq.map(i=>tiles[i].c).join('')===w){sfx('shard');wi++;if(wi>=3)setTimeout(()=>api.solved(),500);else setTimeout(build,700);}else{api.wrong('Der Stern flackert nur. Versuch eine andere Reihenfolge.');setTimeout(()=>{seq=[];paint();},900);}}});
     f.querySelector('#cl').onclick=()=>{seq=[];paint();};};build();}
 };
+
+/* ---------- Rätsel 9 bis 23 ---------- */
+document.head.insertAdjacentHTML('beforeend',`<style>
+.rush{position:relative;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);gap:4px;width:min(100%,340px);aspect-ratio:1;padding:6px;border-radius:12px;background:repeating-linear-gradient(90deg,#4a2e18 0 2px,#6b4426 2px 56px);border:3px solid #2a180c;touch-action:none}
+.rush .exit{position:absolute;right:-14px;top:calc(6px + (100% - 12px) / 6 * 2);height:calc((100% - 12px) / 6);width:14px;background:var(--gold);border-radius:0 6px 6px 0}
+.crate{border:0;border-radius:6px;cursor:grab;padding:0;position:relative;box-shadow:inset 0 0 0 3px rgba(0,0,0,.18),0 3px 0 rgba(0,0,0,.35)}
+.crate::after{content:"";position:absolute;inset:6px;border:2px solid rgba(255,255,255,.22);border-radius:3px}
+.crate.sel{outline:3px solid var(--ice);outline-offset:1px}
+.crate.red{background:repeating-linear-gradient(90deg,var(--red) 0 46%,var(--gold) 46% 54%,var(--red) 54%)}
+.aurora{width:min(100%,380px);aspect-ratio:16/9;border-radius:12px;display:block}
+.tape{font-family:var(--display);font-size:26px;letter-spacing:.12em;min-height:36px;color:var(--ice);text-align:center;word-break:break-all}
+.mtable{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:4px 10px;width:100%;font-size:13px;color:#f1e3c8}
+.mtable span{display:flex;gap:6px;align-items:center}.mtable b{width:14px;color:var(--gold)}
+.ginger{display:grid;gap:8px;width:min(100%,380px)}
+.ginger .eq{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--paper);color:var(--p-ink);border-radius:10px;padding:6px 8px;font:800 22px var(--display);box-shadow:0 3px 0 #9a6a12}
+.ginger svg{width:44px;height:44px}
+.ginger .eq.q{background:#ffe7a3}
+.dark{position:relative;width:min(100%,420px);aspect-ratio:4/3;border-radius:12px;overflow:hidden;touch-action:none;cursor:crosshair}
+.dark>svg{position:absolute;inset:0;width:100%;height:100%}
+.dark .mask{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle var(--r,80px) at var(--x,50%) var(--y,40%),rgba(0,0,0,0) 0,rgba(0,0,0,.15) 55%,rgba(2,4,10,.97) 100%)}
+.dark .thing{position:absolute;width:13%;aspect-ratio:1;transform:translate(-50%,-50%);border:0;background:none;padding:0;cursor:pointer}
+.dark .thing svg{width:100%;height:100%}
+.dark .thing.got{filter:drop-shadow(0 0 6px var(--gold))}
+.found{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.found span{background:rgba(255,255,255,.08);border:1px dashed #7a5234;border-radius:999px;padding:3px 10px;font-size:13px}
+.found span.got{background:var(--gold);color:#2a1c14;border-style:solid}
+.slide{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;width:min(100%,300px);aspect-ratio:1;background:#2a180c;padding:3px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 4px var(--gold),0 8px 24px rgba(0,0,0,.5)}
+.tile{border:0;padding:0;cursor:pointer;background-size:300% 300%;transition:transform .12s}
+.tile.blank{background:#2a180c;cursor:default}
+.mini{width:80px;height:80px;border-radius:50%;box-shadow:0 0 0 2px var(--gold)}
+.icy{position:relative;width:min(100%,380px);aspect-ratio:3/2;border-radius:12px;overflow:hidden;touch-action:none}
+.icy .letter2{position:absolute;inset:0;background:var(--paper);color:#8e1426;font:700 clamp(18px,5vw,26px)/1.25 var(--hand);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:14px}
+.icy canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
+.snowfield{width:min(100%,420px);aspect-ratio:4/3;border-radius:12px;touch-action:none;display:block}
+.cuckoo{width:min(100%,260px);display:block}
+.ctrl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
+.digital{font:800 24px var(--display);min-width:84px;text-align:center;color:var(--gold)}
+.note2{background:var(--paper);color:var(--p-ink);border-radius:10px;padding:10px 14px;font:600 18px/1.35 var(--hand);transform:rotate(-1deg);max-width:380px;box-shadow:0 3px 0 #9a6a12}
+.tags2{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.tag2{background:var(--paper);color:var(--p-ink);border-radius:8px;padding:6px 12px;font:800 15px var(--sans);box-shadow:0 3px 0 #9a6a12;position:relative}
+.tag2::before{content:"";position:absolute;left:50%;top:-6px;width:8px;height:8px;border-radius:50%;background:#7a5234;transform:translateX(-50%)}
+.tag2.done{background:#d9f5e6;color:#0f4d2e}
+.roll{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;background:repeating-linear-gradient(45deg,#c8203a 0 12px,#b01a32 12px 24px);padding:10px;border-radius:8px;width:100%;max-width:440px}
+.roll .sym{width:38px;height:38px;border-radius:6px;background:rgba(255,255,255,.12);display:grid;place-items:center}
+.roll .sym.slot{background:rgba(255,255,255,.85);outline:2px dashed var(--gold)}
+.roll .sym svg,.pal svg{width:28px;height:28px}
+.pal{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.pal button{width:52px;height:52px;border-radius:10px;border:1px solid #c9a46a;background:var(--paper);cursor:pointer;display:grid;place-items:center;box-shadow:0 3px 0 #9a6a12}
+.kettles{display:flex;gap:18px;justify-content:center;align-items:flex-end}
+.kettle{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:14px}
+.kettle svg{width:120px}
+.kettle b{font:800 22px var(--display);color:var(--gold)}
+.jbtns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:min(100%,380px)}
+.snowtrail{position:relative;width:min(100%,340px);aspect-ratio:1;border-radius:12px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#ffffff,#d9e8f5);touch-action:none}
+.snowtrail>svg{position:absolute;inset:0;width:100%;height:100%}
+.snowtrail .lens{position:absolute;width:44%;aspect-ratio:1;border-radius:50%;overflow:hidden;transform:translate(-50%,-50%);box-shadow:0 0 0 5px #7a5612,0 0 0 8px #c9a14a,0 10px 24px rgba(0,0,0,.45);pointer-events:none;background:#fff}
+.snowtrail .lens svg{position:absolute}
+.hcards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:100%;max-width:440px}
+.hcard{border:1px solid #c9a46a;background:var(--paper);border-radius:10px;padding:6px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--p-ink);font:700 13px var(--sans)}
+.hcard svg{width:100%;aspect-ratio:1}
+.hcard.sel{outline:3px solid var(--gold);background:#fff4cf}
+.safe{width:min(100%,340px);background:linear-gradient(160deg,#6f7a86,#3b434d);border-radius:14px;padding:18px;box-shadow:inset 0 0 0 4px #2a3038,0 8px 20px rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center;gap:14px}
+.wheels{display:flex;gap:8px}
+.wheel2{display:flex;flex-direction:column;align-items:center;gap:4px}
+.wheel2 .d{width:52px;height:64px;border-radius:8px;background:linear-gradient(180deg,#1a1d22,#3a3f48 50%,#1a1d22);color:#f0c869;font:800 34px var(--display);display:grid;place-items:center;box-shadow:inset 0 0 0 2px #0e1014}
+.clues{margin:0;padding-left:22px;display:grid;gap:6px;color:#f1e3c8;font-size:15px;align-self:stretch}
+.sky{width:min(100%,400px);aspect-ratio:3/4;border-radius:12px;touch-action:none;display:block;cursor:ew-resize}
+.barn{width:min(100%,420px);aspect-ratio:16/9;border-radius:12px;display:block}
+.push{display:flex;gap:10px;justify-content:center}
+.push .btn{min-width:130px;min-height:60px;font-size:18px}
+</style>`);
+
+Object.assign(SFX,{
+ bump(){tone({f:110,f2:70,dur:.14,vol:.35});noise({dur:.06,type:'lowpass',f:600,vol:.2});},
+ slide(){noise({dur:.16,f:700,f2:300,q:1,vol:.18});},
+ scrape(){noise({dur:.09,type:'highpass',f:3500+Math.random()*2500,vol:.07});},
+ splat(){noise({dur:.18,type:'lowpass',f:1200,f2:300,vol:.4});tone({f:160,f2:80,dur:.1,vol:.2});},
+ throw(){noise({dur:.22,f:500,f2:1800,q:2,vol:.12});},
+ pour(){for(let k=0;k<10;k++)tone({f:420+k*55+Math.random()*40,dur:.07,vol:.07,at:k*.05});noise({dur:.55,f:1100,q:1,vol:.1});},
+ sizzle(){noise({dur:.8,type:'highpass',f:3500,vol:.1,att:.08});},
+ clank(){tone({f:180,f2:110,dur:.25,type:'triangle',vol:.3});noise({dur:.12,f:1600,q:2,vol:.25});},
+ cuckoo(n=1){for(let k=0;k<n;k++){tone({f:784,dur:.22,vol:.18,at:k*.6});tone({f:622,dur:.32,vol:.18,at:k*.6+.25});}},
+ catch(){tone({f:1760+Math.random()*400,dur:.4,vol:.08});tone({f:2637,dur:.25,vol:.04,at:.04});},
+ creak(){tone({f:90,f2:140,dur:.35,type:'sawtooth',vol:.04});noise({dur:.3,f:400,q:6,vol:.08});},
+ crunch(){noise({dur:.12,type:'lowpass',f:1400,vol:.3});},
+ crack(){noise({dur:.5,type:'highpass',f:2000,f2:6000,vol:.25});tone({f:300,f2:80,dur:.3,type:'square',vol:.04});},
+ beep(){}
+});
+const QUIP=a=>a[Math.floor(Math.random()*a.length)];
+const STAR5=(cx,cy,r)=>{let p='';for(let k=0;k<10;k++){const a=k*Math.PI/5-Math.PI/2,rr=k%2?r*.45:r;p+=(k?'L':'M')+(cx+Math.cos(a)*rr).toFixed(1)+' '+(cy+Math.sin(a)*rr).toFixed(1);}return p+'Z';};
+const ICON={
+ stern:`<svg viewBox="0 0 40 40"><path d="${STAR5(20,21,17)}" fill="#f0c869" stroke="#9a6a12" stroke-width="1.5"/></svg>`,
+ flocke:`<svg viewBox="0 0 40 40"><g stroke="#2f6fb0" stroke-width="3" stroke-linecap="round">${[0,60,120].map(a=>`<path d="M20 4 V36 M14 8 L20 13 L26 8 M14 32 L20 27 L26 32" transform="rotate(${a} 20 20)"/>`).join('')}</g></svg>`,
+ baum:`<svg viewBox="0 0 40 40"><path d="M20 3 L34 30 H6 Z" fill="#1f6b45"/><rect x="17" y="30" width="6" height="7" fill="#6b4226"/><circle cx="16" cy="22" r="2" fill="#c8203a"/><circle cx="24" cy="17" r="2" fill="#f0c869"/></svg>`,
+ glocke:`<svg viewBox="0 0 40 40"><path d="M20 5 C11 5 10 14 10 21 C10 27 6 29 5 32 H35 C34 29 30 27 30 21 C30 14 29 5 20 5 Z" fill="#d9a83a" stroke="#7a5612" stroke-width="1.5"/><circle cx="20" cy="35" r="3" fill="#7a5612"/></svg>`,
+ herz:`<svg viewBox="0 0 40 40"><path d="M20 35 C6 25 3 17 7 11 C11 5 18 7 20 12 C22 7 29 5 33 11 C37 17 34 25 20 35 Z" fill="#c8203a"/></svg>`,
+ mond:`<svg viewBox="0 0 40 40"><path d="M27 5 A15 15 0 1 0 35 27 A12 12 0 1 1 27 5 Z" fill="#a8702f" stroke="#fbf6ea" stroke-width="2" stroke-dasharray="3 2"/></svg>`
+};
+const GHEART=`<svg viewBox="0 0 40 40"><path d="M20 35 C6 25 3 17 7 11 C11 5 18 7 20 12 C22 7 29 5 33 11 C37 17 34 25 20 35 Z" fill="#a8702f"/><path d="M20 31 C9 23 7 17 10 13 C13 9 18 11 20 15 C22 11 27 9 30 13 C33 17 31 23 20 31 Z" fill="none" stroke="#fbf6ea" stroke-width="2" stroke-dasharray="3 2"/></svg>`;
+const GSTAR=`<svg viewBox="0 0 40 40"><path d="${STAR5(20,21,17)}" fill="#a8702f"/><path d="${STAR5(20,21,11)}" fill="none" stroke="#fbf6ea" stroke-width="2" stroke-dasharray="3 2"/></svg>`;
+const GMOON=ICON.mond;
+const PFEFF=t=>`<span style="font-family:var(--hand);font-size:20px">Pfefferkorn: »${t}«</span>`;
+
+Object.assign(PUZ,{
+/* 9 · Stau im Geschenkelager */
+rush(f,api,R){const C0=R.crates;const COL=['','#2f6fb0','#1f6b45','#d9a83a','#7a4a22','#5a8ac8','#2a7a5a','#b0702f','#3a5a8a'];
+  const cars=C0.map(c=>c.slice());let sel=0,moves=0,won=false;
+  f.innerHTML=`<div class="rush" id="rush"><span class="exit" aria-hidden="true"></span></div><div class="ctrl"><button class="icon" data-d="-1" type="button" aria-label="Zurück schieben">◀</button><button class="icon" data-d="1" type="button" aria-label="Vor schieben">▶</button><span class="how" id="mv">Züge: 0</span><button class="btn small" id="rst" type="button">Neu stapeln</button></div>`;
+  const g=f.querySelector('#rush');
+  const occ=skip=>{const o=new Set();cars.forEach(([r,c,l,h],i)=>{if(i===skip)return;for(let k=0;k<l;k++)o.add(h?r*6+c+k:(r+k)*6+c);});return o;};
+  const can=(i,d)=>{const [r,c,l,h]=cars[i],o=occ(i);if(h){const nc=d<0?c-1:c+l;return nc>=0&&nc<6&&!o.has(r*6+nc);}const nr=d<0?r-1:r+l;return nr>=0&&nr<6&&!o.has(nr*6+c);};
+  const draw=()=>{g.querySelectorAll('.crate').forEach(e=>e.remove());cars.forEach(([r,c,l,h],i)=>{const b=el('button','crate'+(i===0?' red':'')+(i===sel?' sel':''));b.type='button';b.style.cssText=`grid-row:${r+1}/span ${h?1:l};grid-column:${c+1}/span ${h?l:1};${i?'background:'+COL[i%COL.length||1]:''}`;b.setAttribute('aria-label',(i===0?'Rotes Päckchen':'Kiste '+i)+(h?', bewegt sich waagerecht':', bewegt sich senkrecht'));b.dataset.i=i;g.appendChild(b);});};
+  const move=(i,d)=>{if(won)return false;if(!can(i,d)){sfx('bump');return false;}const cr=cars[i];if(cr[3])cr[1]+=d;else cr[0]+=d;moves++;f.querySelector('#mv').textContent='Züge: '+moves;sfx('slide');draw();
+    if(moves===40)api.say(QUIP(['Der Gabelstapler-Wichtel macht schon Mittagspause.','Vierzig Züge. Die Pakete fangen an zu reden.']),'tip');
+    if(cars[0][1]===4){won=true;sfx('gift');setTimeout(()=>api.solved(),450);}return true;};
+  g.addEventListener('click',e=>{const b=e.target.closest('.crate');if(b){sel=+b.dataset.i;sfx('tick');draw();}});
+  let dr=null;g.addEventListener('pointerdown',e=>{const b=e.target.closest('.crate');if(!b)return;sel=+b.dataset.i;dr={x:e.clientX,y:e.clientY};g.setPointerCapture(e.pointerId);draw();});
+  g.addEventListener('pointermove',e=>{if(!dr)return;const cell=g.clientWidth/6,h=cars[sel][3],dd=h?e.clientX-dr.x:e.clientY-dr.y;if(Math.abs(dd)>cell*.55){const s=dd>0?1:-1;if(move(sel,s)){if(h)dr.x+=s*cell;else dr.y+=s*cell;}else dr=null;}});
+  const up=()=>{dr=null;};g.addEventListener('pointerup',up);g.addEventListener('pointercancel',up);
+  f.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>move(sel,+b.dataset.d));
+  f.querySelector('#rst').onclick=()=>{C0.forEach((c,i)=>cars[i]=c.slice());moves=0;f.querySelector('#mv').textContent='Züge: 0';sfx('slide');draw();};draw();},
+
+/* 10 · Das Polarlicht funkt */
+morse(f,api,R){const M={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..'};
+  const sym=s=>s.replace(/\./g,'•').replace(/-/g,'–');
+  f.innerHTML=`<canvas class="aurora" id="au" aria-label="Polarlicht über dem Dorf"></canvas><div class="ctrl"><button class="btn primary" id="pl" type="button">Polarlicht beobachten</button><label class="how" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="sl"> langsam</label></div><div class="tape" id="tp" aria-live="polite">&nbsp;</div><div class="mtable">${Object.entries(M).map(([k,v])=>`<span><b>${k}</b>${sym(v)}</span>`).join('')}</div>`;
+  const cv=f.querySelector('#au'),x=cv.getContext('2d'),tp=f.querySelector('#tp'),pb=f.querySelector('#pl');let glow=0,raf=0,tms=[],busy=false;const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const draw=now=>{const d=DPR(),w=cv.clientWidth,h=cv.clientHeight;if(cv.width!==Math.round(w*d)){cv.width=w*d;cv.height=h*d;}x.setTransform(d,0,0,d,0,0);
+    x.fillStyle='#050b1c';x.fillRect(0,0,w,h);for(let k=0;k<50;k++){x.fillStyle='rgba(255,255,255,'+(.3+.4*((k*37)%10)/10)+')';x.fillRect((k*73)%w,(k*41)%(h*.6),1.5,1.5);}
+    const t=red?0:now/1000;[['#3cffa0',.45,0],['#9b6bff',.28,1.7]].forEach(([c,a,o])=>{x.beginPath();for(let i=0;i<=40;i++){const px=i/40*w,py=h*(.35+.12*Math.sin(i/6+t*.7+o))+h*.06*Math.sin(i/2.3+t*1.3);i?x.lineTo(px,py):x.moveTo(px,py);}
+      x.strokeStyle=c;x.globalAlpha=a*(.25+glow*.9);x.lineWidth=h*(.12+glow*.12);x.shadowColor=c;x.shadowBlur=30;x.stroke();x.shadowBlur=0;x.globalAlpha=1;});
+    x.fillStyle='#0b1a10';x.beginPath();x.moveTo(0,h);for(let i=0;i<=12;i++){x.lineTo(i/12*w,h*.86-(i%2?h*.08:0));}x.lineTo(w,h);x.fill();
+    x.fillStyle='#ffd36b';[[.2,.9],[.5,.88],[.78,.9]].forEach(([a,b])=>x.fillRect(a*w,b*h,4,4));
+    glow*=.92;raf=requestAnimationFrame(draw);};raf=requestAnimationFrame(draw);
+  const beep=(at,dur)=>{const a=ac(),o=out();if(!a||!o)return;const t=a.currentTime+at,s=a.createOscillator(),g=a.createGain();s.type='sine';s.frequency.value=520;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.12,t+.01);g.gain.setValueAtTime(.12,t+dur-.01);g.gain.linearRampToValueAtTime(0,t+dur);s.connect(g);g.connect(o);s.start(t);s.stop(t+dur+.02);};
+  pb.onclick=()=>{if(busy)return;busy=true;pb.disabled=true;ac();tp.textContent='';const u=f.querySelector('#sl').checked?.26:.17;let t=.4;
+    [...R.word].forEach(ch=>{[...M[ch]].forEach(s=>{const d=s==='.'?u:u*3;beep(t,d);const t0=t;tms.push(setTimeout(()=>{const k=setInterval(()=>glow=1,30);tms.push(setTimeout(()=>clearInterval(k),d*1000));tp.textContent+=sym(s);},t0*1000));t+=d+u;});t+=u*4;tms.push(setTimeout(()=>{tp.textContent+='   ';},(t-u*2)*1000));});
+    duck(t*1000+400);tms.push(setTimeout(()=>{busy=false;pb.disabled=false;pb.textContent='Noch einmal beobachten';},t*1000));};
+  api.input(R.answers,'Antwort');
+  return {cleanup:()=>{cancelAnimationFrame(raf);tms.forEach(clearTimeout);}};},
+
+/* 11 · Die Lebkuchen-Rechnung */
+ginger(f,api,R){const IC={h:GHEART,s:GSTAR,m:GMOON};const row=(items,res,q)=>`<div class="eq${q?' q':''}">${items.map(i=>typeof i==='string'&&IC[i]?IC[i]:`<span>${i}</span>`).join('')}<span>=</span><span>${res}</span></div>`;
+  f.innerHTML=`<div class="ginger">${R.rows.map(r=>row(r[0],r[1])).join('')}${row(R.q,'?',1)}</div>`;
+  api.input(R.answers,'Ergebnis');},
+
+/* 12 · Stromausfall in der Werkstatt */
+torch(f,api,R){const SC=`<svg viewBox="0 0 400 300" aria-hidden="true"><rect width="400" height="300" fill="#3a2414"/><rect width="400" height="200" fill="#4d1a26"/>${Array.from({length:8},(_,k)=>`<rect x="${k*50}" y="0" width="24" height="200" fill="rgba(255,255,255,.04)"/>`).join('')}
+   <rect x="20" y="150" width="160" height="14" fill="#7a4a22"/><rect x="30" y="164" width="10" height="70" fill="#5a3418"/><rect x="160" y="164" width="10" height="70" fill="#5a3418"/>
+   <rect x="230" y="120" width="150" height="14" fill="#7a4a22"/><rect x="240" y="134" width="10" height="100" fill="#5a3418"/><rect x="360" y="134" width="10" height="100" fill="#5a3418"/>
+   <rect x="250" y="40" width="110" height="70" fill="#2a1c14" stroke="#7a5234" stroke-width="3"/>${Array.from({length:6},(_,k)=>`<path d="M${262+k*18} 50 v40" stroke="#9a7a5a" stroke-width="3"/>`).join('')}
+   <path d="M0 26 Q100 50 200 28 T400 30" stroke="#2a1a14" stroke-width="2" fill="none"/>${Array.from({length:14},(_,k)=>`<circle cx="${14+k*28}" cy="${32+Math.sin(k)*6}" r="5" fill="#5a4a3a"/>`).join('')}
+   <g transform="translate(60 120)"><rect width="30" height="30" fill="#c8203a"/><rect x="13" width="4" height="30" fill="#f0c869"/></g><g transform="translate(110 128)"><rect width="34" height="22" fill="#2b4a8a"/><rect y="9" width="34" height="4" fill="#f6f3ea"/></g>
+   <circle cx="300" cy="260" r="26" fill="#2a1a10"/><rect x="0" y="236" width="400" height="64" fill="#2a180c"/></svg>`;
+  const IT={splitter:`<svg viewBox="0 0 40 40"><path d="M20 3 L30 18 L22 37 L10 20 Z" fill="#bfe6ff" stroke="#fff" stroke-width="2"/><path d="M20 3 L22 37" stroke="#8ecbff"/></svg>`,
+    muetze:`<svg viewBox="0 0 40 40"><path d="M6 32 Q18 2 34 10 Q26 16 30 32 Z" fill="#1f6b45"/><rect x="4" y="30" width="30" height="7" rx="3" fill="#f6f3ea"/><circle cx="34" cy="10" r="4" fill="#f6f3ea"/></svg>`,
+    sicherung:`<svg viewBox="0 0 40 40"><rect x="12" y="6" width="16" height="28" rx="3" fill="#e9e2d0" stroke="#7a6a50" stroke-width="2"/><rect x="16" y="12" width="8" height="10" fill="#c8203a"/><rect x="17" y="2" width="6" height="6" fill="#b0b8c0"/><rect x="17" y="32" width="6" height="6" fill="#b0b8c0"/></svg>`,
+    stecker:`<svg viewBox="0 0 40 40"><rect x="8" y="14" width="20" height="16" rx="4" fill="#2a2a30"/><path d="M28 18 h8 M28 26 h8" stroke="#c9a14a" stroke-width="3"/><path d="M8 22 Q0 22 2 34" stroke="#2a2a30" stroke-width="4" fill="none"/></svg>`};
+  const spots=R.spots;
+  f.innerHTML=`<div class="dark" id="dk">${SC}${spots.map((s,k)=>`<button class="thing" type="button" data-k="${k}" style="left:${s.x}%;top:${s.y}%;opacity:.0" aria-label="Etwas im Dunkeln">${IT[s.k]}</button>`).join('')}<div class="mask"></div></div><div class="found" id="fd">${spots.map(()=>'<span>?</span>').join('')}</div>`;
+  const d=f.querySelector('#dk'),m=d.querySelector('.mask'),got=new Set(),lit=spots.map(()=>0);let on=false;
+  const RR=()=>d.clientWidth*.19;
+  const setL=(px,py)=>{m.style.setProperty('--x',px+'%');m.style.setProperty('--y',py+'%');m.style.setProperty('--r',RR()+'px');const w=d.clientWidth,h=d.clientHeight;
+    spots.forEach((s,k)=>{const near=Math.hypot((s.x-px)/100*w,(s.y-py)/100*h)<RR()*.75;const b=d.querySelectorAll('.thing')[k];if(near){lit[k]=performance.now();b.style.opacity=1;}else if(!got.has(k))b.style.opacity=0;});};
+  setL(50,40);const pos=e=>{const r=d.getBoundingClientRect(),off=e.pointerType==='touch'?60:0;return [(e.clientX-r.left)/r.width*100,(e.clientY-r.top-off)/r.height*100];};
+  d.addEventListener('pointerdown',e=>{if(!on){on=true;sfx('click');}setL(...pos(e));});
+  d.addEventListener('pointermove',e=>{if(e.pointerType==='touch'&&!e.buttons)return;setL(...pos(e));});
+  d.querySelectorAll('.thing').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const k=+b.dataset.k;if(got.has(k))return;if(performance.now()-lit[k]>1500){sfx('click');return;}
+    got.add(k);b.classList.add('got');b.style.opacity=1;sfx('bells');const sp=f.querySelectorAll('#fd span')[k];sp.textContent=spots[k].n;sp.classList.add('got');
+    if(got.size===spots.length)setTimeout(()=>api.solved(),600);else api.say(spots[k].q,'ok');}));
+  const ro=new ResizeObserver(()=>setL(50,40));ro.observe(d);return {cleanup:()=>ro.disconnect()};},
+
+/* 13 · Die Christbaumkugel */
+slide(f,api,R){const IMG=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><defs><radialGradient id="g" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ff6b7d"/><stop offset=".6" stop-color="#c8203a"/><stop offset="1" stop-color="#5c0d1c"/></radialGradient></defs><rect width="300" height="300" fill="url(#g)"/>
+   <path d="M0 200 Q150 160 300 200 V300 H0 Z" fill="#f6f3ea"/><path d="M60 200 L95 110 L130 200 Z" fill="#1f6b45"/><path d="M170 200 L215 80 L260 200 Z" fill="#1f6b45"/><path d="M${'210 70'} l5 10 h11 l-9 7 l3 11 l-10 -7 l-10 7 l3 -11 l-9 -7 h11 Z" fill="#f0c869"/>
+   <rect x="120" y="150" width="70" height="50" fill="#7a4a22"/><path d="M110 152 L155 118 L200 152 Z" fill="#5c1424"/><rect x="146" y="172" width="18" height="28" fill="#f0c869"/>
+   ${Array.from({length:30},(_,k)=>`<circle cx="${(k*53)%300}" cy="${(k*37)%150}" r="${1+(k%3)}" fill="#fff" opacity=".8"/>`).join('')}<path d="M0 60 Q150 20 300 60" stroke="#f0c869" stroke-width="6" fill="none" stroke-dasharray="2 10" stroke-linecap="round"/></svg>`;
+  const url="url('data:image/svg+xml,"+encodeURIComponent(IMG).replace(/'/g,'%27')+"')";let st=[0,1,2,3,4,5,6,7,8],moves=0,won=false;
+  const nb=i=>[i-3,i+3,i%3?i-1:-1,i%3<2?i+1:-1].filter(j=>j>=0&&j<9);
+  let blank=8;let last=-1;for(let k=0;k<60||st.every((v,i)=>v===i);k++){const n=nb(blank).filter(j=>j!==last);const j=n[Math.floor(Math.random()*n.length)];[st[blank],st[j]]=[st[j],st[blank]];last=blank;blank=j;}
+  f.innerHTML=`<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center"><div class="slide" id="sl"></div><div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div class="mini" style="background:${url};background-size:cover"></div><span class="how" style="font-size:13px">So soll es aussehen</span></div></div><div class="how" id="mv">Züge: 0</div>`;
+  const g=f.querySelector('#sl');
+  const draw=()=>{g.innerHTML=st.map((v,i)=>v===8&&!won?`<button class="tile blank" type="button" aria-label="Lücke" disabled></button>`:`<button class="tile" type="button" data-i="${i}" aria-label="Scherbe ${v+1}" style="background-image:${url};background-position:${(v%3)*50}% ${Math.floor(v/3)*50}%"></button>`).join('');
+    g.querySelectorAll('.tile:not(.blank)').forEach(b=>b.onclick=()=>{if(won)return;const i=+b.dataset.i,bi=st.indexOf(8);if(!nb(i).includes(bi)){sfx('click');return;}[st[i],st[bi]]=[st[bi],st[i]];moves++;f.querySelector('#mv').textContent='Züge: '+moves;sfx('flip');
+      if(st.every((v,k)=>v===k)){won=true;draw();sfx('bells');setTimeout(()=>api.solved(),700);return;}draw();});};draw();},
+
+/* 14 · Der vereiste Brief */
+ice(f,api,R){f.innerHTML=`<div class="icy" id="ic"><div class="letter2">${R.letter.map(l=>`<div>${l}</div>`).join('')}</div><canvas id="cv" aria-label="Eisschicht, mit dem Finger wegkratzen"></canvas></div><div class="how" id="pc">Eis entfernt: 0 %</div>`;
+  const cv=f.querySelector('#cv'),x=cv.getContext('2d'),ic=f.querySelector('#ic');let done=0,lastS=0;
+  const frost=()=>{const d=DPR(),w=ic.clientWidth,h=ic.clientHeight;cv.width=w*d;cv.height=h*d;x.setTransform(d,0,0,d,0,0);const g=x.createLinearGradient(0,0,w,h);g.addColorStop(0,'#e8f4ff');g.addColorStop(1,'#a9cfee');x.fillStyle=g;x.fillRect(0,0,w,h);
+    for(let k=0;k<70;k++){const px=Math.random()*w,py=Math.random()*h,l=10+Math.random()*40,a=Math.random()*Math.PI;x.strokeStyle='rgba(255,255,255,.7)';x.lineWidth=1;x.beginPath();x.moveTo(px,py);x.lineTo(px+Math.cos(a)*l,py+Math.sin(a)*l);x.stroke();for(let j=0;j<3;j++){const b=a+(j-1)*.7;x.beginPath();x.moveTo(px+Math.cos(a)*l*.5,py+Math.sin(a)*l*.5);x.lineTo(px+Math.cos(a)*l*.5+Math.cos(b)*l*.3,py+Math.sin(a)*l*.5+Math.sin(b)*l*.3);x.stroke();}}
+    x.fillStyle='rgba(60,110,160,.25)';x.font='700 15px Manrope,sans-serif';x.textAlign='center';x.fillText('Eis wegkratzen',w/2,h/2);};frost();
+  let dn=false,lp=null;const scr=e=>{const r=cv.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top,rad=r.width*.07;x.globalCompositeOperation='destination-out';x.lineCap='round';x.lineWidth=rad*2;x.beginPath();x.moveTo(lp?lp[0]:px,lp?lp[1]:py);x.lineTo(px,py);x.stroke();x.globalCompositeOperation='source-over';lp=[px,py];
+    const now=performance.now();if(now-lastS>70){lastS=now;sfx('scrape');}};
+  const measure=()=>{const d=x.getImageData(0,0,cv.width,cv.height).data;let c=0,n=0;for(let i=3;i<d.length;i+=64){n++;if(d[i]<40)c++;}done=Math.round(c/n*100);f.querySelector('#pc').textContent=`Eis entfernt: ${done} %`;if(done>=55&&!api._shown){api._shown=1;api.say('Jetzt kann man lesen, was dasteht.','ok');}};
+  cv.addEventListener('pointerdown',e=>{dn=true;lp=null;cv.setPointerCapture(e.pointerId);scr(e);});cv.addEventListener('pointermove',e=>{if(dn)scr(e);});const up=()=>{if(dn){dn=false;lp=null;measure();}};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+  api.input(R.answers,'Antwort');},
+
+/* 15 · Die große Schneeballschlacht */
+snowball(f,api,R){f.innerHTML=`<canvas class="snowfield" id="cv" aria-label="Schneefeld mit Schneemännern"></canvas><div class="hits" id="hud"></div><button class="btn primary" id="go" type="button">Los geht's!</button>`;
+  const cv=f.querySelector('#cv'),x=cv.getContext('2d'),hud=f.querySelector('#hud'),gb=f.querySelector('#go');const SL=[[.18,.42],[.5,.38],[.82,.42],[.3,.72],[.7,.72]];
+  let pop=SL.map(()=>({u:0,t:0,w:false,dn:0})),hits=0,time=R.time,run=false,raf=0,last=0,balls=[],splats=[],next=0;
+  const W=()=>cv.clientWidth,H=()=>cv.clientHeight;const rs=()=>{const d=DPR();cv.width=W()*d;cv.height=H()*d;x.setTransform(d,0,0,d,0,0);};rs();
+  const man=(cx,by,s,up,wichtel)=>{const y=by-s*up;x.save();x.beginPath();x.rect(cx-s,by-s*3,s*2,s*3);x.clip();
+    if(wichtel){x.fillStyle='#f1d3b8';x.beginPath();x.arc(cx,y+s*.2,s*.5,0,7);x.fill();x.fillStyle='#1f6b45';x.beginPath();x.moveTo(cx-s*.55,y);x.lineTo(cx,y-s*.9);x.lineTo(cx+s*.55,y);x.fill();x.fillStyle='#2a1c14';x.fillRect(cx-s*.2,y+s*.15,s*.08,s*.08);x.fillRect(cx+s*.12,y+s*.15,s*.08,s*.08);}
+    else{x.fillStyle='#fff';x.beginPath();x.arc(cx,y+s*.9,s*.7,0,7);x.fill();x.beginPath();x.arc(cx,y+s*.15,s*.45,0,7);x.fill();x.fillStyle='#ff6a1f';x.beginPath();x.moveTo(cx,y+s*.15);x.lineTo(cx+s*.4,y+s*.22);x.lineTo(cx,y+s*.28);x.fill();x.fillStyle='#2a1c14';x.fillRect(cx-s*.18,y+s*.02,s*.08,s*.08);x.fillRect(cx+s*.08,y+s*.02,s*.08,s*.08);x.fillStyle='#8a8f98';x.fillRect(cx-s*.32,y-s*.45,s*.64,s*.32);}
+    x.restore();};
+  const draw=now=>{const dt=last?Math.min(.05,(now-last)/1000):0;last=now;const w=W(),h=H(),s=w*.088;
+    const g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,'#0b1a3a');g.addColorStop(.55,'#3a5a8a');g.addColorStop(.56,'#eef4fa');g.addColorStop(1,'#d2e2f2');x.fillStyle=g;x.fillRect(0,0,w,h);
+    for(let k=0;k<30;k++){x.fillStyle='rgba(255,255,255,.7)';x.fillRect((k*97)%w,(k*31)%(h*.5),1.5,1.5);}
+    if(run){next-=dt;if(next<=0){next=.45+Math.random()*.5;const free=pop.map((p,i)=>i).filter(i=>!pop[i].t);if(free.length){const i=free[Math.floor(Math.random()*free.length)];pop[i]={u:0,t:1.0+Math.random()*.5-Math.min(.4,hits*.03),w:Math.random()<.2,dn:0};}}}
+    pop.forEach((p,i)=>{if(p.t>0){p.t-=dt;p.u=Math.min(1,p.u+dt*6);}else if(p.u>0){p.u=Math.max(0,p.u-dt*6);}const [ax,ay]=SL[i];
+      if(p.u>0)man(ax*w,ay*h,s,p.u*1.8,p.w);x.fillStyle='#f6f9fd';x.beginPath();x.ellipse(ax*w,ay*h+s*.15,s*1.4,s*.5,0,0,7);x.fill();x.fillStyle='rgba(150,180,210,.35)';x.fillRect(ax*w-s*1.2,ay*h+s*.2,s*2.4,s*.12);});
+    balls=balls.filter(b=>{b.k+=dt*3.2;const k=Math.min(1,b.k),bx=w/2+(b.tx-w/2)*k,by=h+(b.ty-h)*k-Math.sin(k*Math.PI)*h*.18;x.fillStyle='#fff';x.beginPath();x.arc(bx,by,s*.28*(1.3-k*.6),0,7);x.fill();if(k>=1){b.hit();return false;}return true;});
+    splats=splats.filter(sp=>now-sp.t<500);splats.forEach(sp=>{x.fillStyle='rgba(255,255,255,'+(1-(now-sp.t)/500)+')';for(let k=0;k<7;k++){const a=k*.9;x.beginPath();x.arc(sp.x+Math.cos(a)*s*.35,sp.y+Math.sin(a)*s*.35,s*.14,0,7);x.fill();}});
+    if(run){time-=dt;if(time<=0){run=false;gb.hidden=false;gb.textContent='Noch eine Runde';api.say(`Zeit um! ${hits} von ${R.need} Schneemännern. Die Wichtel lachen schon.`,'no');}}
+    hud.textContent=`Treffer: ${hits}/${R.need} · Zeit: ${Math.max(0,Math.ceil(time))} s`;raf=requestAnimationFrame(draw);};raf=requestAnimationFrame(draw);
+  gb.onclick=()=>{hits=0;time=R.time;pop=SL.map(()=>({u:0,t:0,w:false}));run=true;gb.hidden=true;next=.3;api.say('Achtung: Wichtel nicht abwerfen, die haben Gewerkschaft.','tip');sfx('click');};
+  cv.addEventListener('pointerdown',e=>{if(!run)return;const rc=cv.getBoundingClientRect(),px=e.clientX-rc.left,py=e.clientY-rc.top,w=W(),h=H(),s=w*.088;sfx('throw');
+    const i=SL.findIndex(([ax,ay],k)=>pop[k].u>.6&&Math.abs(px-ax*w)<s*1.1&&py<ay*h+s*.3&&py>ay*h-s*2.4);
+    balls.push({k:0,tx:px,ty:py,hit:()=>{splats.push({x:px,y:py,t:performance.now()});sfx('splat');if(i<0||!pop[i].t)return;const p=pop[i];p.t=0;
+      if(p.w){hits=Math.max(0,hits-1);api.say(QUIP(['Au! Das war Wichtel Krümel. Er schreibt dir eine Beschwerde.','Ein Wichtel! Die Gewerkschaft ist informiert.']),'no');}
+      else{hits++;if(hits>=R.need){run=false;setTimeout(()=>api.solved(),500);}}}});});
+  const ro=new ResizeObserver(rs);ro.observe(cv);return {cleanup:()=>{cancelAnimationFrame(raf);ro.disconnect();}};},
+
+/* 16 · Die Kuckucksuhr */
+cuckoo(f,api,R){let m=R.start;
+  f.innerHTML=`<div class="note2">${R.note}</div><svg class="cuckoo" viewBox="0 0 200 250" role="img" aria-label="Kuckucksuhr zum Stellen"><path d="M20 70 L100 10 L180 70 Z" fill="#5c3418" stroke="#2a180c" stroke-width="3"/><path d="M60 40 Q100 20 140 40" stroke="#1f6b45" stroke-width="8" fill="none"/><rect x="34" y="66" width="132" height="150" rx="6" fill="#7a4a22" stroke="#2a180c" stroke-width="3"/>
+   <rect x="86" y="74" width="28" height="22" fill="#2a180c" id="door"/><g id="bird" opacity="0"><circle cx="100" cy="86" r="9" fill="#d9a83a"/><path d="M108 86 l8 2 l-8 3 Z" fill="#ff6a1f"/><circle cx="102" cy="83" r="1.6" fill="#2a1c14"/></g>
+   <circle cx="100" cy="152" r="52" fill="#fbf6ea" stroke="#d9a83a" stroke-width="5"/>${Array.from({length:12},(_,k)=>{const a=k*Math.PI/6;return `<text x="${(100+Math.sin(a)*41).toFixed(1)}" y="${(157-Math.cos(a)*41).toFixed(1)}" text-anchor="middle" font-family="EB Garamond,serif" font-size="13" font-weight="700" fill="#2a1c14">${k||12}</text>`;}).join('')}
+   <path id="hh" d="M100 152 L100 124" stroke="#2a1c14" stroke-width="5" stroke-linecap="round"/><path id="mh" d="M100 152 L100 108" stroke="#2a1c14" stroke-width="3" stroke-linecap="round"/><circle cx="100" cy="152" r="4" fill="#2a1c14"/>
+   <path d="M80 216 V236 M120 216 V242" stroke="#c9a14a" stroke-width="2"/><path d="M74 236 h12 l-2 10 h-8 Z M114 242 h12 l-2 8 h-8 Z" fill="#c9a14a"/></svg>
+   <div class="ctrl"><button class="icon" type="button" data-d="-60" aria-label="Eine Stunde zurück">−1h</button><button class="icon" type="button" data-d="-5" aria-label="Fünf Minuten zurück">−5</button><span class="digital" id="dg"></span><button class="icon" type="button" data-d="5" aria-label="Fünf Minuten vor">+5</button><button class="icon" type="button" data-d="60" aria-label="Eine Stunde vor">+1h</button></div><button class="btn primary" id="ck" type="button">Pendel anstoßen</button>`;
+  const hh=f.querySelector('#hh'),mh=f.querySelector('#mh'),dg=f.querySelector('#dg'),bird=f.querySelector('#bird');
+  const draw=()=>{m=((m%720)+720)%720;mh.setAttribute('transform',`rotate(${(m%60)*6} 100 152)`);hh.setAttribute('transform',`rotate(${(m/60)*30} 100 152)`);dg.textContent=`${Math.floor(m/60)||12}:${String(m%60).padStart(2,'0')}`;};draw();
+  f.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{m+=+b.dataset.d;sfx('tick');draw();});
+  f.querySelector('#ck').onclick=()=>{if(m===R.target){bird.setAttribute('opacity','1');bird.setAttribute('transform','translate(0 -4)');if(!MUTE)SFX.cuckoo(Math.floor(m/60)||12);setTimeout(()=>api.solved(),1800);}
+    else{sfx('wrong');api.say(QUIP(['Der Kuckuck schnarcht. Falsche Zeit.','Klaus schaut auf die Uhr und isst vorsorglich einen Lebkuchen. Das stimmt nicht.','Pfefferkorn tippt auf seinen Zettel. Lies ihn noch einmal.']),'no');}};},
+
+/* 17 · Wichtelnamen-Salat */
+names(f,api,R){const clean=s=>s.toUpperCase().replace(/Ä/g,'AE').replace(/Ö/g,'OE').replace(/Ü/g,'UE').replace(/ß/g,'SS').replace(/[^A-Z]/g,'');
+  const fromPlayers=(PLAYERS||[]).map(p=>clean(p.name)).filter(n=>n.length>=3&&n.length<=9);
+  const words=[...new Set(fromPlayers.slice(0,2).concat(R.elves))].slice(0,4);let wi=0;
+  const mix=w=>{let t;do{t=w.split('').sort(()=>Math.random()-.5).join('');}while(t===w&&w.length>2);return t;};
+  const tagsHtml=()=>`<div class="tags2">${words.map((w,k)=>`<span class="tag2${k<wi?' done':''}">${k<wi?w:mix(w)}</span>`).join('')}</div>`;
+  const build=()=>{const w=words[wi];const tiles=mix(w).split('');let seq=[];
+    f.innerHTML=`${tagsHtml()}<div class="label">Schild ${wi+1} von ${words.length}</div><div class="cstrip" id="sl">${w.split('').map(()=>'<span class="cl" style="cursor:default;height:44px"><b>&nbsp;</b></span>').join('')}</div><div class="cstrip" id="tl">${tiles.map((c,k)=>`<button class="cl" type="button" data-k="${k}"><b>${c}</b></button>`).join('')}</div><button class="btn small" id="cl" type="button">Zurücksetzen</button>`;
+    const slots=[...f.querySelectorAll('#sl .cl')];const paint=()=>{slots.forEach((s,k)=>s.querySelector('b').innerHTML=seq[k]!=null?tiles[seq[k]]:'&nbsp;');f.querySelectorAll('#tl .cl').forEach(b=>b.style.opacity=seq.includes(+b.dataset.k)?.25:1);};
+    f.querySelectorAll('#tl .cl').forEach(b=>b.onclick=()=>{const k=+b.dataset.k;if(seq.includes(k))return;seq.push(k);sfx('click');paint();if(seq.length===w.length){if(seq.map(i=>tiles[i]).join('')===w){sfx('bells');wi++;if(wi>=words.length)setTimeout(()=>api.solved(),500);else{api.say(QUIP(['Der Wichtel schläft schon. Schnarcht sogar.','Schild hängt. Nächstes Bett.','Bett gemacht, Wichtel zufrieden.']),'ok');setTimeout(build,700);}}else{api.wrong(QUIP(['So heißt hier niemand. Gut, Pfefferkorn vielleicht im Traum.','Der Wichtel schüttelt den Kopf. So heißt er nicht.']));setTimeout(()=>{seq=[];paint();},900);}}});
+    f.querySelector('#cl').onclick=()=>{seq=[];paint();};};build();},
+
+/* 18 · Das Geschenkpapier-Muster */
+pattern(f,api,R){let ri=0;
+  const build=()=>{const r=R.rolls[ri];let fill=[];
+    f.innerHTML=`<div class="label">Rolle ${ri+1} von ${R.rolls.length}</div><div class="roll" id="rl"></div><div class="pal">${R.palette.map(p=>`<button type="button" data-p="${p}" aria-label="${p}">${ICON[p]}</button>`).join('')}</div><button class="btn small" id="cl" type="button">Zurücksetzen</button>`;
+    const paint=()=>{f.querySelector('#rl').innerHTML=r.seq.map(s=>`<span class="sym">${ICON[s]}</span>`).join('')+r.ans.map((_,k)=>`<span class="sym slot">${fill[k]?ICON[fill[k]]:''}</span>`).join('');};paint();
+    f.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{if(fill.length>=r.ans.length)return;fill.push(b.dataset.p);sfx('flip');paint();
+      if(fill.length===r.ans.length){if(fill.every((v,k)=>v===r.ans[k])){sfx('bells');ri++;if(ri>=R.rolls.length)setTimeout(()=>api.solved(),500);else{api.say('Die Maschine rattert weiter. Nächste Rolle.','ok');setTimeout(build,800);}}else{api.wrong(QUIP(['Die Maschine hustet Konfetti. Das Muster stimmt nicht.','Pfefferkorn: »Das würde ich nicht mal meiner Schwiegermutter schenken.«']));setTimeout(()=>{fill=[];paint();},900);}}});
+    f.querySelector('#cl').onclick=()=>{fill=[];paint();};};build();},
+
+/* 19 · Der Punschkessel */
+kettle(f,api,R){let a=0,b=0;const A=R.big,B=R.small;
+  const pot=(v,cap,lab,wide)=>{const W=wide?110:84,top=20,bot=118,lvl=bot-(bot-top-10)*(v/cap);return `<div class="kettle"><svg viewBox="0 0 140 150"><path d="M${70-W/2} ${top} Q${70-W/2-6} ${bot} 70 ${bot+8} Q${70+W/2+6} ${bot} ${70+W/2} ${top} Z" fill="#2a2a30" stroke="#0e0e12" stroke-width="3"/>
+    <clipPath id="c${lab}"><path d="M${70-W/2} ${top} Q${70-W/2-6} ${bot} 70 ${bot+8} Q${70+W/2+6} ${bot} ${70+W/2} ${top} Z"/></clipPath><rect x="0" y="${lvl}" width="140" height="${150-lvl}" fill="#a3172e" clip-path="url(#c${lab})" opacity="${v?1:0}"/>
+    <rect x="${70-W/2-6}" y="${top-6}" width="${W+12}" height="8" rx="3" fill="#4a4a52"/>${v?`<path d="M55 ${top-10} q-6 -8 0 -16 M70 ${top-12} q-6 -8 0 -16 M85 ${top-10} q-6 -8 0 -16" stroke="rgba(255,255,255,.4)" stroke-width="2" fill="none"/>`:''}</svg><b>${v} l</b><span>${lab}</span></div>`;};
+  f.innerHTML=`<div class="kettles" id="kt"></div><div class="jbtns"><button class="btn small" data-a="fa" type="button">Kessel füllen</button><button class="btn small" data-a="fb" type="button">Topf füllen</button><button class="btn small" data-a="ab" type="button">Kessel → Topf</button><button class="btn small" data-a="ba" type="button">Topf → Kessel</button><button class="btn small" data-a="ea" type="button">Kessel leeren</button><button class="btn small" data-a="eb" type="button">Topf leeren</button></div><div class="how" id="st">Schritte: 0</div>`;
+  let steps=0;const paint=()=>{f.querySelector('#kt').innerHTML=pot(a,A,A+'-Liter-Kessel',1)+pot(b,B,B+'-Liter-Topf',0);f.querySelector('#st').textContent='Schritte: '+steps;};paint();
+  f.querySelectorAll('[data-a]').forEach(btn=>btn.onclick=()=>{const k=btn.dataset.a,a0=a,b0=b;if(k==='fa')a=A;if(k==='fb')b=B;if(k==='ea')a=0;if(k==='eb')b=0;if(k==='ab'){const m=Math.min(a,B-b);a-=m;b+=m;}if(k==='ba'){const m=Math.min(b,A-a);b-=m;a+=m;}
+    if(a===a0&&b===b0){sfx('click');return;}steps++;sfx(k[0]==='e'?'sizzle':'pour');paint();if(steps===12)api.say('Die Küchenwichtel wischen schon den Boden. Geht es auch mit weniger Schütten?','tip');if(a===R.target)setTimeout(()=>api.solved(),600);});},
+
+/* 20 · Spuren im Schnee */
+hoof(f,api,R){const HV={rudolph:{w:1,crack:-1,dots:0,nick:1},komet:{w:.82,crack:1,dots:0,nick:0},blitz:{w:1.12,crack:0,dots:3,nick:0},donner:{w:1,crack:-1,dots:0,nick:0}};
+  const hoofSvg=(v,col='#5a6a80')=>{const o=HV[v],w=o.w;return `<g transform="translate(50 52) scale(${w} 1)"><path d="M-3 -34 Q-24 -32 -26 -2 Q-26 26 -6 32 Q-3 10 -3 -34 Z" fill="${col}"/><path d="M3 -34 Q24 -32 26 -2 Q26 26 6 32 Q3 10 3 -34 Z" fill="${col}"/></g>
+    ${o.crack?`<path d="${o.crack>0?'M30 30 L38 44 L34 50 L42 64':'M70 30 L62 44 L66 50 L58 64'}" stroke="#fff" stroke-width="3" fill="none"/>`:''}${o.dots?`<circle cx="62" cy="60" r="3" fill="#fff"/><circle cx="66" cy="70" r="3" fill="#fff"/><circle cx="60" cy="78" r="3" fill="#fff"/>`:''}${o.nick?`<path d="M24 74 l6 -4 l2 6 Z" fill="#fff"/>`:''}`;};
+  const trail=`<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#f4f8fc"/>${Array.from({length:40},(_,k)=>`<circle cx="${(k*37)%100}" cy="${(k*61)%100}" r="${.5+(k%3)*.4}" fill="#cfdceb"/>`).join('')}<g transform="translate(8 6) scale(.84)" opacity=".85">${hoofSvg(R.sol,'#6a7d96')}</g></svg>`;
+  f.innerHTML=`<div class="snowtrail" id="tr">${trail}<div class="lens" id="ln">${trail}</div></div><div class="hcards">${R.deer.map(([id,n])=>`<button class="hcard" type="button" data-id="${id}" aria-label="Abdruck von ${n}"><svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#fbf6ea"/>${hoofSvg(id,'#2a3a50')}</svg><span>${n}</span></button>`).join('')}</div><button class="btn primary" id="ck" type="button" disabled>Rentier überführen</button>`;
+  const tr=f.querySelector('#tr'),ln=f.querySelector('#ln'),inner=ln.querySelector('svg');let sel=null;
+  const place=(px,py)=>{const G=tr.clientWidth,L=ln.offsetWidth||G*.44,z=2.3;ln.style.left=px+'px';ln.style.top=py+'px';inner.style.width=inner.style.height=(G*z)+'px';inner.style.left=(L/2-px*z)+'px';inner.style.top=(L/2-py*z)+'px';};
+  const mv=e=>{const r=tr.getBoundingClientRect(),off=e.pointerType==='touch'?60:0;place(Math.max(0,Math.min(r.width,e.clientX-r.left)),Math.max(0,Math.min(r.height,e.clientY-r.top-off)));};
+  tr.addEventListener('pointerdown',e=>{tr.setPointerCapture(e.pointerId);sfx('crunch');mv(e);});tr.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'||e.buttons)mv(e);});
+  const init=()=>place(tr.clientWidth*.5,tr.clientHeight*.5);init();const ro=new ResizeObserver(init);ro.observe(tr);
+  const ck=f.querySelector('#ck');f.querySelectorAll('.hcard').forEach(b=>b.onclick=()=>{sel=b.dataset.id;f.querySelectorAll('.hcard').forEach(x=>x.classList.toggle('sel',x===b));ck.disabled=false;sfx('flip');});
+  ck.onclick=()=>{if(sel===R.sol)api.solved();else api.wrong(R.why[sel]||'Das passt nicht. Schau dir die Spur noch einmal mit der Lupe an.');};
+  return {cleanup:()=>ro.disconnect()};},
+
+/* 21 · Der Tresor */
+safe(f,api,R){const v=R.code.map(()=>0);
+  f.innerHTML=`<ol class="clues">${R.clues.map(c=>`<li>${c}</li>`).join('')}</ol><div class="safe"><div class="wheels">${v.map((_,k)=>`<div class="wheel2"><button class="icon" type="button" data-k="${k}" data-d="1" aria-label="Rad ${k+1} hoch">▲</button><span class="d" id="d${k}">0</span><button class="icon" type="button" data-k="${k}" data-d="-1" aria-label="Rad ${k+1} runter">▼</button></div>`).join('')}</div><button class="btn primary" id="op" type="button">Griff drehen</button></div>`;
+  f.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{const k=+b.dataset.k;v[k]=(v[k]+ +b.dataset.d+10)%10;f.querySelector('#d'+k).textContent=v[k];sfx('tick');});
+  f.querySelector('#op').onclick=()=>{if(v.every((x,k)=>x===R.code[k])){sfx('clank');setTimeout(()=>sfx('bells'),300);setTimeout(()=>api.solved(),700);}else{sfx('clank');api.wrong(QUIP(['Der Tresor knurrt. Klaus erinnert sich jetzt an »irgendwas mit einer Acht«. Danke, Klaus.','Zu. Der Weihnachtsmann schwört, es war früher einfacher.','Klonk. Der Griff bewegt sich keinen Millimeter.']));}};},
+
+/* 22 · Sternschnuppen */
+catcher(f,api,R){f.innerHTML=`<canvas class="sky" id="cv" aria-label="Nachthimmel mit Sternschnuppen, Korb mit dem Finger verschieben"></canvas><div class="hits" id="hud"></div><button class="btn primary" id="go" type="button">Hände aufhalten!</button>`;
+  const cv=f.querySelector('#cv'),x=cv.getContext('2d'),hud=f.querySelector('#hud'),gb=f.querySelector('#go');let px=.5,items=[],got=0,time=R.time,run=false,raf=0,last=0,next=0,trails=[];
+  const W=()=>cv.clientWidth,H=()=>cv.clientHeight;const rs=()=>{const d=DPR();cv.width=W()*d;cv.height=H()*d;x.setTransform(d,0,0,d,0,0);};rs();
+  const draw=now=>{const dt=last?Math.min(.05,(now-last)/1000):0;last=now;const w=W(),h=H();const g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,'#02040e');g.addColorStop(1,'#16244a');x.fillStyle=g;x.fillRect(0,0,w,h);
+    for(let k=0;k<70;k++){x.fillStyle='rgba(255,255,255,'+(.2+.5*Math.abs(Math.sin(now/900+k)))+')';x.fillRect((k*97)%w,(k*53)%h,1.4,1.4);}
+    if(run){next-=dt;if(next<=0){next=.35+Math.random()*.45;const coal=Math.random()<.22;items.push({x:.08+Math.random()*.84,y:-.05,vy:.22+Math.random()*.18+Math.min(.2,got*.01),vx:(Math.random()-.5)*.1,coal});}}
+    items=items.filter(it=>{it.y+=it.vy*dt;it.x+=it.vx*dt;const ix=it.x*w,iy=it.y*h;
+      if(it.coal){x.fillStyle='#2a2a30';x.beginPath();x.arc(ix,iy,w*.03,0,7);x.fill();x.fillStyle='#4a4a52';x.beginPath();x.arc(ix-3,iy-3,w*.012,0,7);x.fill();}
+      else{x.strokeStyle='rgba(191,230,255,.45)';x.lineWidth=3;x.beginPath();x.moveTo(ix,iy);x.lineTo(ix-it.vx*w*.4,iy-h*.08);x.stroke();x.fillStyle='#bfe6ff';x.beginPath();x.moveTo(ix,iy-w*.035);x.lineTo(ix+w*.022,iy);x.lineTo(ix,iy+w*.035);x.lineTo(ix-w*.022,iy);x.fill();}
+      if(iy>h*.86&&iy<h*.95&&Math.abs(ix-px*w)<w*.11){if(it.coal){got=Math.max(0,got-2);sfx('bump');api.say(QUIP(['Kohle! Das ist für die Unartigen.','Ein Kohlestück. Klaus hat wohl wieder geschummelt.']),'no');}else{got++;sfx('catch');trails.push({x:ix,y:iy,t:now});if(got>=R.need){run=false;setTimeout(()=>api.solved(),400);}}return false;}
+      return iy<h+20;});
+    trails=trails.filter(t=>now-t.t<400);trails.forEach(t=>{x.strokeStyle='rgba(240,200,105,'+(1-(now-t.t)/400)+')';x.lineWidth=2;x.beginPath();x.arc(t.x,t.y,(now-t.t)/400*30,0,7);x.stroke();});
+    const bx=px*w,by=h*.9;x.fillStyle='#c8203a';x.beginPath();x.moveTo(bx-w*.11,by-6);x.quadraticCurveTo(bx,by+h*.08,bx+w*.11,by-6);x.fill();x.fillStyle='#fbf6ea';x.fillRect(bx-w*.115,by-10,w*.23,8);
+    if(run){time-=dt;if(time<=0){run=false;gb.hidden=false;gb.textContent='Noch einmal';api.say(`Die Nacht ist vorbei. ${got} von ${R.need} Splittersplittern gefangen.`,'no');}}
+    hud.textContent=`Splitter: ${got}/${R.need} · Zeit: ${Math.max(0,Math.ceil(time))} s`;raf=requestAnimationFrame(draw);};raf=requestAnimationFrame(draw);
+  const mv=e=>{const r=cv.getBoundingClientRect();px=Math.max(.1,Math.min(.9,(e.clientX-r.left)/r.width));};
+  cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);mv(e);});cv.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'||e.buttons)mv(e);});
+  gb.onclick=()=>{got=0;time=R.time;items=[];run=true;gb.hidden=true;next=.2;sfx('click');};
+  const ro=new ResizeObserver(rs);ro.observe(cv);return {cleanup:()=>{cancelAnimationFrame(raf);ro.disconnect();}};},
+
+/* 23 · Der Schlitten klemmt */
+sled(f,api,R){f.innerHTML=`<canvas class="barn" id="cv" aria-label="Scheune mit festgefrorenem Schlitten"></canvas><div class="hits" id="hud">Bewegung: 0 %</div><div class="push"><button class="btn primary" id="L" type="button">Links schieben</button><button class="btn primary" id="R" type="button">Rechts schieben</button></div>`;
+  const cv=f.querySelector('#cv'),x=cv.getContext('2d');let pos=0,ice=1,vel=0,lastSide='',raf=0,last=0,freed=false,done=false,shake=0;
+  const W=()=>cv.clientWidth,H=()=>cv.clientHeight;const rs=()=>{const d=DPR();cv.width=W()*d;cv.height=H()*d;x.setTransform(d,0,0,d,0,0);};rs();
+  const draw=now=>{const dt=last?Math.min(.05,(now-last)/1000):0;last=now;const w=W(),h=H();x.fillStyle='#3a2414';x.fillRect(0,0,w,h);for(let k=0;k<12;k++){x.fillStyle=k%2?'#4a2e18':'#442a16';x.fillRect(k*w/12,0,w/12+1,h*.75);}
+    x.fillStyle='#e8eef6';x.fillRect(0,h*.75,w,h*.25);x.fillStyle='#0b1a3a';x.fillRect(w*.86,h*.15,w*.14,h*.6);x.fillStyle='#f6f3ea';for(let k=0;k<6;k++)x.fillRect(w*.88+(k*13)%(w*.1),h*.2+(k*29)%(h*.5),2,2);
+    if(!freed){vel*=Math.pow(.2,dt);}else{vel*=Math.pow(.45,dt);pos+=vel*dt;}
+    const sx=w*.12+pos*w*.6+(shake>0?(Math.random()-.5)*6:0),sy=h*.68;shake=Math.max(0,shake-dt);
+    x.strokeStyle='#d9a83a';x.lineWidth=5;x.beginPath();x.moveTo(sx-10,sy+18);x.lineTo(sx+w*.3,sy+18);x.quadraticCurveTo(sx+w*.36,sy+18,sx+w*.36,sy);x.stroke();
+    x.fillStyle='#c8203a';x.beginPath();x.moveTo(sx,sy+10);x.lineTo(sx+w*.3,sy+10);x.lineTo(sx+w*.32,sy-h*.12);x.lineTo(sx+w*.04,sy-h*.18);x.closePath();x.fill();x.fillStyle='#f0c869';x.fillRect(sx+w*.02,sy-h*.05,w*.28,4);
+    x.fillStyle='#8a5a2b';x.fillRect(sx+w*.06,sy-h*.24,w*.06,h*.1);x.fillStyle='#2b4a8a';x.fillRect(sx+w*.13,sy-h*.22,w*.07,h*.08);x.fillStyle='#1f6b45';x.fillRect(sx+w*.2,sy-h*.25,w*.05,h*.11);
+    if(ice>0){x.fillStyle=`rgba(191,230,255,${.35+ice*.5})`;x.fillRect(sx-14,sy+12,w*.36+20,12);}
+    if(!freed&&pos<.02){x.fillStyle='#bfe6ff';x.beginPath();x.moveTo(sx+w*.33,sy+20);x.lineTo(sx+w*.335,sy+12);x.lineTo(sx+w*.34,sy+20);x.fill();}
+    f.querySelector('#hud').textContent=freed?`Bewegung: ${Math.min(100,Math.round(pos/R.dist*100))} %`:`Eis an den Kufen: ${Math.round(ice*100)} %`;
+    if(freed&&pos>=R.dist&&!done){done=true;sfx('bells');setTimeout(()=>api.solved(),500);}
+    raf=requestAnimationFrame(draw);};raf=requestAnimationFrame(draw);
+  const push=side=>{if(done)return;if(side===lastSide){sfx('bump');shake=.25;api.say(QUIP(['Nicht zweimal dieselbe Seite, sonst dreht sich der Schlitten nur.','Abwechseln! Links, rechts, links. Wie beim Schlittschuhlaufen.']),'tip');lastSide='';return;}
+    lastSide=side;sfx('crunch');shake=.12;if(!freed){ice=Math.max(0,ice-R.iceStep);sfx('creak');if(ice<=0){freed=true;sfx('crack');api.say('Knack! Die Kufen sind frei. Jetzt Tempo!','ok');}}else{vel+=R.boost;}};
+  f.querySelector('#L').onclick=()=>push('L');f.querySelector('#R').onclick=()=>push('R');
+  const ro=new ResizeObserver(rs);ro.observe(cv);return {cleanup:()=>{cancelAnimationFrame(raf);ro.disconnect();}};}
+});
+
 boot();
 })();
 </script>
