@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&family=Mountains+of+Christmas:wght@700&family=Caveat:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
 <style>
-/* Layout: Nordpoldorf in der Winternacht. Nextwing-Kopfzeile bleibt; oben das Dorf-Panorama mit Polarlicht, Schneefall und dem Polarstern, der mit jedem gefundenen Splitter heller wird; darunter das Adventskalenderhaus mit 24 Fenstern, die Anzeigetafel, Geschichten auf Briefpapier vom Nordpol, Rätsel auf der Wichtel-Werkbank. Nur dunkel: Winternacht. */
+/* Layout: Nordpoldorf in der Winternacht. Fenrik-Kopfzeile bleibt; oben das Dorf-Panorama mit Polarlicht, Schneefall und dem Polarstern, der mit jedem gefundenen Splitter heller wird; darunter das Adventskalenderhaus mit 24 Fenstern, die Anzeigetafel, Geschichten auf Briefpapier vom Nordpol, Rätsel auf der Wichtel-Werkbank. Nur dunkel: Winternacht. */
 :root{--surface:#0b1220;--ink:#f3f1ea;--muted:#a9b3c9;--line:#26355a;--action:#ff6a1f;--action-hover:#ff8a4c;--on-action:#0b1220;--info:#8eacff;
 --night:#081226;--night-2:#0f1f3d;--red:#c8203a;--red-2:#8e1426;--green:#1f6b45;--green-2:#134a30;--gold:#f0c869;--gold-2:#b88a2c;--snow:#f6f3ea;--paper:#fbf6ea;--p-ink:#2a1c14;--p-muted:#6d5644;--ice:#bfe6ff;
 --display:"Outfit",ui-sans-serif,system-ui,sans-serif;--sans:"Manrope",ui-sans-serif,system-ui,"Segoe UI",sans-serif;--xmas:"Mountains of Christmas","Outfit",cursive;--hand:"Caveat","Segoe Print",cursive;--serif:"EB Garamond",Georgia,serif;color-scheme:dark}
@@ -204,7 +204,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <body>
 <canvas id="snow" aria-hidden="true"></canvas>
 <header class="top"><div class="topin">
-  <a class="brand" href="../" aria-label="Zurück zu Nextwing Quest"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0b1220"/><path d="M12 22 C24 14 40 13 52 17 C42 19 30 22 20 28 Z" fill="#4d7cff"/><path d="M12 33 C24 25 40 24 52 28 C42 30 30 33 20 39 Z" fill="#ff6a1f"/><path d="M12 44 C24 36 40 35 52 39 C42 41 30 44 20 50 Z" fill="#8eacff"/></svg><span>next<b>wing</b> quest</span></a>
+  <a class="brand" href="../" aria-label="Zurück zu Fenrik Quest"><svg aria-hidden="true" viewBox="0 0 100 100"><defs><linearGradient id="fk9g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd08a"/><stop offset="1" stop-color="#ff8f6b"/></linearGradient><mask id="fk9m"><rect width="100" height="100" fill="#fff"/><g stroke="#000" stroke-width="9"><path d="M41 22V80"/><path d="M41 44L64 29"/><path d="M41 62L64 47"/></g></mask></defs><circle cx="50" cy="50" r="40" fill="url(#fk9g)" mask="url(#fk9m)"/></svg><span>fen<b>rik</b> quest</span></a>
   <div class="me" id="me"></div>
   <div style="display:flex;gap:6px"><button class="tbtn" id="home" type="button" aria-label="Zum Kalender" hidden>🏠</button><button class="tbtn" id="snd" type="button" aria-label="Ton ausschalten">🔊</button></div>
 </div></header>
@@ -473,12 +473,13 @@ function renderHome(){cleanup();window.scrollTo({top:0,behavior:'instant'});app.
     const as=td>=1&&td<=24?ASSIGN[td]:null;const s=td>=1&&td<=24?solvedDay(td):null;
     const nextTurn=id=>{for(let d=Math.max(1,td+1);d<=23;d++)if(ASSIGN[d]===id)return d;return null;};
     const ppl=PLAYERS.map(p=>{const n=Object.values(ST.d||{}).filter(x=>x.by===p.id).length;const isToday=td>=1&&td<=23&&as===p.id;const st=isToday?(s?['done','heute gelöst']:['play','heute dran']):(online(p.id)?['on','online']:['wait','']);const nt=nextTurn(p.id);
-      return `<div class="pc${p.id===ME?' self':''}${isToday?' now':''}">${avatar(p.id)}<b>${p.name}</b>${st[1]?`<span class="pst ${st[0]}">${st[1]}</span>`:''}<small>${n} ${n===1?'Splitter':'Splitter'}${nt&&!isToday?` · dran am ${nt}.`:''}</small>${p.id!==ME&&!ME_LEAD?`<button class="lnk" type="button" data-cheer="${p.id}" ${CHEERED.has(p.id)?'disabled':''}>${CHEERED.has(p.id)?'Angefeuert!':'Anfeuern 📣'}</button>`:''}</div>`;}).join('');
+      const tp=Object.values(ST.d||{}).filter(x=>x.by===p.id).reduce((a,x)=>a+(x.tips|0),0);
+      return `<div class="pc${p.id===ME?' self':''}${isToday?' now':''}">${avatar(p.id)}<b>${p.name}</b>${st[1]?`<span class="pst ${st[0]}">${st[1]}</span>`:''}<small>${n} Splitter · ${tp} ${tp===1?'Tipp':'Tipps'}${nt&&!isToday?` · dran am ${nt}.`:''}</small>${p.id!==ME&&!ME_LEAD?`<button class="lnk" type="button" data-cheer="${p.id}" ${CHEERED.has(p.id)?'disabled':''}>${CHEERED.has(p.id)?'Angefeuert!':'Anfeuern 📣'}</button>`:''}</div>`;}).join('');
     const ph=A.PHRASE.split('').map((c,i)=>solvedDay(i+1)?`<span class="got">${solvedDay(i+1).l}</span>`:'<span></span>').join('');
     let todayHtml='';
     if(td<1)todayHtml=`<div class="todaybox">${NPC.frau}<div><b>Noch ${1-rawDay()} ${1-rawDay()===1?'Tag':'Tage'} bis zum ersten Türchen</b><small>Am 1. Dezember geht es los. Die Wichtel polieren schon die Lupen.</small></div></div>`;
     else if(td>24)todayHtml=`<div class="todaybox">${NPC.frau}<div><b>Der Polarstern leuchtet</b><small>Frohe Weihnachten! Die Geschichte bleibt zum Nachlesen offen.</small></div></div>`;
-    else todayHtml=`<div class="todaybox">${td===24?NPC.frau:avatar(as)}<div><b>${td===24?'Heiligabend: heute alle zusammen':s?`${nameOf(s.by)} hat Splitter ${td} gefunden`:`Heute ist ${as===ME?'<span style="color:var(--gold)">du</span>':nameOf(as)} dran`}</b><small>${A.DAYS[td-1].t}${!s&&td<24?` · Wichtelhilfe ab ${A.HELP_HOUR} Uhr`:''}</small></div></div>`;
+    else todayHtml=`<div class="todaybox">${td===24?NPC.frau:avatar(as)}<div><b>${td===24?'Heiligabend: heute alle zusammen':s?`${nameOf(s.by)} hat Splitter ${td} gefunden`:(as===ME?`Heute bist <span style="color:var(--gold)">du</span> dran`:`Wir warten auf ${nameOf(as)}${online(as)?' (gerade online)':''}`)}</b><small>${A.DAYS[td-1].t}${!s&&td<24?` · Wichtelhilfe ab ${A.HELP_HOUR} Uhr`:''}</small></div></div>`;
     board.innerHTML=`<h2>Anzeigetafel</h2><p class="hello">Hallo ${ME_NAME}${ME_LEAD?' (Spielleitung)':''}. ${Sync.remote?'':'<b style="color:var(--gold)">Testmodus</b>'}</p>
      <div class="rlabel" style="margin-top:12px">Der Polarstern: ${found} von 24 Splittern</div><div class="meter"><i style="width:${found/24*100}%"></i></div>
      ${todayHtml}<div class="cta" id="cta"></div>

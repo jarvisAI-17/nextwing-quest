@@ -1,5 +1,5 @@
 /**
- * Nextwing Quest – gemeinsamer Spielstand für Mehrspieler-Quests.
+ * Fenrik Quest – gemeinsamer Spielstand für Mehrspieler-Quests.
  * Bereitstellen als Web-App (Ausführen als: ich, Zugriff: Jeder).
  * Bei Änderungen: Bereitstellen → Bereitstellungen verwalten → Bearbeiten → Version „Neue Version“ (URL bleibt gleich).
  *
@@ -10,7 +10,7 @@
  * Zeitzone des Projekts muss Europe/Berlin sein (Projekteinstellungen).
  */
 var ADVENT = {
-  link: 'https://quest.nextwing.de/advent/',
+  link: 'https://quest.fenrik.de/advent/',
   helpHour: 21,
   lead: { code: 'POLARSTERN-LEITUNG', name: 'Spielleitung', email: '' },   // email: deine Adresse für den Tagesbericht
   games: {

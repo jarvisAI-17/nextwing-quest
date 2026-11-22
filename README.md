@@ -1,6 +1,6 @@
-# Nextwing Quest
+# Fenrik Quest
 
-Statische Seiten für quest.nextwing.de (GitHub Pages).
+Statische Seiten für quest.fenrik.de (GitHub Pages).
 
 - `index.html` Startseite mit Code-Login und Quest-Übersicht
 - `play.html` Spielerseite (Code im Link nach `#`)

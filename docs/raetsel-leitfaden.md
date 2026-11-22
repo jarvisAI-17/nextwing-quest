@@ -1,4 +1,4 @@
-# Rätsel-Leitfaden Nextwing Quest
+# Rätsel-Leitfaden Fenrik Quest
 
 Dieser Leitfaden hält fest, was in den Probespielen funktioniert hat. Er ist die Grundlage für die Anweisung an die KI im Generator und wird nach jeder gespielten Runde ergänzt.
 

@@ -1,4 +1,4 @@
-// Nextwing Quest – Cloudflare Worker
+// Fenrik Quest – Cloudflare Worker
 // Liefert die statischen Spiele aus und stellt die Shop-API bereit:
 //   POST /api/checkout        Stripe-Checkout-Sitzung anlegen (Preise kommen nur vom Server)
 //   POST /api/stripe-webhook  Zahlungsbestätigung von Stripe (Signatur wird geprüft)

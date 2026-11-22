@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@500;700&family=Cormorant+SC:wght@600;700&display=swap">
 <style>
-/* Layout: an old adventure book under a night sky. Nextwing top bar stays; each chapter is a parchment page (ornament, chapter numeral, drop cap, story, handwritten letters), found objects as taped photos that open large, the riddle on a wooden board, Eddie in comic bubbles. Single dark look by choice: it is an autumn night. */
+/* Layout: an old adventure book under a night sky. Fenrik top bar stays; each chapter is a parchment page (ornament, chapter numeral, drop cap, story, handwritten letters), found objects as taped photos that open large, the riddle on a wooden board, Eddie in comic bubbles. Single dark look by choice: it is an autumn night. */
 :root{--surface:#0b1220;--ink:#eef2fb;--muted:#98a3bd;--line:#25304a;--action:#ff6a1f;--action-hover:#ff8a4c;--on-action:#0b1220;--info:#8eacff;--success:#5fd3a0;--danger:#ff8a8a;
 --paper:#f2e4c4;--paper-2:#e8d5ad;--p-ink:#3b2a17;--p-muted:#7a5f3d;--rust:#8a3b1a;--gold:#e9c46a;--gold-2:#b8862b;--wood:#3a2716;--wood-2:#24170c;--board-ink:#f3e6c8;--ok:#2f6b45;--no:#9a2a1a;
 --display:"Outfit",ui-sans-serif,system-ui,sans-serif;--sans:"Manrope",ui-sans-serif,system-ui,"Segoe UI",sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
@@ -188,7 +188,7 @@ dialog.lb::backdrop{background:rgba(5,8,15,.86);backdrop-filter:blur(3px)}
 </head>
 <body>
 <header class="top"><div class="topin">
-  <a class="brand" href="../" aria-label="Zurück zu Nextwing Quest"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0b1220"/><path d="M12 22 C24 14 40 13 52 17 C42 19 30 22 20 28 Z" fill="#4d7cff"/><path d="M12 33 C24 25 40 24 52 28 C42 30 30 33 20 39 Z" fill="#ff6a1f"/><path d="M12 44 C24 36 40 35 52 39 C42 41 30 44 20 50 Z" fill="#8eacff"/></svg><span>next<b>wing</b> quest</span></a>
+  <a class="brand" href="../" aria-label="Zurück zu Fenrik Quest"><svg aria-hidden="true" viewBox="0 0 100 100"><defs><linearGradient id="fk10g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd08a"/><stop offset="1" stop-color="#ff8f6b"/></linearGradient><mask id="fk10m"><rect width="100" height="100" fill="#fff"/><g stroke="#000" stroke-width="9"><path d="M41 22V80"/><path d="M41 44L64 29"/><path d="M41 62L64 47"/></g></mask></defs><circle cx="50" cy="50" r="40" fill="url(#fk10g)" mask="url(#fk10m)"/></svg><span>fen<b>rik</b> quest</span></a>
   <div class="prog" id="prog" aria-label="Fortschritt"></div>
   <div class="meta"><span id="timer" aria-label="Spielzeit">00:00</span><span id="lets" aria-label="Gesammelte Buchstaben" style="display:flex;gap:3px"></span><button class="snd" id="snd" type="button" aria-label="Ton ausschalten">🔊</button></div>
 </div></header>
@@ -427,7 +427,7 @@ const bubble=(t,h)=>`<div class="eddie">${EDDIE}<div class="bubble"><b>${h||'Edd
 function renderStart(){
   cleanup();top();timer();window.scrollTo({top:0,behavior:'instant'});
   const resume=G.start&&G.ch>=0;
-  app.innerHTML=`<section class="cover"><div class="frame"><small>Nextwing Quest · Probespiel</small><div class="medal">${EDDIE}</div><h1>Eddie und der Schatz von Agathe</h1><p>Ein Hund, eine rostige Dose und eine Frau, die vor über sechzig Jahren etwas versteckt hat, das sie nie vergessen wollte.</p><small>Für Kathleen &amp; Stefan</small></div></section>
+  app.innerHTML=`<section class="cover"><div class="frame"><small>Fenrik Quest · Probespiel</small><div class="medal">${EDDIE}</div><h1>Eddie und der Schatz von Agathe</h1><p>Ein Hund, eine rostige Dose und eine Frau, die vor über sechzig Jahren etwas versteckt hat, das sie nie vergessen wollte.</p><small>Für Kathleen &amp; Stefan</small></div></section>
   <section class="page tilt">${ORN}<span class="chap">Bevor es losgeht</span><h2>So spielt ihr</h2>
     <ul>
       <li>Ein Handy oder Tablet reicht. Setzt euch zusammen hin, am besten mit Tee.</li>
@@ -506,7 +506,7 @@ function renderEnd(w){
   w.innerHTML=`<article class="page tilt">${ORN}<span class="chap">Epilog</span><div class="story">${FINALE.map(p=>para(p,1)).join('')}</div></article>
   <section class="page">${ORN}<span class="chap">Ende der Geschichte</span><h2 style="font-size:28px">${honor}</h2>
   <div class="stats"><div class="stat"><b>${min} Min.</b><span>Spielzeit</span></div><div class="stat"><b>${total} / 21</b><span>Sterne</span></div><div class="stat"><b>${tipsAll}</b><span>Tipps genutzt</span></div><div class="stat"><b>${counts.K} · ${counts.S} · ${counts.B}</b><span>gelöst von Kathleen · Stefan · beiden</span></div></div>
-  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px"><button class="btn primary" id="again" type="button">Noch einmal spielen</button><a class="btn" href="../">Zu Nextwing Quest</a></div></section>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px"><button class="btn primary" id="again" type="button">Noch einmal spielen</button><a class="btn" href="../">Zu Fenrik Quest</a></div></section>
   ${bubble('Zwei Scheiben Käse. Ich sage nichts mehr. Bestes Abenteuer meines Lebens.')}`;
   $('#again').addEventListener('click',()=>{G=fresh();save();ambient(false);renderStart();});
 }
